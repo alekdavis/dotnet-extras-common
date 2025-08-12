@@ -82,7 +82,6 @@
           <ignoreIfUnresolved>
             <assemblyIdentity name="BusinessObjects.Licensing.KeycodeDecoder" />
             <assemblyIdentity name="Microsoft.VisualStudio.TestTools.UITest.Playback" />
-            <assemblyIdentity name="Microsoft.OData.Edm" />
           </ignoreIfUnresolved>
         </configuration>
       </PlugInConfig>
