@@ -1,0 +1,2 @@
+﻿# DotNetExtras.Common library unit tests
+This project implements unit tests for the `DotNetExtras.Common` library APIs. Unit tests are based on the [`xUnit`](https://xunit.net) testing framework and utilize [`FakeItEasy`](https://fakeiteasy.github.io) for mocking.

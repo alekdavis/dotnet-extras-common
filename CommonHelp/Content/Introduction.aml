@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="95884982-ff04-4b6e-9214-7622491f4679" revisionNumber="1">
+  <developerConceptualDocument
+    xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <!--
+    <summary>
+      <para>A brief overview of the DotNetExtras libraries.</para>
+    </summary>
+    -->
+    
+    <introduction>
+      <!-- <autoOutline /> -->
+      <para>
+        DotNetExtras.Common is a .NET Core library that implements common general-purpose tasks such as retrieving error information from the immediate and inner exceptions, simple JSON serialization and deserialization, generation of tokenized strings from collections, deep object cloning and comparison, setting object properties and getting property values using compound (nested) property names, etc. See the API documentation section for the description of the DotNetExtras.Common namespaces and classes.
+      </para>
+    </introduction>
+
+    <relatedTopics>
+      <externalLink>
+        <linkText>DotNetExtras.Common Nuget package</linkText>
+        <linkUri>https://www.nuget.org/packages/DotNetExtras.Common</linkUri>
+      </externalLink>
+    </relatedTopics>
+  </developerConceptualDocument>
+</topic>
