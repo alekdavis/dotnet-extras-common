@@ -117,7 +117,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icons\Help.png" />
-    <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\Introduction.aml" />

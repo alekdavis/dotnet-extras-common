@@ -5,12 +5,6 @@ VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLib", "CommonLib\CommonLib.csproj", "{B3CE634B-320B-4607-9BF1-392864E9F706}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".SOLUTION", ".SOLUTION", "{EBEA2928-281A-4BE4-A7C4-E98B1F1F2411}"
-	ProjectSection(SolutionItems) = preProject
-		LICENSE = LICENSE
-		README.md = README.md
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTests", "CommonTests\CommonTests.csproj", "{4DA61FB3-39DB-EDE1-7691-2AEF5451C664}"
 EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "CommonHelp", "CommonHelp\CommonHelp.shfbproj", "{EB6F1DC6-030C-4527-877E-73D430C60FF4}"
