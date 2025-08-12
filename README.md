@@ -1,4 +1,4 @@
-# DotNetExtras.Common Library
+# DotNetExtras.Common
 
 `DotNetExtras.Common` is a .NET Core library that can simplify common tasks in .NET projects.
 
