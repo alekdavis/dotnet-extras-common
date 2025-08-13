@@ -20,12 +20,14 @@ Use the `DotNetExtras.Common` library to:
 - Escape special characters for LDAP queries and SQL statements.
 
 ## Documentation
+
 For complete documentation, usage details, and code samples, see:
 
 - [Documentation](https://alekdavis.github.io/dotnet-extras-common)
 - [Unit tests](https://github.com/alekdavis/dotnet-extras-common/tree/main/CommonTests)
 
 ## Package
+
 Install the latest version of the `DotNetExtras.Common` Nuget package from:
 
 - [https://www.nuget.org/packages/DotNetExtras.Common](https://www.nuget.org/packages/DotNetExtras.Common)
