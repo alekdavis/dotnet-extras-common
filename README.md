@@ -31,3 +31,9 @@ For complete documentation, usage details, and code samples, see:
 Install the latest version of the `DotNetExtras.Common` Nuget package from:
 
 - [https://www.nuget.org/packages/DotNetExtras.Common](https://www.nuget.org/packages/DotNetExtras.Common)
+
+## See also
+
+Check out other `DotNetExtras` libraries at:
+
+- [https://github.com/alekdavis/dotnet-extras](https://github.com/alekdavis/dotnet-extras)
