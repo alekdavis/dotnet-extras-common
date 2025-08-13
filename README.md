@@ -4,11 +4,11 @@
 
 Use the `DotNetExtras.Common` library to:
 
-- Generate fully qualified or *camelCase* names for variables, types, and members using the `NameOf` utility (similar to the `nameof` operator).
+- Generate fully qualified names for types, variables, and object properties (think of the `nameof` operator on steroids).
 - Retrieve application assembly information including company, version, and product details.
 - Retrieve error information from exceptions, including immediate and inner exceptions.
-- Serialize objects as JSON strings and deserialize JSON strings into objects in one call.
-- Serialize as collection as a comma-separated (or tokenized) string.
+- Serialize objects as JSON strings and deserialize JSON strings into objects.
+- Convert collections to comma-separated (or tokenized) string.
 - Compare complex object for equivalency (property by property).
 - Deep clone complex objects (including all nested properties).
 - Get and set object values using compound (nested) property names (create property hierarchy if necessary).
