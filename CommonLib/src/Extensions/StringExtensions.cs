@@ -1,10 +1,11 @@
-﻿namespace DotNetExtras.Common.Extensions;
+﻿using System.Text.RegularExpressions;
+
+namespace DotNetExtras.Common.Extensions;
 /// <summary>
 /// Implements the most frequently used extension methods,
-/// such as escaping special characters, making sure the sting ends ina punctuation character, etc.,
+/// such as escaping special characters, making sure the sting ends in a punctuation character, etc.,
 /// for the <see cref="string"/> types.
 /// </summary>
-/// <seealso cref="Specialized"/>
 public static partial class StringExtensions
 {
     /// <summary>
@@ -43,8 +44,7 @@ public static partial class StringExtensions
 
     /// <summary>
     /// Appends a period at the end of the string,
-    /// unless it already ends with one of the punctuation characters:
-    /// ,.!?;:
+    /// unless it already ends with one of the punctuation characters.
     /// </summary>
     /// <param name="source">
     /// Input string.
@@ -54,6 +54,9 @@ public static partial class StringExtensions
     /// </param>
     /// <param name="trimEnd">
     /// Indicates that white space characters must be trimmed from the string end.
+    /// </param>
+    /// <param name="compact">
+    /// Indicates that the multiple space and new line characters will be converted to a single space.
     /// </param>
     /// <returns>
     /// Input string that has a valid punctuation string at the end.
@@ -67,8 +70,9 @@ public static partial class StringExtensions
     public static string ToSentence
     (
         this string source,
-        bool trimStart = true,
-        bool trimEnd = true
+        bool trimStart = false,
+        bool trimEnd = false,
+        bool compact = false
     )
     {
         if (string.IsNullOrEmpty(source))
@@ -78,17 +82,22 @@ public static partial class StringExtensions
 
         if (trimStart)
         {
-            source = source.TrimStart();
+            source = Regex.Replace(source, "^[\\s\n\r]+", "");
         }
 
         if (trimEnd)
         {
-            source = source.TrimEnd();
+            source = Regex.Replace(source, "[\\s\n\r]+$", "");
+        }
+
+        if (compact)
+        {
+            source = Regex.Replace(source, "[\\s\n\r]+", " ");
         }
 
         return string.IsNullOrEmpty(source)
             ? ""
-            : System.Text.RegularExpressions.Regex.IsMatch(source, @"[\p{P}]$")
+            : Regex.IsMatch(source, @"[\p{P}]$")
                 ? source
                 : source + ".";
     }

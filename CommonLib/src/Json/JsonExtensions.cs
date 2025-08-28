@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿// Ignore Spelling: Json
+
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace DotNetExtras.Common.Json;
@@ -21,13 +23,13 @@ public static partial class JsonExtensions
     /// </returns>
     /// <example>
     /// <code>
-    /// Sample sample = new Sample(){ Name = "John", Age = 30 };
+    /// User user = new User(){ Name = "John", Age = 30 };
     /// 
     /// // Prints unformatted JSON version of the object.
-    /// Console.WriteLine(sample.ToJson());
+    /// Console.WriteLine(user.ToJson());
     /// 
     /// // Prints formatted JSON version of the object.
-    /// Console.WriteLine(sample.ToJson(true));
+    /// Console.WriteLine(user.ToJson(true));
     /// </code>
     /// </example>
     public static string ToJson
@@ -36,11 +38,6 @@ public static partial class JsonExtensions
         bool indented = false
     )
     {
-        if (source == null)
-        {
-            return "";
-        }
-
         JsonSerializerOptions options = new() 
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
@@ -48,6 +45,7 @@ public static partial class JsonExtensions
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             Converters = { new JsonStringEnumConverter() }
         };
+
         return JsonSerializer.Serialize(source, options);
     }
 

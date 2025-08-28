@@ -1,6 +1,8 @@
+// Ignore Spelling: Json
+
 using CommonLibTests.Models;
-using DotNetExtras.Common;
 using DotNetExtras.Common.Json;
+using DotNetExtras.Common.Extensions;
 
 namespace CommonLibTests;
 public partial class ExtensionsTests
@@ -11,7 +13,7 @@ public partial class ExtensionsTests
         User? u1 = null;
         string json = u1.ToJson();
 
-        Assert.Equal("", json);
+        Assert.Equal("null", json);
 
         u1 = new()
         {
@@ -38,6 +40,8 @@ public partial class ExtensionsTests
 
             PasswordExpirationDate = new (2031, 11, 30, 19, 15, 33),
             LastLoginDateOffset = new(new DateTime(2021, 10, 12, 20, 33, 41), new TimeSpan(3, 30, 0)),
+
+            Password = "sensitiveValue"
         };
 
         json = u1.ToJson();
@@ -53,6 +57,7 @@ public partial class ExtensionsTests
         Assert.Contains("\"socialAccounts\":{\"facebook\":{\"account\":\"Joe.Doe@mail.com\"}}", json);
         Assert.Contains("\"phones\":[{\"type\":\"Personal\",\"number\":\"123-456-7890\"},{\"type\":\"Business\",\"number\":\"987-654-3210\"}]", json);
         Assert.Contains("\"sponsor\":{\"id\":\"54321\"", json);
+        Assert.Contains("\"password\":\"sensitiveValue\"", json);
 
         User? u2 = json.FromJson<User>();
 

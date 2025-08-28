@@ -8,7 +8,6 @@ namespace DotNetExtras.Common.Extensions;
 /// converting a collection of generic elements to a comma-separated string value,
 /// for the <see cref="IEnumerable"/> types.
 /// </summary>
-/// <seealso cref="Specialized"/>
 public static partial class IEnumerableExtensions
 {
     /// <summary>

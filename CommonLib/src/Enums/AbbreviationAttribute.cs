@@ -1,6 +1,4 @@
-﻿using DotNetExtras.Common;
-
-namespace DotNetExtras.Common.Enums;
+﻿namespace DotNetExtras.Common.Enums;
 
 /// <summary>
 /// Use <see cref="AbbreviationAttribute"/> to decorate enumerated fields

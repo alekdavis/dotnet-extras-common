@@ -43,7 +43,7 @@
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
     <HelpTitle>DotNetExtras.Common Library Documentation</HelpTitle>
-    <HelpFileVersion>1.0.0</HelpFileVersion>
+    <HelpFileVersion>1.0.1</HelpFileVersion>
     <NamingMethod>MemberName</NamingMethod>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <RootNamespaceContainer>True</RootNamespaceContainer>
@@ -54,16 +54,12 @@
     <SdkLinkTarget>Blank</SdkLinkTarget>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="DotNetExtras.Common (Group)" isGroup="True" isDocumented="True">Contains utility classes and namespaces for general-purpose operations.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="DotNetExtras.Common" isDocumented="True">Provides general-purpose utility classes that extend functionality of the most frequently used types, such as exceptions and strings.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="DotNetExtras.Common.Enums" isDocumented="True">Provides utility classes that enhance the capabilities and consumption of the enumerated (enum) types.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="DotNetExtras.Common.Exceptions" isDocumented="True">Defines custom exception classes.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="DotNetExtras.Common.Extensions (Group)" isGroup="True" isDocumented="True">Contains utility classes and namespaces implementing extension methods.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="DotNetExtras.Common.Extensions" isDocumented="True">Implements most common extension methods.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="DotNetExtras.Common.Extensions.Specialized" isDocumented="True">Implements less common extension methods.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="DotNetExtras.Common.Json" isDocumented="True">Provides classes to simplify operations on JSON strings and objects.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="DotNetExtras.Common.RegularExpressions" isDocumented="True">Defines regular expressions for common values, such as email addresses, GUIDs, names, and so on.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="DotNetExtras.Common.Specialized" isDocumented="True">Provides more specific and less frequently used general-purpose utility classes that extend functionality of  various types.</NamespaceSummaryItem>
-    </NamespaceSummaries>
+<NamespaceSummaryItem name="DotNetExtras.Common" isDocumented="True">Provides general-purpose utility classes that extend functionality of the most frequently used types, such as exceptions and strings.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="DotNetExtras.Common.Enums" isDocumented="True">Provides utility classes that enhance the capabilities and consumption of the enumerated (enum) types.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="DotNetExtras.Common.Exceptions" isDocumented="True">Defines custom exception classes.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="DotNetExtras.Common.Extensions" isDocumented="True">Implements most common extension methods.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="DotNetExtras.Common.Json" isDocumented="True">Provides classes to simplify operations on JSON strings and objects.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="DotNetExtras.Common.RegularExpressions" isDocumented="True">Defines regular expressions for common values, such as email addresses, GUIDs, names, and so on.</NamespaceSummaryItem></NamespaceSummaries>
     <HtmlSdkLinkType>Msdn</HtmlSdkLinkType>
     <BinaryTOC>True</BinaryTOC>
     <IncludeFavorites>False</IncludeFavorites>
@@ -86,7 +82,8 @@
         </configuration>
       </PlugInConfig>
     </PlugInConfigurations>
-    <FooterText>&amp;lt%3ba href=&amp;quot%3bhttps://github.com/alekdavis/dotnet-extras-common&amp;quot%3b target=&amp;quot%3b_blank&amp;quot%3b&amp;gt%3bProject repository&amp;lt%3b/a&amp;gt%3b</FooterText>
+    <FooterText>
+    </FooterText>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->

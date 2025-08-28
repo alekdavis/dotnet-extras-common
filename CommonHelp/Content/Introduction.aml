@@ -17,10 +17,195 @@
       </para>
     </introduction>
 
+    <section address="Overview">
+      <title>Overview</title>
+      <content>
+        <para>
+          The <legacyItalic>DotNetExtras.Common</legacyItalic> library groups the utility classes and extension methods under the following namespaces:
+        </para>
+        <list class="ordered">
+          <listItem>
+            <para><codeInline>DotNetExtras.Common</codeInline>: Implements non-specific, most frequently used operations.</para>
+          </listItem>
+          <listItem>
+            <para><codeInline>DotNetExtras.Common.Enums</codeInline>: Defines useful attributes and extension methods applicable to the <codeInline>enum</codeInline> types.</para>
+          </listItem>
+          <listItem>
+            <para><codeInline>DotNetExtras.Common.Exceptions</codeInline>: Offers useful exception classes and extension methods.</para>
+          </listItem>
+          <listItem>
+            <para><codeInline>DotNetExtras.Common.Extensions</codeInline>: Provides extension methods for most frequently used operations.</para>
+          </listItem>
+          <listItem>
+            <para><codeInline>DotNetExtras.Common.Json</codeInline>: Handles JSON operations.</para>
+          </listItem>
+          <listItem>
+            <para><codeInline>DotNetExtras.Common.RegularExpressions</codeInline>: Defines common regular expression patterns that can be used for validating email addresses, GUIDs, IDs, etc.</para>
+          </listItem>
+        </list>
+        <para>
+          Here are some operations that you may find useful grouped by namespaces.
+        </para>
+      </content>
+      
+      <sections>
+        
+        <section address="Common">
+          <title>DotNetExtras.Common namespace</title>
+          <content>
+            <para>
+              The <legacyItalic>NameOf</legacyItalic> class offers methods that extend the functionality of the built-in <codeInline>nameof</codeInline> operator. Use them to reference the full or partial name of a variable, class, or property using the original or forced <legacyItalic>camelCase</legacyItalic> notation. The <legacyItalic>PrimaryAssembly</legacyItalic> class allows you to easily access the properties of the primary application assembly, such as the assembly title, version, company, copyright, and more.
+            </para>
+          </content>
+          <sections>
+            <section>
+              <title>Examples</title>
+              <content>
+                <code language="c#" title="NameOf examples">
+<![CDATA[
+using DotNetExtras.Common;
+...
+// Print: Some.Type.Property.SubProperty
+Console.WriteLine(NameOf.Full(nameof(Some.Type.Property.SubProperty)));
+
+// Print: some.type.property.subProperty
+Console.WriteLine(NameOf.Full(nameof(Some.Type.Property.SubProperty), true));
+
+// Print: Property.SubProperty
+Console.WriteLine(NameOf.Long(someObject.Property.Subproperty)));
+
+// Print: property.subProperty
+Console.WriteLine(NameOf.Long(someObject.Property.Subproperty), true));
+
+// Print: SubProperty
+Console.WriteLine(NameOf.Short(someObject.Property.Subproperty)));
+
+// Print: subProperty
+Console.WriteLine(NameOf.Short(someObject.Property.Subproperty), true));
+]]>
+                </code>
+                <code language="c#" title="PrimaryAssembly examples">
+<![CDATA[
+using DotNetExtras.Common;
+...
+// Print the version and the copyright message such as: MyApp v1.0.8 © 2023 MyCompany
+Console.WriteLine($"{PrimaryAssembly.Title} v{PrimaryAssembly.Version} {PrimaryAssembly.Copyright}");
+]]>
+                </code>
+              </content>
+            </section>
+       
+          </sections>
+        </section>
+   
+        <section address="Extensions">
+          <title>DotNetExtras.Extensions namespace</title>
+          <content>
+            <para>
+              The extension classes implement extension methods applicable to various data types.
+            </para>
+          </content>
+          <sections>
+            <section>
+              <title>Examples</title>
+              <content>
+
+                <code language="c#" title="Exception extensions examples">
+<![CDATA[
+using DotNetExtras.Common.Exceptions;
+...
+// Print exception messages from the immediate and all inner exceptions.
+Console.WriteLine(ex.GetMessages());
+]]>
+                </code>
+                <code language="c#" title="IEnumerable extensions examples">
+<![CDATA[
+using DotNetExtras.Common.Extensions;
+...
+// Print received tags as a comma-separated string.
+List<string> tags = GetTags();
+
+Console.WriteLine($"Got tags: {tags.ToCsv()}.");
+]]>
+                </code>
+                <code language="c#" title="Object extensions examples">
+<![CDATA[
+using DotNetExtras.Common.Extensions;
+...
+// Set a nested property value using a compound property name.
+userA.SetPropertyValue("Name.Surname", "Johnson");
+userB.SetPropertyValue("Name.Surname", "Johnson");
+
+// Get a nested property value using a compound property name.
+string surname = userA.GetPropertyValue<string>("Name.Surname");
+
+// Compare two objects for equivalence.
+bool equivalent = userA.IsEquivalentTo(userB));
+
+// Compare two arrays for partial equivalence.
+bool partiallyEquivalent = arrayA.IsPartiallyEquivalentTo(arrayB, 3));
+]]>
+                </code>
+              </content>
+            </section>
+          </sections>
+        </section>
+   
+        <section address="Json">
+          <title>DotNetExtras.Json namespace</title>
+          <content>
+            <para>
+              This namespace groups JSON operations such as object conversions to and from JSON strings.
+            </para>
+          </content>
+          <sections>
+            <section>
+              <title>Examples</title>
+              <content>
+
+                <code language="c#" title="JSON examples">
+<![CDATA[
+using DotNetExtras.Common.Json;
+...
+// Serialize an object to a JSON string.
+string json = myObject.ToJson();
+
+// Convert a JSON string to an object.
+myObject = json.FromJson<MyObjectType>();
+]]>
+                </code>
+              </content>
+            </section>      
+            
+          </sections>
+        </section>    
+        
+        <section address="More">
+          <title>More</title>
+            <content>
+              <para>
+                For more examples of available functionality, see the 
+                <externalLink>
+                  <linkText>unit test project</linkText>
+                  <linkUri>https://github.com/alekdavis/dotnet-extras-common/tree/main/CommonTests</linkUri>
+                  <linkTarget>_blank</linkTarget>
+                </externalLink>.
+              </para>
+            </content>
+        </section>
+    
+      </sections>     
+    </section>       
+    
     <relatedTopics>
       <externalLink>
-        <linkText>DotNetExtras.Common Nuget package</linkText>
+        <linkText>DotNetExtras.Common NuGet package</linkText>
         <linkUri>https://www.nuget.org/packages/DotNetExtras.Common</linkUri>
+      </externalLink>
+      <externalLink>
+        <linkText>DotNetExtras.Common project repository</linkText>
+        <linkUri>https://github.com/alekdavis/dotnet-extras-common</linkUri>
+        <linkTarget>_blank</linkTarget>
       </externalLink>
     </relatedTopics>
   </developerConceptualDocument>

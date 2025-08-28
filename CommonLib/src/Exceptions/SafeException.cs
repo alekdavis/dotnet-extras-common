@@ -3,9 +3,9 @@
 /// Use the <see cref="SafeException"/> class as the base exception for your custom exception classes,
 /// so you can easily recognize them in code.
 /// This can be handy in a few cases.
-/// For example, calling the <see cref="Extensions.ExceptionExtensions.GetMessages{T}(Exception, bool)"/>
+/// For example, calling the <see cref="Exceptions.ExceptionExtensions.GetMessages{T}(Exception, bool)"/>
 /// extension method passing <see cref="SafeException"/> as the generic type
-/// (or calling the <see cref="Extensions.ExceptionExtensions.GetSafeMessages(Exception, bool)"/>
+/// (or calling the <see cref="Exceptions.ExceptionExtensions.GetSafeMessages(Exception, bool)"/>
 /// extension method),
 /// will only return messages from your custom exceptions
 /// which can help you control the error details sent to the other apps

@@ -38,4 +38,7 @@ internal class User
 
     [JsonInclude]
     internal Dictionary<string, string>? Tags { get; set; }
+
+    [JsonInclude]
+    internal string? Password { get; set; }
 }

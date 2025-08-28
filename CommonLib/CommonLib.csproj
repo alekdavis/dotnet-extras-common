@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <AssemblyName>DotNetExtras.Common</AssemblyName>
     <RootNamespace>DotNetExtras.Common</RootNamespace>
-    <Version>1.0.0</Version>
+    <Version>1.0.5</Version>
     <Title>$(AssemblyName)</Title>
     <Authors>Alek Davis</Authors>
     <Description>A .NET Core library implementing most frequently used general-purpose operations.</Description>
@@ -21,6 +21,7 @@
     <IncludeSourceRevisionInInformationalVersion>False</IncludeSourceRevisionInInformationalVersion>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageReleaseNotes>Breaking change. Refactored some code. Changed and moved around classes. Moved classes from the extended namespace to a separate library.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
