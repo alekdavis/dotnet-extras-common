@@ -23,7 +23,7 @@
         <para>
           The <legacyItalic>DotNetExtras.Common</legacyItalic> library groups the utility classes and extension methods under the following namespaces:
         </para>
-        <list class="ordered">
+        <list class="bullet">
           <listItem>
             <para><codeInline>DotNetExtras.Common</codeInline>: Implements non-specific, most frequently used operations.</para>
           </listItem>

@@ -646,150 +646,190 @@ public partial class ExtensionsTests
     }
 
     [Fact]
+    public void Object_IsPartiallyEquivalentTo_Class_Simple()
+    {
+        User u1 = new()
+        {
+            Name = new()
+            {
+                Surname = "Johnson",
+                MiddleName = "Jack",
+                GivenName = "John"
+            },
+        };
+
+        User u2 = new()
+        {
+            Name = new()
+            {
+                Surname = "Johnson",
+                MiddleName = "Jack",
+                GivenName = "John"
+            },
+        };
+
+        Assert.True(u1.IsPartiallyEquivalentTo(u2, true));
+        Assert.True(u2.IsPartiallyEquivalentTo(u1, true));
+
+        u1.Name.Surname = "Smith";
+
+        Assert.False(u2.IsPartiallyEquivalentTo(u1, true));
+        Assert.False(u1.IsPartiallyEquivalentTo(u2, true));
+
+        u1.Name.Surname = null;
+        Assert.False(u2.IsPartiallyEquivalentTo(u1, true));
+        Assert.True(u1.IsPartiallyEquivalentTo(u2, true));
+
+        u1.Name.GivenName = null;
+        Assert.False(u2.IsPartiallyEquivalentTo(u1, true));
+        Assert.True(u1.IsPartiallyEquivalentTo(u2, true));
+    }
+
+    [Fact]
     public void Object_IsPartiallyEquivalentTo_Class()
     {
-        //User u1 = new()
-        //{
-        //    Name = new()
-        //    {
-        //        Surname = "Johnson",
-        //        MiddleName = "Jack",
-        //        GivenName = "John"
-        //    },
+        User u1 = new()
+        {
+            Name = new()
+            {
+                Surname = "Johnson",
+                MiddleName = "Jack",
+                GivenName = "John"
+            },
 
-        //    Mail = "john.johnson@email.com",
+            Mail = "john.johnson@email.com",
 
-        //    OtherMail = ["jack.johnson@email.com", "jjohnson@email.com", "jj@email.com"],
+            OtherMail = ["jack.johnson@email.com", "jjohnson@email.com", "jj@email.com"],
 
-        //    LuckyNumbers = [13, 57, 95, 38],
+            LuckyNumbers = [13, 57, 95, 38],
 
-        //    PasswordExpirationDate = DateTime.Parse("2012/12/31 23:59:59.999"),
+            PasswordExpirationDate = DateTime.Parse("2012/12/31 23:59:59.999"),
 
-        //    SocialAccounts = new()
-        //    {
-        //        { "Facebook", new SocialAccount() { Provider = "Facebook", Account = "jack.johnson@email.com", Enabled = true} },
-        //        { "Microsoft", new SocialAccount() { Provider = "Microsoft", Account = "jack.johnson@email.com", Enabled = true} },
-        //        { "Google", new SocialAccount() { Provider = "Google", Account = "jack.johnson@email.com", Enabled = true} },
-        //    },
+            SocialAccounts = new()
+            {
+                { "Facebook", new SocialAccount() { Provider = "Facebook", Account = "jack.johnson@email.com", Enabled = true} },
+                { "Microsoft", new SocialAccount() { Provider = "Microsoft", Account = "jack.johnson@email.com", Enabled = true} },
+                { "Google", new SocialAccount() { Provider = "Google", Account = "jack.johnson@email.com", Enabled = true} },
+            },
 
-        //    Phones =
-        //    [
-        //        new Phone { IsMobile = true , IsPrimary = true, Number = "+13334445566", Type = PhoneType.Personal },
-        //        new Phone { IsMobile = false , IsPrimary = false, Number = "+13334445577", Type = PhoneType.Personal },
-        //        new Phone { IsMobile = false , IsPrimary = false, Number = "+13334445588", Type = PhoneType.Business },
-        //        new Phone { IsMobile = false, IsPrimary = false, Number = "+13334445599", Type = PhoneType.Other },
-        //        new Phone { IsMobile = true, IsPrimary = false, Number = "+13334445500", Type = PhoneType.Other },
-        //    ],
+            Phones =
+            [
+                new Phone { IsMobile = true , IsPrimary = true, Number = "+13334445566", Type = PhoneType.Personal },
+                new Phone { IsMobile = false , IsPrimary = false, Number = "+13334445577", Type = PhoneType.Personal },
+                new Phone { IsMobile = false , IsPrimary = false, Number = "+13334445588", Type = PhoneType.Business },
+                new Phone { IsMobile = false, IsPrimary = false, Number = "+13334445599", Type = PhoneType.Other },
+                new Phone { IsMobile = true, IsPrimary = false, Number = "+13334445500", Type = PhoneType.Other },
+            ],
 
-        //    Tags = new()
-        //    {
-        //        ["greeting"] = "hello",
-        //        ["color"] = "red",
-        //        ["shape"] = "oval"
-        //    }
-        //};
+            Tags = new()
+            {
+                ["greeting"] = "hello",
+                ["color"] = "red",
+                ["shape"] = "oval"
+            }
+        };
 
-        //User u2 = new()
-        //{
-        //    Name = new()
-        //    {
-        //        Surname = "Johnson",
-        //        MiddleName = "Jack",
-        //        GivenName = "John"
-        //    },
+        User u2 = new()
+        {
+            Name = new()
+            {
+                Surname = "Johnson",
+                MiddleName = "Jack",
+                GivenName = "John"
+            },
 
-        //    Mail = "john.johnson@email.com",
+            Mail = "john.johnson@email.com",
 
-        //    OtherMail = ["jack.johnson@email.com", "jjohnson@email.com", "jj@email.com"],
+            OtherMail = ["jack.johnson@email.com", "jjohnson@email.com", "jj@email.com"],
 
-        //    LuckyNumbers = [13, 57, 95, 38],
+            LuckyNumbers = [13, 57, 95, 38],
 
-        //    PasswordExpirationDate = DateTime.Parse("2012/12/31 23:59:59.999"),
+            PasswordExpirationDate = DateTime.Parse("2012/12/31 23:59:59.999"),
 
-        //    SocialAccounts = new()
-        //    {
-        //        { "Facebook", new SocialAccount() { Provider = "Facebook", Account = "jack.johnson@email.com", Enabled = true} },
-        //        { "Microsoft", new SocialAccount() { Provider = "Microsoft", Account = "jack.johnson@email.com", Enabled = true} },
-        //        { "Google", new SocialAccount() { Provider = "Google", Account = "jack.johnson@email.com", Enabled = true} },
-        //    },
+            SocialAccounts = new()
+            {
+                { "Facebook", new SocialAccount() { Provider = "Facebook", Account = "jack.johnson@email.com", Enabled = true} },
+                { "Microsoft", new SocialAccount() { Provider = "Microsoft", Account = "jack.johnson@email.com", Enabled = true} },
+                { "Google", new SocialAccount() { Provider = "Google", Account = "jack.johnson@email.com", Enabled = true} },
+            },
 
-        //    Phones =
-        //    [
-        //        new Phone { IsMobile = true , IsPrimary = true, Number = "+13334445566", Type = PhoneType.Personal },
-        //        new Phone { IsMobile = false , IsPrimary = false, Number = "+13334445577", Type = PhoneType.Personal },
-        //        new Phone { IsMobile = false , IsPrimary = false, Number = "+13334445588", Type = PhoneType.Business },
-        //        new Phone { IsMobile = false, IsPrimary = false, Number = "+13334445599", Type = PhoneType.Other },
-        //        new Phone { IsMobile = true, IsPrimary = false, Number = "+13334445500", Type = PhoneType.Other },
-        //    ],
+            Phones =
+            [
+                new Phone { IsMobile = true , IsPrimary = true, Number = "+13334445566", Type = PhoneType.Personal },
+                new Phone { IsMobile = false , IsPrimary = false, Number = "+13334445577", Type = PhoneType.Personal },
+                new Phone { IsMobile = false , IsPrimary = false, Number = "+13334445588", Type = PhoneType.Business },
+                new Phone { IsMobile = false, IsPrimary = false, Number = "+13334445599", Type = PhoneType.Other },
+                new Phone { IsMobile = true, IsPrimary = false, Number = "+13334445500", Type = PhoneType.Other },
+            ],
 
-        //    Tags = new()
-        //    {
-        //        ["greeting"] = "hello",
-        //        ["color"] = "red",
-        //        ["shape"] = "oval"
-        //    }
-        //};
+            Tags = new()
+            {
+                ["greeting"] = "hello",
+                ["color"] = "red",
+                ["shape"] = "oval"
+            }
+        };
 
-        //Assert.True(u1.IsPartiallyEquivalentTo(u2, true));
-        //Assert.True(u2.IsPartiallyEquivalentTo(u1, true));
+        Assert.True(u1.IsPartiallyEquivalentTo(u2, true));
+        Assert.True(u2.IsPartiallyEquivalentTo(u1, true));
 
-        //u2.Tags?.Remove("greeting");
+        u2.Tags?.Remove("greeting");
 
-        //Assert.False(u2.IsPartiallyEquivalentTo(u1, true));
-        //Assert.False(u1.IsPartiallyEquivalentTo(u2, true));
+        Assert.True(u2.IsPartiallyEquivalentTo(u1, true));
+        Assert.False(u1.IsPartiallyEquivalentTo(u2, true));
 
-        //u2.Tags?.Clear();
+        u2.Tags?.Clear();
 
-        //Assert.False(u2.IsPartiallyEquivalentTo(u1, true));
-        //Assert.False(u1.IsPartiallyEquivalentTo(u2, true));
+        Assert.True(u2.IsPartiallyEquivalentTo(u1, true));
+        Assert.False(u1.IsPartiallyEquivalentTo(u2, true));
 
-        //u2.Tags = new()
-        //{
-        //    ["greeting"] = "hello",
-        //    ["color"] = "red",
-        //    ["shape"] = "oval"
-        //};
+        u2.Tags = new()
+        {
+            ["greeting"] = "hello",
+            ["color"] = "red",
+            ["shape"] = "oval"
+        };
 
-        //Assert.True(u1.IsPartiallyEquivalentTo(u2, true));
-        //Assert.True(u2.IsPartiallyEquivalentTo(u1, true));
+        Assert.True(u1.IsPartiallyEquivalentTo(u2, true));
+        Assert.True(u2.IsPartiallyEquivalentTo(u1, true));
 
-        //if (u2.Tags?["greeting"] != null)
-        //{
-        //    u2.Tags["greeting"] = "hi";
-        //}
+        if (u2.Tags?["greeting"] != null)
+        {
+            u2.Tags["greeting"] = "hi";
+        }
 
-        //Assert.False(u1.IsPartiallyEquivalentTo(u2, true));
-        //Assert.False(u2.IsPartiallyEquivalentTo(u1, true));
+        Assert.False(u1.IsPartiallyEquivalentTo(u2, true));
+        Assert.False(u2.IsPartiallyEquivalentTo(u1, true));
 
-        //if (u2.Tags?["greeting"] != null)
-        //{
-        //    u2.Tags["greeting"] = "hello";
-        //}
+        if (u2.Tags?["greeting"] != null)
+        {
+            u2.Tags["greeting"] = "hello";
+        }
 
-        //Assert.True(u1.IsPartiallyEquivalentTo(u2, true));
-        //Assert.True(u2.IsPartiallyEquivalentTo(u1, true));
+        Assert.True(u1.IsPartiallyEquivalentTo(u2, true));
+        Assert.True(u2.IsPartiallyEquivalentTo(u1, true));
 
-        //u2.SocialAccounts?.Remove("Facebook");
+        u2.SocialAccounts?.Remove("Facebook");
 
-        //Assert.False(u2.IsPartiallyEquivalentTo(u1, true));
-        //Assert.False(u1.IsPartiallyEquivalentTo(u2, true));
+        Assert.True(u2.IsPartiallyEquivalentTo(u1, true));
+        Assert.False(u1.IsPartiallyEquivalentTo(u2, true));
 
-        //u2.SocialAccounts?.Add("Facebook", new()
-        //{
-        //    Provider = "Facebook",
-        //    Account = "jack.johnson@email.com",
-        //    Enabled = true
-        //});
+        u2.SocialAccounts?.Add("Facebook", new()
+        {
+            Provider = "Facebook",
+            Account = "jack.johnson@email.com",
+            Enabled = true
+        });
 
-        //Assert.True(u1.IsPartiallyEquivalentTo(u2, true));
-        //Assert.True(u2.IsPartiallyEquivalentTo(u1, true));
+        Assert.True(u1.IsPartiallyEquivalentTo(u2, true));
+        Assert.True(u2.IsPartiallyEquivalentTo(u1, true));
 
-        //if (u2.SocialAccounts?["Facebook"] != null)
-        //{
-        //    u2.SocialAccounts["Facebook"].Enabled = false;
-        //}
+        if (u2.SocialAccounts?["Facebook"] != null)
+        {
+            u2.SocialAccounts["Facebook"].Enabled = false;
+        }
 
-        //Assert.False(u1.IsPartiallyEquivalentTo(u2, true));
-        //Assert.False(u2.IsPartiallyEquivalentTo(u1, true));
+        Assert.False(u1.IsPartiallyEquivalentTo(u2, true));
+        Assert.False(u2.IsPartiallyEquivalentTo(u1, true));
     }
 }
