@@ -16,7 +16,7 @@ Use the `DotNetExtras.Common` library to:
 - Check if objects are empty or determine type characteristics (primitive vs. complex).
 - Escape special characters for LDAP queries and SQL statements.
 
-# Usage
+## Usage
 
 The following examples illustrates various operations implemented by the `DotNetExtras.Common` library.
 
