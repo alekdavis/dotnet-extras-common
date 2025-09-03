@@ -106,18 +106,18 @@ Console.WriteLine($"{PrimaryAssembly.Title} v{PrimaryAssembly.Version} {PrimaryA
           </sections>
         </section>
    
-        <section address="Extensions">
-          <title>DotNetExtras.Common.Extensions namespace</title>
+        <section address="Exceptions">
+          <title>DotNetExtras.Common.Exceptions namespace</title>
           <content>
             <para>
-              The extension classes implement extension methods applicable to various data types.
+              The exception extension methods allow you to retrieve the immediate and all inner exception messages in a neatly formatted string.
             </para>
           </content>
           <sections>
             <section>
               <content>
 
-                <code language="c#" title="Exception extensions examples">
+                <code language="c#" title="Exception examples">
 <![CDATA[
 using DotNetExtras.Common.Exceptions;
 ...
@@ -140,6 +140,22 @@ catch (Exception ex)
 }
 ]]>
                 </code>
+              </content>
+            </section>
+       
+          </sections>
+        </section>
+   
+        <section address="Extensions">
+          <title>DotNetExtras.Common.Extensions namespace</title>
+          <content>
+            <para>
+              This namespace groups various extension methods applicable to different data types.
+            </para>
+          </content>
+          <sections>
+            <section>
+              <content>
                 
                 <code language="c#" title="IEnumerable extensions examples">
 <![CDATA[
