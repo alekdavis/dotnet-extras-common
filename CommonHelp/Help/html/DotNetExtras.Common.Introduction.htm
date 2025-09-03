@@ -6,7 +6,7 @@
           Here are some operations that you may find useful grouped by namespaces.
         </p><h4 id="Common" class="quickLinkHeader">DotNetExtras.Common namespace</h4><p>
               The <span class="code">NameOf</span> class offers methods that extend the functionality of the built-in <span class="code">nameof</span> operator. Use them to reference the full or partial name of a variable, class, or property using the original or forced <em>camelCase</em> notation. The <span class="code">PrimaryAssembly</span> class allows you to easily access the properties of the primary application assembly, such as the assembly title, version, company, copyright, and more.
-            </p><h4 class="quickLinkHeader">Examples</h4><div class="codeSnippet"><div class="codeHeader"><span class="codeHeaderTitle">NameOf examples</span><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-c#">using DotNetExtras.Common;
+            </p><div class="codeSnippet"><div class="codeHeader"><span class="codeHeaderTitle">NameOf examples</span><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-c#">using DotNetExtras.Common;
 ...
 // Prints: Some.Type.Property.SubProperty
 Console.WriteLine(NameOf.Full(nameof(Some.Type.Property.SubProperty)));
@@ -36,7 +36,7 @@ Console.WriteLine(NameOf.Short(someObject.Property.SubProperty), true));</code><
 // Print the version and the copyright message such as: MyApp v1.0.8 © 2023 MyCompany
 Console.WriteLine($"{PrimaryAssembly.Title} v{PrimaryAssembly.Version} {PrimaryAssembly.Copyright}");</code></pre></div></div><h4 id="Extensions" class="quickLinkHeader">DotNetExtras.Common.Extensions namespace</h4><p>
               The extension classes implement extension methods applicable to various data types.
-            </p><h4 class="quickLinkHeader">Examples</h4><div class="codeSnippet"><div class="codeHeader"><span class="codeHeaderTitle">Exception extensions examples</span><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-c#">using DotNetExtras.Common.Exceptions;
+            </p><div class="codeSnippet"><div class="codeHeader"><span class="codeHeaderTitle">Exception extensions examples</span><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-c#">using DotNetExtras.Common.Exceptions;
 ...
 // Print exception messages from the immediate and all inner exceptions.
 try
@@ -128,7 +128,7 @@ userB.Name.Surname = "Johnson";
 userB.IsEquivalentTo(userA)); // true
 userA.IsEquivalentTo(userB)); // true</code></pre></div></div><h4 id="Json" class="quickLinkHeader">DotNetExtras.Common.Json namespace</h4><p>
               The <span class="code">JsonExtensions</span> class implements extension methods for converting objects to and from JSON strings using the <span class="code">System.Text.Json</span> (STJ) serialization methods.
-            </p><h4 class="quickLinkHeader">Examples</h4><div class="codeSnippet"><div class="codeHeader"><span class="codeHeaderTitle">JSON serialization and deserialization examples</span><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-c#">using DotNetExtras.Common.Json;
+            </p><div class="codeSnippet"><div class="codeHeader"><span class="codeHeaderTitle">JSON serialization and deserialization examples</span><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-c#">using DotNetExtras.Common.Json;
 ...
 User user = new()
 {
@@ -143,7 +143,7 @@ string json = user.ToJson();
 
 user = json.FromJson&lt;User&gt;();</code></pre></div></div><h4 id="Enums" class="quickLinkHeader">DotNetExtras.Common.Enums namespace</h4><p>
               This namespace groups <span class="code">enum</span>-specific classes and operations.
-            </p><h4 class="quickLinkHeader">Examples</h4><div class="codeSnippet"><div class="codeHeader"><span class="codeHeaderTitle">Using enum metadata attributes and extension methods</span><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-c#">using DotNetExtras.Common.Enums;
+            </p><div class="codeSnippet"><div class="codeHeader"><span class="codeHeaderTitle">Using enum metadata attributes and extension methods</span><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-c#">using DotNetExtras.Common.Enums;
 ...
 public enum Something
 {
@@ -167,10 +167,10 @@ Console.WriteLine(something.ToDescription());
 Console.WriteLine(something.ToAbbreviation());
 
 // Prints: Short1
-Console.WriteLine(something.ToShortName());</code></pre></div></div><h4 id="More" class="quickLinkHeader">More</h4><p>
-                For more examples of available functionality, see the 
-                <a href="https://github.com/alekdavis/dotnet-extras-common/tree/main/CommonTests" target="_blank" rel="noopener noreferrer">unit test project</a>.
-              </p></div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>See Also</h2><div id="seeAlsoSection"><h4>Other Resources</h4><div><a href="https://www.nuget.org/packages/DotNetExtras.Common" target="_blank" rel="noopener noreferrer">DotNetExtras.Common NuGet package</a></div><div><a href="https://github.com/alekdavis/dotnet-extras-common" target="_blank" rel="noopener noreferrer">DotNetExtras.Common project repository</a></div></div></div><div id="InThisArticleColumn" class="column is-hidden-mobile"><nav class="menu sticky is-hidden"><p class="menu-label"><strong>In This Article</strong></p><ul id="InThisArticleMenu" class="menu-list"><li><a class="quickLink">Overview</a><ul class="menu"><li><a class="quickLink">DotNetExtras.Common namespace</a></li><li><a class="quickLink">Examples</a></li><li><a class="quickLink">DotNetExtras.Common.Extensions namespace</a></li><li><a class="quickLink">Examples</a></li><li><a class="quickLink">DotNetExtras.Common.Json namespace</a></li><li><a class="quickLink">Examples</a></li><li><a class="quickLink">DotNetExtras.Common.Enums namespace</a></li><li><a class="quickLink">Examples</a></li><li><a class="quickLink">More</a></li></ul></li><li><a class="quickLink">See Also</a></li></ul></nav></div></div></div><footer id="PageFooter" class="footer border-top py-3 fixedFooter"><div class="columns"><div id="FooterContent" class="column"><p>Copyright © 2025 Alek Davis</p><div class="feedbackLink">Send comments on this topic to
+Console.WriteLine(something.ToShortName());</code></pre></div></div></div><h2 id="More" class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>More</h2><div id="IDDABSection"><p>
+            For more examples of available functionality, see the 
+            <a href="https://github.com/alekdavis/dotnet-extras-common/tree/main/CommonTests" target="_blank" rel="noopener noreferrer">unit test project</a>.
+          </p></div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>See Also</h2><div id="seeAlsoSection"><h4>Other Resources</h4><div><a href="https://www.nuget.org/packages/DotNetExtras.Common" target="_blank" rel="noopener noreferrer">DotNetExtras.Common NuGet package</a></div><div><a href="https://github.com/alekdavis/dotnet-extras-common" target="_blank" rel="noopener noreferrer">DotNetExtras.Common project repository</a></div></div></div><div id="InThisArticleColumn" class="column is-hidden-mobile"><nav class="menu sticky is-hidden"><p class="menu-label"><strong>In This Article</strong></p><ul id="InThisArticleMenu" class="menu-list"><li><a class="quickLink">Overview</a><ul class="menu"><li><a class="quickLink">DotNetExtras.Common namespace</a></li><li><a class="quickLink">DotNetExtras.Common.Extensions namespace</a></li><li><a class="quickLink">DotNetExtras.Common.Json namespace</a></li><li><a class="quickLink">DotNetExtras.Common.Enums namespace</a></li></ul></li><li><a class="quickLink">More</a></li><li><a class="quickLink">See Also</a></li></ul></nav></div></div></div><footer id="PageFooter" class="footer border-top py-3 fixedFooter"><div class="columns"><div id="FooterContent" class="column"><p>Copyright © 2025 Alek Davis</p><div class="feedbackLink">Send comments on this topic to
         <a id="HT_MailLink" href="mailto:alek.davis%40gmail.com?Subject=DotNetExtras.Common%20Library%20Documentation">Alek Davis</a></div>
         <script type="text/javascript">
         var HT_mailLink = document.getElementById("HT_MailLink");

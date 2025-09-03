@@ -59,7 +59,6 @@
           </content>
           <sections>
             <section>
-              <title>Examples</title>
               <content>
                 
                 <code language="c#" title="NameOf examples">
@@ -116,7 +115,6 @@ Console.WriteLine($"{PrimaryAssembly.Title} v{PrimaryAssembly.Version} {PrimaryA
           </content>
           <sections>
             <section>
-              <title>Examples</title>
               <content>
 
                 <code language="c#" title="Exception extensions examples">
@@ -240,7 +238,6 @@ userA.IsEquivalentTo(userB)); // true
           </content>
           <sections>
             <section>
-              <title>Examples</title>
               <content>
 
                 <code language="c#" title="JSON serialization and deserialization examples">
@@ -276,7 +273,6 @@ user = json.FromJson<User>();
           </content>
           <sections>
             <section>
-              <title>Examples</title>
               <content>
 
                 <code language="c#" title="Using enum metadata attributes and extension methods">
@@ -314,22 +310,22 @@ Console.WriteLine(something.ToShortName());
           </sections>
         </section>    
         
-        <section address="More">
-          <title>More</title>
-            <content>
-              <para>
-                For more examples of available functionality, see the 
-                <externalLink>
-                  <linkText>unit test project</linkText>
-                  <linkUri>https://github.com/alekdavis/dotnet-extras-common/tree/main/CommonTests</linkUri>
-                  <linkTarget>_blank</linkTarget>
-                </externalLink>.
-              </para>
-            </content>
-        </section>
-    
       </sections>     
-    </section>       
+    </section>
+    
+    <section address="More">
+      <title>More</title>
+        <content>
+          <para>
+            For more examples of available functionality, see the 
+            <externalLink>
+              <linkText>unit test project</linkText>
+              <linkUri>https://github.com/alekdavis/dotnet-extras-common/tree/main/CommonTests</linkUri>
+              <linkTarget>_blank</linkTarget>
+            </externalLink>.
+          </para>
+        </content>
+    </section>
     
     <relatedTopics>
       <externalLink>
