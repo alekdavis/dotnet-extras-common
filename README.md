@@ -4,91 +4,239 @@
 
 Use the `DotNetExtras.Common` library to:
 
-- Generate fully qualified names for types, variables, and object properties (think of the `nameof` operator on steroids).
+- Generate fully qualified names for types, variables, and object properties in the original or _camelCase_ notation (think of the `nameof` operator on steroids).
 - Retrieve application assembly information including company, version, and product details.
 - Retrieve error information from exceptions, including immediate and inner exceptions.
-- Serialize objects as JSON strings and deserialize JSON strings into objects with an option to mask or ignore specific properties.
+- Convert objects to and from JSON strings via the `System.Text.Json` (STJ) serialization.
 - Convert collections to comma-separated (or tokenized) string.
 - Compare complex object for equivalence or partial equivalence (by property, key, or element).
-- Deep clone complex objects (including all nested properties).
 - Get and set object values using compound (nested) property names (create property hierarchy if necessary).
 - Access enumeration metadata like descriptions, abbreviations, and custom attributes.
-- Check if objects are empty or determine type characteristics (primitive vs. complex).
-- Escape special characters for LDAP queries and SQL statements.
+- Check if objects are empty.
+- Determine if an object is primitive or a complex type.
 
 ## Usage
 
-The following examples illustrates various operations implemented by the `DotNetExtras.Common` library.
+The following examples illustrates some operations implemented by the `DotNetExtras.Common` library.
 
-### DotNetExtras.Common namespace
+### DotNetExtras.Common.NameOf class
+
+Generate fully qualified or partial names for types, variables, and object properties:
 
 ```cs
-using DotNetExtras.Common;
-...
-// Print: Some.Type.Property.SubProperty
+// Prints: Some.Type.Property.SubProperty
 Console.WriteLine(NameOf.Full(nameof(Some.Type.Property.SubProperty)));
 
-// Print: some.type.property.subProperty
+// Prints: some.type.property.subProperty
 Console.WriteLine(NameOf.Full(nameof(Some.Type.Property.SubProperty), true));
 
-// Print: Property.SubProperty
-Console.WriteLine(NameOf.Long(someObject.Property.Subproperty)));
+// Prints: Property.SubProperty
+Console.WriteLine(NameOf.Long(someObject.Property.SubProperty)));
 
-// Print: property.subProperty
-Console.WriteLine(NameOf.Long(someObject.Property.Subproperty), true));
+// Prints: property.subProperty
+Console.WriteLine(NameOf.Long(someObject.Property.SubProperty), true));
 
-// Print: SubProperty
-Console.WriteLine(NameOf.Short(someObject.Property.Subproperty)));
+// Prints: SubProperty
+Console.WriteLine(NameOf.Short(someObject.Property.SubProperty)));
 
-// Print: subProperty
-Console.WriteLine(NameOf.Short(someObject.Property.Subproperty), true));
+// Prints: subProperty
+Console.WriteLine(NameOf.Short(someObject.Property.SubProperty), true));
+```
 
-// Print the version and the copyright message such as: MyApp v1.0.8 © 2023 MyCompany
+### DotNetExtras.Common.PrimaryAssembly class
+
+Given the following `csproj` file settings:
+
+```
+<PropertyGroup>
+  <AssemblyName>MyApp</AssemblyName>
+  <Version>1.0.8</Version>
+  <Title>$(AssemblyName)</Title>
+  <Copyright>© 2023 MyCompany</Copyright>
+</PropertyGroup>
+```
+
+Print the application assembly information as `MyApp v1.0.8 © 2023 MyCompany`:
+
+```cs
 Console.WriteLine($"{PrimaryAssembly.Title} v{PrimaryAssembly.Version} {PrimaryAssembly.Copyright}");
 ```
 
-### DotNetExtras.Common.Exceptions namespace
+### DotNetExtras.Common.Exceptions.ExceptionExtensions class
+
+Print exception messages from the immediate and all inner exceptions:
 
 ```cs
-using DotNetExtras.Common.Exceptions;
-...
-// Print exception messages from the immediate and all inner exceptions.
-Console.WriteLine(ex.GetMessages());
+try
+{
+  try
+  {
+  	throw new Exception("Cannot do that");
+  }
+  catch (Exception ex)
+  {
+  	throw new Exception("Failed to do this", ex);
+  }
+}
+catch (Exception ex)
+{
+  Console.WriteLine(ex.GetMessages());
+}
 ```
 
-### DotNetExtras.Common.Extensions namespace
+In the example above, the output will be:
+
+```
+Failed to do this. Cannot do that.
+```
+
+### DotNetExtras.Common.Extensions.IEnumerable class
+
+Convert list or array values to delimited strings:
 
 ```cs
-using DotNetExtras.Common.Extensions;
-...
-// Print received tags as a comma-separated string.
-List<string> tags = GetTags();
-Console.WriteLine($"Got tags: {tags.ToCsv()}.");
+List<string> strings = ["one", "two", "tree"];
+int[] numbers = [1, 2, 3];
 
-// Set a nested property value using a compound property name.
+Console.WriteLine("Strings: " + strings.ToCsv() + ".");
+Console.WriteLine("Strings: " + strings.ToCsv(";") + ".");
+Console.WriteLine("Numbers: " + numbers.ToCsv("|") + ".");
+```
+
+In the example above, the output will be:
+
+```
+Strings: one, two, three.
+Strings: one;two;three.
+Numbers: 1|2|3.
+```
+
+### DotNetExtras.Common.Extensions.ObjectExtensions class
+
+Given the class definitions:
+
+```cs
+public class Name
+{
+    public string GivenName { get; set; } = string.Empty;
+    public string Surname { get; set; } = string.Empty;
+}
+
+public class User
+{
+    public Name Name { get; set; } = new Name();
+}
+```
+
+Set and get the nested property value using the compound property name.
+
+```cs
+User user = new();
+
+// Set the nested property value using a compound property name.
 user.SetPropertyValue("Name.Surname", "Johnson");
 
 // Get a nested property value using a compound property name.
 string surname = user.GetPropertyValue<string>("Name.Surname");
-
-// Compare two objects for equivalence.
-bool equivalent = userA.IsEquivalentTo(userB));
-
-// Compare two arrays for partial equivalence.
-bool partiallyEquivalent = arrayA.IsPartiallyEquivalentTo(arrayB, 3));
 ```
 
-### DotNetExtras.Common.Json namespace
+Check if an object holds any properties with non-default values.
 
 ```cs
-using DotNetExtras.Common.Json;
-...
+User user = new();
+bool isEmpty = user.IsEmpty(); // true
+user.Name = new()
+{
+    GivenName = "Alice";
+}
+isEmpty = user.IsEmpty(); // false
+```
 
-// Serialize an object to a JSON string.
-string json = myObject.ToJson();
+Compare two complex objects for equivalence or partial equivalence.
 
-// Convert a JSON string to an object.
-MyObjectType? myObject = json.FromJson();
+```cs
+User userA = new()
+{
+    Name = new()
+    {
+        GivenName = "Alice",
+        Surname = "Johnson"
+    }
+};
+
+User userB = new()
+{
+    Name = new()
+    {
+        GivenName = "Alice",
+    }
+};
+
+// Compare two arrays for partial equivalence.
+bool almostTheSame;
+
+almostTheSame = userB.IsPartiallyEquivalentTo(userA)); // true
+almostTheSame = userA.IsPartiallyEquivalentTo(userB)); // false
+
+userB.Name.Surname = "Johnson";
+
+userB.IsEquivalentTo(userA)); // true
+userA.IsEquivalentTo(userB)); // true
+```
+
+Keep in mind that partially equivalent objects may not be equivalent, but equivalent objects are always partially equivalent. In addition to comparing objects, you can also compare arrays, lists, dictionaries, hash sets, and primitive types. For the explanation of the equivalence and partial equivalence rules, see the class and method documentation.
+
+### DotNetExtras.Common.Json.JsonExtensions class
+
+Serialize and deserialize objects to and from JSON strings:
+
+```cs
+User user = new()
+{
+    Name = new()
+    {
+        GivenName = "Alice",
+        Surname = "Johnson"
+    }
+};
+
+string json = user.ToJson();
+
+user = json.FromJson<User>();
+```
+
+### Enum metadata definition and access classes
+
+Set the metadata attributes for enumeration values:
+
+```cs
+public enum Something
+{
+    [Description("Description 1")]
+    [Abbreviation("ABBR1")]
+    [ShortName("Short1")]
+    Value1,
+
+    [Description("Description 2")]
+    [Abbreviation("ABBR2")]
+    [ShortName("Short2")]
+    Value2,
+}
+```
+
+Get the metadata attributes for enumeration values:
+
+```cs
+Something something = Something.Value1;
+
+// Prints: Description 1
+Console.WriteLine(something.ToDescription());
+
+// Prints: ABBR1
+Console.WriteLine(something.ToAbbreviation());
+
+// Prints: Short1
+Console.WriteLine(something.ToShortName());
 ```
 
 ## Documentation

@@ -13,7 +13,7 @@
     <introduction>
       <!-- <autoOutline /> -->
       <para>
-        The <legacyItalic>DotNetExtras.Common</legacyItalic> library simplifies common general-purpose operations, such as retrieving error information from the immediate and inner exceptions, simple JSON serialization and deserialization, generation of tokenized strings from collections, deep object cloning and comparison, setting object properties and getting property values using compound (nested) property names, and more. For the detailed description of the library API, code samples, and usage scenarios, see the <legacyItalic>API documentation</legacyItalic> section.
+        The <codeInline>DotNetExtras.Common</codeInline> library simplifies common general-purpose operations, such as retrieving error information from the immediate and inner exceptions, simple JSON serialization and deserialization, generation of tokenized strings from collections, deep object cloning and comparison, setting object properties and getting property values using compound (nested) property names, and more. For the detailed description of the library API, code samples, and usage scenarios, see the <legacyItalic>API documentation</legacyItalic> section.
       </para>
     </introduction>
 
@@ -21,7 +21,7 @@
       <title>Overview</title>
       <content>
         <para>
-          The <legacyItalic>DotNetExtras.Common</legacyItalic> library groups the utility classes and extension methods under the following namespaces:
+          The <codeInline>DotNetExtras.Common</codeInline> library groups the utility classes and extension methods under the following namespaces:
         </para>
         <list class="bullet">
           <listItem>
@@ -54,40 +54,49 @@
           <title>DotNetExtras.Common namespace</title>
           <content>
             <para>
-              The <legacyItalic>NameOf</legacyItalic> class offers methods that extend the functionality of the built-in <codeInline>nameof</codeInline> operator. Use them to reference the full or partial name of a variable, class, or property using the original or forced <legacyItalic>camelCase</legacyItalic> notation. The <legacyItalic>PrimaryAssembly</legacyItalic> class allows you to easily access the properties of the primary application assembly, such as the assembly title, version, company, copyright, and more.
+              The <codeInline>NameOf</codeInline> class offers methods that extend the functionality of the built-in <codeInline>nameof</codeInline> operator. Use them to reference the full or partial name of a variable, class, or property using the original or forced <legacyItalic>camelCase</legacyItalic> notation. The <codeInline>PrimaryAssembly</codeInline> class allows you to easily access the properties of the primary application assembly, such as the assembly title, version, company, copyright, and more.
             </para>
           </content>
           <sections>
             <section>
               <title>Examples</title>
               <content>
+                
                 <code language="c#" title="NameOf examples">
 <![CDATA[
 using DotNetExtras.Common;
 ...
-// Print: Some.Type.Property.SubProperty
+// Prints: Some.Type.Property.SubProperty
 Console.WriteLine(NameOf.Full(nameof(Some.Type.Property.SubProperty)));
 
-// Print: some.type.property.subProperty
+// Prints: some.type.property.subProperty
 Console.WriteLine(NameOf.Full(nameof(Some.Type.Property.SubProperty), true));
 
-// Print: Property.SubProperty
-Console.WriteLine(NameOf.Long(someObject.Property.Subproperty)));
+// Prints: Property.SubProperty
+Console.WriteLine(NameOf.Long(someObject.Property.SubProperty)));
 
-// Print: property.subProperty
-Console.WriteLine(NameOf.Long(someObject.Property.Subproperty), true));
+// Prints: property.subProperty
+Console.WriteLine(NameOf.Long(someObject.Property.SubProperty), true));
 
-// Print: SubProperty
-Console.WriteLine(NameOf.Short(someObject.Property.Subproperty)));
+// Prints: SubProperty
+Console.WriteLine(NameOf.Short(someObject.Property.SubProperty)));
 
-// Print: subProperty
-Console.WriteLine(NameOf.Short(someObject.Property.Subproperty), true));
+// Prints: subProperty
+Console.WriteLine(NameOf.Short(someObject.Property.SubProperty), true));
 ]]>
                 </code>
+                
                 <code language="c#" title="PrimaryAssembly examples">
 <![CDATA[
 using DotNetExtras.Common;
 ...
+// Assuming the following .csproj setting for the assembly:
+// <PropertyGroup>
+//   <AssemblyName>MyApp</AssemblyName>
+//   <Version>1.0.8</Version>
+//   <Title>$(AssemblyName)</Title>
+//   <Copyright>© 2023 MyCompany</Copyright>
+// </PropertyGroup>
 // Print the version and the copyright message such as: MyApp v1.0.8 © 2023 MyCompany
 Console.WriteLine($"{PrimaryAssembly.Title} v{PrimaryAssembly.Version} {PrimaryAssembly.Copyright}");
 ]]>
@@ -99,7 +108,7 @@ Console.WriteLine($"{PrimaryAssembly.Title} v{PrimaryAssembly.Version} {PrimaryA
         </section>
    
         <section address="Extensions">
-          <title>DotNetExtras.Extensions namespace</title>
+          <title>DotNetExtras.Common.Extensions namespace</title>
           <content>
             <para>
               The extension classes implement extension methods applicable to various data types.
@@ -115,35 +124,106 @@ Console.WriteLine($"{PrimaryAssembly.Title} v{PrimaryAssembly.Version} {PrimaryA
 using DotNetExtras.Common.Exceptions;
 ...
 // Print exception messages from the immediate and all inner exceptions.
-Console.WriteLine(ex.GetMessages());
+try
+{
+  try
+  {
+  	throw new Exception("Cannot do that");
+  }
+  catch (Exception ex)
+  {
+  	throw new Exception("Failed to do this", ex);
+  }
+}
+catch (Exception ex)
+{
+  // Prints: Failed to do this. Cannot do that.
+  Console.WriteLine(ex.GetMessages());
+}
 ]]>
                 </code>
+                
                 <code language="c#" title="IEnumerable extensions examples">
 <![CDATA[
 using DotNetExtras.Common.Extensions;
 ...
-// Print received tags as a comma-separated string.
-List<string> tags = GetTags();
+List<string> strings = ["one", "two", "tree"];
+int[] numbers = [1, 2, 3];
 
-Console.WriteLine($"Got tags: {tags.ToCsv()}.");
+// Prints: Strings: one, two, three.
+Console.WriteLine("Strings: " + strings.ToCsv() + ".");
+
+// Prints: Strings: one;two;three.
+Console.WriteLine("Strings: " + strings.ToCsv(";") + ".");
+
+// Prints: Numbers: 1|2|3.
+Console.WriteLine("Numbers: " + numbers.ToCsv("|") + ".");
 ]]>
                 </code>
+                
                 <code language="c#" title="Object extensions examples">
 <![CDATA[
 using DotNetExtras.Common.Extensions;
 ...
-// Set a nested property value using a compound property name.
-userA.SetPropertyValue("Name.Surname", "Johnson");
-userB.SetPropertyValue("Name.Surname", "Johnson");
+// Defines name parts.
+public class Name
+{
+    public string GivenName { get; set; } = string.Empty;
+    public string Surname { get; set; } = string.Empty;
+}
+...
+// Defines user object.
+public class User
+{
+    public Name Name { get; set; } = new Name();
+}
+...
+// Demo code.
+User user = new();
+
+// Set the nested property value using a compound property name.
+user.SetPropertyValue("Name.Surname", "Johnson");
 
 // Get a nested property value using a compound property name.
-string surname = userA.GetPropertyValue<string>("Name.Surname");
+string surname = user.GetPropertyValue<string>("Name.Surname");
+...
+user = new();
+bool isEmpty;
+  
+isEmpty = user.IsEmpty(); // true
+user.Name = new()
+{
+    GivenName = "Alice";
+}
+isEmpty = user.IsEmpty(); // false
+...
+User userA = new()
+{
+    Name = new()
+    {
+        GivenName = "Alice",
+        Surname = "Johnson"
+    }
+};
 
-// Compare two objects for equivalence.
-bool equivalent = userA.IsEquivalentTo(userB));
-
+User userB = new()
+{
+    Name = new()
+    {
+        GivenName = "Alice",
+    }
+};
+...
 // Compare two arrays for partial equivalence.
-bool partiallyEquivalent = arrayA.IsPartiallyEquivalentTo(arrayB, 3));
+bool almostTheSame;
+
+almostTheSame = userB.IsPartiallyEquivalentTo(userA)); // true
+almostTheSame = userA.IsPartiallyEquivalentTo(userB)); // false
+
+userB.Name.Surname = "Johnson";
+
+userB.IsEquivalentTo(userA)); // true
+userA.IsEquivalentTo(userB)); // true
 ]]>
                 </code>
               </content>
@@ -152,10 +232,10 @@ bool partiallyEquivalent = arrayA.IsPartiallyEquivalentTo(arrayB, 3));
         </section>
    
         <section address="Json">
-          <title>DotNetExtras.Json namespace</title>
+          <title>DotNetExtras.Common.Json namespace</title>
           <content>
             <para>
-              This namespace groups JSON operations such as object conversions to and from JSON strings.
+              The <codeInline>JsonExtensions</codeInline> class implements extension methods for converting objects to and from JSON strings using the <codeInline>System.Text.Json</codeInline> (STJ) serialization methods.
             </para>
           </content>
           <sections>
@@ -163,20 +243,74 @@ bool partiallyEquivalent = arrayA.IsPartiallyEquivalentTo(arrayB, 3));
               <title>Examples</title>
               <content>
 
-                <code language="c#" title="JSON examples">
+                <code language="c#" title="JSON serialization and deserialization examples">
 <![CDATA[
 using DotNetExtras.Common.Json;
 ...
-// Serialize an object to a JSON string.
-string json = myObject.ToJson();
+User user = new()
+{
+    Name = new()
+    {
+        GivenName = "Alice",
+        Surname = "Johnson"
+    }
+};
+...
+string json = user.ToJson();
 
-// Convert a JSON string to an object.
-myObject = json.FromJson<MyObjectType>();
+user = json.FromJson<User>();
 ]]>
                 </code>
               </content>
             </section>      
-            
+
+          </sections>
+        </section>    
+   
+        <section address="Enums">
+          <title>DotNetExtras.Common.Enums namespace</title>
+          <content>
+            <para>
+              This namespace groups <codeInline>enum</codeInline>-specific classes and operations.
+            </para>
+          </content>
+          <sections>
+            <section>
+              <title>Examples</title>
+              <content>
+
+                <code language="c#" title="Using enum metadata attributes and extension methods">
+<![CDATA[
+using DotNetExtras.Common.Enums;
+...
+public enum Something
+{
+    [Description("Description 1")]
+    [Abbreviation("ABBR1")]
+    [ShortName("Short1")]
+    Value1,
+
+    [Description("Description 2")]
+    [Abbreviation("ABBR2")]
+    [ShortName("Short2")]
+    Value2,
+}
+...
+Something something = Something.Value1;
+
+// Prints: Description 1
+Console.WriteLine(something.ToDescription());
+
+// Prints: ABBR1
+Console.WriteLine(something.ToAbbreviation());
+
+// Prints: Short1
+Console.WriteLine(something.ToShortName());
+]]>
+                </code>
+              </content>
+            </section>      
+
           </sections>
         </section>    
         
