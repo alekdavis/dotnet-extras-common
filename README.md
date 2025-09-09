@@ -175,8 +175,8 @@ User userB = new()
 // Compare two arrays for partial equivalence.
 bool almostTheSame;
 
-almostTheSame = userB.IsPartiallyEquivalentTo(userA)); // true
-almostTheSame = userA.IsPartiallyEquivalentTo(userB)); // false
+almostTheSame = userB.IsPartialEquivalentTo(userA)); // true
+almostTheSame = userA.IsPartialEquivalentTo(userB)); // false
 
 userB.Name.Surname = "Johnson";
 

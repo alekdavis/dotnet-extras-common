@@ -688,6 +688,18 @@ public static partial class ObjectExtensions
         }
     }
 
+    /// <inheritdoc cref="IsPartialEquivalentTo(object?, object?, bool)" />
+    [Obsolete("Use IsPartialEquivalentTo instead.")]
+    public static bool IsPartiallyEquivalentTo
+    (
+        this object? source,
+        object? target,
+        bool includeNonPublic = false
+    )
+    {
+        return IsPartialEquivalentTo(source, target, includeNonPublic);
+    }
+
     /// <summary>
     /// Checks if the source value is <c>null</c> or an equivalent of a target value;
     /// or if every element of a source array, list or dictionary is a subset of the corresponding target array, list or dictionary,
@@ -758,13 +770,13 @@ public static partial class ObjectExtensions
     ///     },
     /// };
     /// 
-    /// Assert.True(source.IsPartiallyEquivalentTo(target1));
-    /// Assert.False(target1.IsPartiallyEquivalentTo(source));
-    /// Assert.False(source.IsPartiallyEquivalentTo(target2));
+    /// Assert.True(source.IsPartialEquivalentTo(target1));
+    /// Assert.False(target1.IsPartialEquivalentTo(source));
+    /// Assert.False(source.IsPartialEquivalentTo(target2));
     /// </code>
     /// </example>
     /// <seealso cref="IsEquivalentTo(object?, object?, bool)"/>"/>
-    public static bool IsPartiallyEquivalentTo
+    public static bool IsPartialEquivalentTo
     (
         this object? source,
         object? target,
@@ -815,7 +827,7 @@ public static partial class ObjectExtensions
 
             for (int i = 0; i < sourceArray.Length; i++)
             {
-                if (!IsPartiallyEquivalentTo(sourceArray.GetValue(i), targetArray.GetValue(i), includeNonPublic))
+                if (!IsPartialEquivalentTo(sourceArray.GetValue(i), targetArray.GetValue(i), includeNonPublic))
                 {
                     return false;
                 }
@@ -835,7 +847,7 @@ public static partial class ObjectExtensions
 
             for (int i = 0; i < sourceList.Count; i++)
             {
-                if (!IsPartiallyEquivalentTo(sourceList[i], targetList[i], includeNonPublic))
+                if (!IsPartialEquivalentTo(sourceList[i], targetList[i], includeNonPublic))
                 {
                     return false;
                 }
@@ -855,7 +867,7 @@ public static partial class ObjectExtensions
             
             foreach (object? key in sourceDictionary.Keys)
             {
-                if (!targetDictionary.Contains(key) || !IsPartiallyEquivalentTo(sourceDictionary[key], targetDictionary[key], includeNonPublic))
+                if (!targetDictionary.Contains(key) || !IsPartialEquivalentTo(sourceDictionary[key], targetDictionary[key], includeNonPublic))
                 {
                     return false;
                 }
@@ -905,7 +917,7 @@ public static partial class ObjectExtensions
                     object? sourceValue = property.GetValue(source);
                     object? targetValue = property.GetValue(target);
 
-                    if (!IsPartiallyEquivalentTo(sourceValue, targetValue))
+                    if (!IsPartialEquivalentTo(sourceValue, targetValue))
                     {
                         return false;
                     }
@@ -924,7 +936,7 @@ public static partial class ObjectExtensions
                 object? sourceValue = field.GetValue(source);
                 object? targetValue = field.GetValue(target);
 
-                if (!IsPartiallyEquivalentTo(sourceValue, targetValue, includeNonPublic))
+                if (!IsPartialEquivalentTo(sourceValue, targetValue, includeNonPublic))
                 {
                     return false;
                 }
