@@ -122,13 +122,13 @@ User userB = new()
 // Compare two arrays for partial equivalence.
 bool almostTheSame;
 
-almostTheSame = userB.IsPartialEquivalentTo(userA)); // true
-almostTheSame = userA.IsPartialEquivalentTo(userB)); // false
+almostTheSame = userB.IsPartialEquivalentOf(userA)); // true
+almostTheSame = userA.IsPartialEquivalentOf(userB)); // false
 
 userB.Name.Surname = "Johnson";
 
-userB.IsEquivalentTo(userA)); // true
-userA.IsEquivalentTo(userB)); // true</code></pre></div></div><h4 id="Json" class="quickLinkHeader">DotNetExtras.Common.Json namespace</h4><p>
+userB.IsPartialEquivalentOf(userA)); // true
+userA.IsPartialEquivalentOf(userB)); // true</code></pre></div></div><h4 id="Json" class="quickLinkHeader">DotNetExtras.Common.Json namespace</h4><p>
               The <span class="code">JsonExtensions</span> class implements extension methods for converting objects to and from JSON strings using the <span class="code">System.Text.Json</span> (STJ) serialization methods.
             </p><div class="codeSnippet"><div class="codeHeader"><span class="codeHeaderTitle">JSON serialization and deserialization examples</span><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-c#">using DotNetExtras.Common.Json;
 ...

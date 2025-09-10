@@ -175,13 +175,13 @@ User userB = new()
 // Compare two arrays for partial equivalence.
 bool almostTheSame;
 
-almostTheSame = userB.IsPartialEquivalentTo(userA)); // true
-almostTheSame = userA.IsPartialEquivalentTo(userB)); // false
+almostTheSame = userB.IsPartialEquivalentOf(userA)); // true
+almostTheSame = userA.IsPartialEquivalentOf(userB)); // false
 
 userB.Name.Surname = "Johnson";
 
-userB.IsEquivalentTo(userA)); // true
-userA.IsEquivalentTo(userB)); // true
+userB.IsPartialEquivalentOf(userA)); // true
+userA.IsPartialEquivalentOf(userB)); // true
 ```
 
 Keep in mind that partially equivalent objects may not be equivalent, but equivalent objects are always partially equivalent. In addition to comparing objects, you can also compare arrays, lists, dictionaries, hash sets, and primitive types. For the explanation of the equivalence and partial equivalence rules, see the class and method documentation.

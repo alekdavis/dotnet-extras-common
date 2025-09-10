@@ -231,13 +231,13 @@ User userB = new()
 // Compare two arrays for partial equivalence.
 bool almostTheSame;
 
-almostTheSame = userB.IsPartialEquivalentTo(userA)); // true
-almostTheSame = userA.IsPartialEquivalentTo(userB)); // false
+almostTheSame = userB.IsPartialEquivalentOf(userA)); // true
+almostTheSame = userA.IsPartialEquivalentOf(userB)); // false
 
 userB.Name.Surname = "Johnson";
 
-userB.IsEquivalentTo(userA)); // true
-userA.IsEquivalentTo(userB)); // true
+userB.IsPartialEquivalentOf(userA)); // true
+userA.IsPartialEquivalentOf(userB)); // true
 ]]>
                 </code>
               </content>
