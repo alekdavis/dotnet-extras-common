@@ -739,7 +739,7 @@ public static partial class ObjectExtensions
     /// If <c>true</c>, non-public properties and fields will be checked along with the public properties and fields.
     /// </param>
     /// <returns>
-    /// True if the source objects is <c>null</c>, equivalent or a subset of the target; otherwise, <c>false</c>>.
+    /// True if the source objects is <c>null</c>, equivalent or a subset of the target; otherwise, <c>false</c>.
     /// </returns>
     /// <remarks>
     /// <para>
