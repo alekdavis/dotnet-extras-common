@@ -1,6 +1,7 @@
 ﻿// Ignore Spelling: Json
 
 using DotNetExtras.Common.Json.Converters;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -52,6 +53,7 @@ public static partial class JsonExtensions
     {
         JsonSerializerOptions options = new() 
         {
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
             WriteIndented = indented,
             Converters = { new JsonStringEnumConverter() }
         };

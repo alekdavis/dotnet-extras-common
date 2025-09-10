@@ -63,7 +63,7 @@ public static partial class StringExtensions
     /// </returns>
     /// <example>
     /// <code>
-    /// // PRINTS: "Hello, world."
+    /// // PRINTS: Hello, world.
     /// Console.WriteLine(" Hello, world  ".ToSentence());
     /// </code>
     /// </example>
@@ -100,5 +100,75 @@ public static partial class StringExtensions
             : Regex.IsMatch(source, @"[\p{P}]$")
                 ? source
                 : source + ".";
+    }
+
+    /// <summary>
+    /// Masks characters in the input string allowing to keep the specified number of
+    /// characters in the beginning and/or end of the string unmasked.
+    /// </summary>
+    /// <param name="input">
+    /// Input string.
+    /// </param>
+    /// <param name="maskChar">
+    /// Mask character.
+    /// </param>
+    /// <param name="keepCharsStart">
+    /// Number of characters at the beginning of the string to keep unmasked.
+    /// </param>
+    /// <param name="keepCharsEnd">
+    /// Number of characters at the end of the string to keep unmasked.
+    /// </param>
+    /// <returns>
+    /// Masked string.
+    /// </returns>
+    /// <remarks>
+    /// Depending if the input string is shorter than the sum of the characters
+    /// to be kept unmasked in the beginning and/or end of the input string
+    /// then the original string will be returned as-is.
+    /// </remarks>
+    /// <example>
+    /// <code>
+    /// // PRINTS: He#########d!
+    /// Console.WriteLine("Hello, world!".Mask('#', 2, 1));
+    /// </code>
+    /// </example>
+    public static string? Mask
+    (
+        this string input,
+        char maskChar = '*',
+        int keepCharsStart = 0,
+        int keepCharsEnd = 0
+    )
+    {
+        if (string.IsNullOrEmpty(input))
+        {
+            return input;
+        }
+
+        if (keepCharsStart < 0)
+        {
+            keepCharsStart = 0;
+        }
+
+        if (keepCharsEnd < 0)
+        {
+            keepCharsEnd = 0;
+        }
+
+        if (keepCharsStart == 0 && keepCharsEnd == 0)
+        {
+            return new string(maskChar, input.Length);
+        }
+
+        if (keepCharsStart + keepCharsEnd >= input.Length)
+        {
+            return input;
+        }
+
+        string start = keepCharsStart == 0 ? "" : input[..keepCharsStart];
+        string end   = keepCharsEnd == 0 ? "" : input[^keepCharsEnd..];
+        string middle= new(maskChar, input.Length - keepCharsStart - keepCharsEnd);
+
+        return start + middle + end;
     }
 }

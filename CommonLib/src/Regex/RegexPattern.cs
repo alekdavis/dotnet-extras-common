@@ -1,4 +1,6 @@
-﻿namespace DotNetExtras.Common.RegularExpressions;
+﻿using static System.Net.WebRequestMethods;
+
+namespace DotNetExtras.Common.RegularExpressions;
 
 /// <summary>
 /// Implements common regular expression patterns.
@@ -57,4 +59,22 @@ public class RegexPattern
     /// </remarks>
     public static readonly string PhoneNumber =
         @"^(\+|00)[1-9][0-9 \-\(\)\.]{7,32}$";
+
+    /// <summary>
+    /// A regular expression pattern for validating a user name parts (first name, last name, middle name, nickname).
+    /// </summary>
+    /// <remarks>
+    /// Tested at <see href="https://regexr.com/6ru33"/>.
+    /// </remarks>
+    public static readonly string PersonName =
+        @"(?=^.{1,64}$)^(?!.*[ '/\-]{2})(?=^[\p{L}\p{Mn}\d].*)(?=.*[\p{L}\p{Mn}\d]$)(?=.*\S$)(?!.*$\n)[\p{L}\p{Mn}][\p{L}\p{Mn}\d '/\-]*[\p{L}\p{Mn}\d]*$";
+
+    /// <summary>
+    /// A regular expression pattern for validating user display name.
+    /// </summary>
+    /// <remarks>
+    /// Tested at <see href="https://regexr.com/7aids"/>.
+    /// </remarks>
+    public static readonly string PersonDisplayName =
+        @"(?=^.{1,64}$)^(?!.*[ '/-]{2})(?!.*[,]{2})(?=^[\p{L}\p{Mn}\d].*)(?=.*[\p{L}\p{Mn}\d]$)(?=.*\S$)(?!.*$\n)[\p{L}\p{Mn}][\p{L}\p{Mn}\d, '/-]*[\p{L}\p{Mn}\d]*$";
 }

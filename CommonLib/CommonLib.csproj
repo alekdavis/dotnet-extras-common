@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <AssemblyName>DotNetExtras.Common</AssemblyName>
     <RootNamespace>DotNetExtras.Common</RootNamespace>
-    <Version>1.0.8</Version>
+    <Version>1.0.9</Version>
     <Title>$(AssemblyName)</Title>
     <Authors>Alek Davis</Authors>
     <Description>A .NET Core library implementing most frequently used general-purpose operations.</Description>
@@ -21,7 +21,7 @@
     <IncludeSourceRevisionInInformationalVersion>False</IncludeSourceRevisionInInformationalVersion>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <PackageReleaseNotes>Renamed the equivalency check extension methods. Fixed typos in docs.</PackageReleaseNotes>
+    <PackageReleaseNotes>Eased JSON character encoding restrictions. Added regular expression patterns.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

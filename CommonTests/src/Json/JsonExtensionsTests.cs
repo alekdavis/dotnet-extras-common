@@ -75,4 +75,22 @@ public class JsonExtensionsTests
         Assert.NotNull(u2);
         Assert.Equivalent(u1, u2);
     }
+
+    [Theory]
+    [InlineData("O'Brien")]
+    [InlineData("Joh&John")]
+    [InlineData("John,John")]
+    [InlineData("John.John")]
+    [InlineData("John-John")]
+    [InlineData("John (John)")]
+    public void Object_ToJsonSpecialChars
+    (
+        string name
+    )
+    {
+        User? user = new() { Name = new() { Surname = name } };
+        string json = user.ToJson();
+
+        Assert.Contains($"\"surname\":\"{name}\"", json);
+    }
 }
