@@ -1,7 +1,7 @@
 ﻿using DotNetExtras.Common.Extensions;
 
-namespace CommonLibTests;
-public partial class ExtensionsTests
+namespace CommonLibTests.Extensions;
+public class TypeExtensionsTests
 {
     [Theory]
     [InlineData(typeof(bool), true)]

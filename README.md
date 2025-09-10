@@ -52,11 +52,11 @@ Given the following `csproj` file settings:
   <AssemblyName>MyApp</AssemblyName>
   <Version>1.0.8</Version>
   <Title>$(AssemblyName)</Title>
-  <Copyright>© 2023 MyCompany</Copyright>
+  <Copyright>(c) 2023 MyCompany</Copyright>
 </PropertyGroup>
 ```
 
-Print the application assembly information as `MyApp v1.0.8 © 2023 MyCompany`:
+Print the application assembly information as `MyApp v1.0.8 (c) 2023 MyCompany`:
 
 ```cs
 Console.WriteLine($"{PrimaryAssembly.Title} v{PrimaryAssembly.Version} {PrimaryAssembly.Copyright}");

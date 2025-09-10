@@ -1,5 +1,6 @@
 ﻿// Ignore Spelling: Json
 
+using DotNetExtras.Common.Json.Converters;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -18,6 +19,15 @@ public static partial class JsonExtensions
     /// <param name="indented">
     /// If true, serialized JSON elements will be indented.
     /// </param>
+    /// <param name="useOriginalCase">
+    /// If <c>true</c>, the original property names will be used
+    /// (unless they are overwritten by the JSON serialization attributes);
+    /// otherwise, the <c>camelCase</c> notation will be used.
+    /// </param>
+    /// <param name="includeNullValues">
+    /// If <c>true</c>, properties with null values will be included;
+    /// otherwise, they will be ignored.
+    /// </param>
     /// <returns>
     /// JSON string.
     /// </returns>
@@ -35,16 +45,26 @@ public static partial class JsonExtensions
     public static string ToJson
     (
         this object? source,
-        bool indented = false
+        bool indented = false,
+        bool useOriginalCase = false,
+        bool includeNullValues = false
     )
     {
         JsonSerializerOptions options = new() 
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             WriteIndented = indented,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             Converters = { new JsonStringEnumConverter() }
         };
+
+        if (!useOriginalCase)
+        {
+            options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        }
+
+        if (!includeNullValues)
+        {
+            options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+        }
 
         return JsonSerializer.Serialize(source, options);
     }
@@ -62,8 +82,15 @@ public static partial class JsonExtensions
     /// Converted value or default if conversion failed.
     /// </returns>
     /// <remarks>
+    /// <para>
     /// Enumerated properties in the JSON string are assumed to hold the 
     /// field names, i.e. string, not integer, values.
+    /// </para>
+    /// <para>
+    /// If the property being set is of type <see cref="object"/>,
+    /// this method will attempt to convert the JSON value to the most appropriate
+    /// primitive type, list, or collection type using <see cref="JsonObjectAsPrimitiveConverter"/>.
+    /// </para>
     /// </remarks>
     /// <example>
     /// <code>
@@ -84,7 +111,7 @@ public static partial class JsonExtensions
         JsonSerializerOptions options = new() 
         {
             PropertyNameCaseInsensitive = true,  
-            Converters = { new JsonStringEnumConverter() }
+            Converters = { new JsonStringEnumConverter(), new JsonObjectAsPrimitiveConverter() }
         };
 
         return JsonSerializer.Deserialize<T>(json, options);

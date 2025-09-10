@@ -1,8 +1,7 @@
-﻿using DotNetExtras.Common;
-using DotNetExtras.Common.Extensions;
+﻿using DotNetExtras.Common.Extensions;
 
-namespace CommonLibTests;
-public partial class ExtensionsTests
+namespace CommonLibTests.Extensions;
+public class IEnumerableExtensionsTests
 {
     [Fact]
     public void IEnumerable_Count()

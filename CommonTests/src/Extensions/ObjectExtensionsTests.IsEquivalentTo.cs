@@ -1,9 +1,9 @@
 using CommonLibTests.Models;
 using DotNetExtras.Common.Extensions;
 
-namespace CommonLibTests;
+namespace CommonLibTests.Extensions;
 
-public partial class ExtensionsTests
+public partial class ObjectExtensionsTests
 {
     [Fact]
     public void Object_IsEquivalentTo_Boolean()

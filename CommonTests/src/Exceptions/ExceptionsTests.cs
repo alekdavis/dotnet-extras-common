@@ -1,9 +1,8 @@
 ﻿using DotNetExtras.Common.Exceptions;
-using DotNetExtras.Common.Extensions;
 
-namespace CommonLibTests;
+namespace CommonLibTests.Exceptions;
 
-public partial class ExtensionsTests
+public partial class ExceptionsTests
 {
     [Fact]
     public void Exception_GetMessages()

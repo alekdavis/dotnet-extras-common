@@ -1,7 +1,7 @@
 ﻿using DotNetExtras.Common.RegularExpressions;
 
-namespace CommonLibTests;
-public class TextTests
+namespace CommonLibTests.RegularExpressions;
+public class RegexPatternTests
 {
     [Fact]
     public void Regex_Guid()

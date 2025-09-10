@@ -2,8 +2,8 @@
 
 using DotNetExtras.Common.Extensions;
 
-namespace CommonLibTests;
-public partial class ExtensionsTests
+namespace CommonLibTests.Extensions;
+public partial class StringExtensionsTests
 {
     [Theory]
     [InlineData("Hello", "Hello")]

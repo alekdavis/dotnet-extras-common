@@ -43,7 +43,7 @@
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
     <HelpTitle>DotNetExtras.Common Library Documentation</HelpTitle>
-    <HelpFileVersion>1.0.6</HelpFileVersion>
+    <HelpFileVersion>1.0.7</HelpFileVersion>
     <NamingMethod>MemberName</NamingMethod>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <RootNamespaceContainer>True</RootNamespaceContainer>
@@ -53,14 +53,15 @@
     <Preliminary>True</Preliminary>
     <SdkLinkTarget>Blank</SdkLinkTarget>
     <NamespaceSummaries>
-      <NamespaceSummaryItem name="DotNetExtras.Common (Group)" isGroup="True" isDocumented="True">Contains utility classes and namespaces for general-purpose operations.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="DotNetExtras.Common" isDocumented="True">Provides general-purpose utility classes that extend functionality of the most frequently used types, such as exceptions and strings.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="DotNetExtras.Common.Enums" isDocumented="True">Provides utility classes that enhance the capabilities and consumption of the enumerated (enum) types.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="DotNetExtras.Common.Exceptions" isDocumented="True">Defines custom exception classes.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="DotNetExtras.Common.Extensions" isDocumented="True">Implements most common extension methods.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="DotNetExtras.Common.Json" isDocumented="True">Provides classes to simplify operations on JSON strings and objects.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="DotNetExtras.Common.RegularExpressions" isDocumented="True">Defines regular expressions for common values, such as email addresses, GUIDs, names, and so on.</NamespaceSummaryItem>
-    </NamespaceSummaries>
+      <NamespaceSummaryItem name="DotNetExtras.Common (Group)" isGroup="True" isDocumented="True">Defines classes and namespaces for the most common general-purpose operations.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="DotNetExtras.Common" isDocumented="True">Defines classes for the most common general-purpose operations.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="DotNetExtras.Common.Enums" isDocumented="True">Defines classes that enhance the capabilities and consumption of the enumerated (enum) types.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="DotNetExtras.Common.Exceptions" isDocumented="True">Defines custom exception classes.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="DotNetExtras.Common.Extensions" isDocumented="True">Defines classes implementing extension methods for common data types.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="DotNetExtras.Common.Json" isDocumented="True">Defines classes handling JSON operations, such as serialization and deserialization.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="DotNetExtras.Common.RegularExpressions" isDocumented="True">Defines regular expressions for common values, such as email addresses, GUIDs, names, and so on.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="DotNetExtras.Common.Json (Group)" isGroup="True" isDocumented="True">Defines classes and namespaces handling JSON operations.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="DotNetExtras.Common.Json.Converters" isDocumented="True">Defines classes implementing JSON converters.</NamespaceSummaryItem></NamespaceSummaries>
     <HtmlSdkLinkType>Msdn</HtmlSdkLinkType>
     <BinaryTOC>True</BinaryTOC>
     <IncludeFavorites>False</IncludeFavorites>

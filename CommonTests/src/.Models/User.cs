@@ -41,4 +41,7 @@ internal class User
 
     [JsonInclude]
     internal string? Password { get; set; }
+
+    [JsonInclude]
+    internal List<object>? Extensions { get; set; }
 }

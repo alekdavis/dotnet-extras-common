@@ -1,9 +1,9 @@
 ﻿using DotNetExtras.Common.Enums;
 using System.ComponentModel;
 
-namespace CommonLibTests;
+namespace CommonLibTests.Enums;
 
-public partial class ExtensionsTests
+public class EnumExtensionsTests
 {
     private enum TestEnum
     {
