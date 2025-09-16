@@ -1,4 +1,4 @@
-# DotNetExtras.Common
+﻿# DotNetExtras.Common
 
 `DotNetExtras.Common` is a general-purpose .NET Core library that simplifies common operations frequently used in .NET applications.
 
@@ -110,6 +110,36 @@ Strings: one, two, three.
 Strings: one;two;three.
 Numbers: 1|2|3.
 ```
+### DotNetExtras.Common.Extensions.StringExtensions class
+
+Convert Unicode characters to their lower-ASCII equivalents:
+
+```cs
+// Prints: Raul Alvaro Lucia
+Console.WriteLine("Raúl Álvaro Lucía".ToAscii());
+
+// Prints: Gocke Ugur
+Console.WriteLine("Gökçe Uğur".ToAscii());
+
+// Prints: Sign [タクミ]
+Console.WriteLine("Sign [タクミ]".ToAscii());
+
+// Prints: Sign []
+Console.WriteLine("Sign [タクミ]".ToAscii(true));
+
+// Prints: Sign [???]
+Console.WriteLine("Sign [タクミ]".ToAscii(true, '?'));
+```
+
+In the example above, the output will be:
+
+```cs
+Raul Alvaro Lucia
+Gocke Ugur
+Sign [タクミ]
+Sign []
+Sign [???]
+```
 
 ### DotNetExtras.Common.Extensions.ObjectExtensions class
 
@@ -172,16 +202,24 @@ User userB = new()
     }
 };
 
-// Compare two arrays for partial equivalence.
-bool almostTheSame;
+// Compare two objects for partial equivalence.
+userB.IsPartialEquivalentOf(userA)); // true
+userA.IsPartialEquivalentOf(userB)); // false
 
-almostTheSame = userB.IsPartialEquivalentOf(userA)); // true
-almostTheSame = userA.IsPartialEquivalentOf(userB)); // false
+// Compare two objects for equivalence.
+userB.IsEquivalentOf(userA)); // false
+userA.IsEquivalentOf(userB)); // false
 
+// Fix the discrepancy.
 userB.Name.Surname = "Johnson";
 
+// Compare two objects for partial equivalence.
 userB.IsPartialEquivalentOf(userA)); // true
 userA.IsPartialEquivalentOf(userB)); // true
+
+// Compare two objects for equivalence.
+userB.IsEquivalentOf(userA)); // true
+userA.IsEquivalentOf(userB)); // true
 ```
 
 Keep in mind that partially equivalent objects may not be equivalent, but equivalent objects are always partially equivalent. In addition to comparing objects, you can also compare arrays, lists, dictionaries, hash sets, and primitive types. For the explanation of the equivalence and partial equivalence rules, see the class and method documentation.

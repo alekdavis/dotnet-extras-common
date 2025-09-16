@@ -126,11 +126,11 @@ try
 {
   try
   {
-  	throw new Exception("Cannot do that");
+    throw new Exception("Cannot do that");
   }
   catch (Exception ex)
   {
-  	throw new Exception("Failed to do this", ex);
+    throw new Exception("Failed to do this", ex);
   }
 }
 catch (Exception ex)
@@ -174,6 +174,27 @@ Console.WriteLine("Strings: " + strings.ToCsv(";") + ".");
 Console.WriteLine("Numbers: " + numbers.ToCsv("|") + ".");
 ]]>
                 </code>
+
+                <code language="c#" title="String extensions examples">
+<![CDATA[
+using DotNetExtras.Common.Extensions;
+...
+// Prints: Raul Alvaro Lucia
+Console.WriteLine("Raúl Álvaro Lucía".ToAscii());
+
+// Prints: Gocke Ugur
+Console.WriteLine("Gökçe Uğur".ToAscii());
+
+// Prints: Sign [タクミ]
+Console.WriteLine("Sign [タクミ]".ToAscii());
+
+// Prints: Sign []
+Console.WriteLine("Sign [タクミ]".ToAscii(true));
+
+// Prints: Sign [???]
+Console.WriteLine("Sign [タクミ]".ToAscii(true, '?'));
+]]>
+                </code>
                 
                 <code language="c#" title="Object extensions examples">
 <![CDATA[
@@ -182,14 +203,14 @@ using DotNetExtras.Common.Extensions;
 // Defines name parts.
 public class Name
 {
-    public string GivenName { get; set; } = string.Empty;
-    public string Surname { get; set; } = string.Empty;
+  public string GivenName { get; set; } = string.Empty;
+  public string Surname { get; set; } = string.Empty;
 }
 ...
 // Defines user object.
 public class User
 {
-    public Name Name { get; set; } = new Name();
+  public Name Name { get; set; } = new Name();
 }
 ...
 // Demo code.
@@ -207,37 +228,45 @@ bool isEmpty;
 isEmpty = user.IsEmpty(); // true
 user.Name = new()
 {
-    GivenName = "Alice";
+  GivenName = "Alice";
 }
 isEmpty = user.IsEmpty(); // false
 ...
 User userA = new()
 {
-    Name = new()
-    {
-        GivenName = "Alice",
-        Surname = "Johnson"
-    }
+  Name = new()
+  {
+    GivenName = "Alice",
+    Surname = "Johnson"
+  }
 };
 
 User userB = new()
 {
-    Name = new()
-    {
-        GivenName = "Alice",
-    }
+  Name = new()
+  {
+    GivenName = "Alice",
+  }
 };
 ...
-// Compare two arrays for partial equivalence.
-bool almostTheSame;
+// Compare two objects for partial equivalence.
+userB.IsPartialEquivalentOf(userA)); // true
+userA.IsPartialEquivalentOf(userB)); // false
 
-almostTheSame = userB.IsPartialEquivalentOf(userA)); // true
-almostTheSame = userA.IsPartialEquivalentOf(userB)); // false
+// Compare two objects for equivalence.
+userB.IsEquivalentOf(userA)); // false
+userA.IsEquivalentOf(userB)); // false
 
+// Fix the discrepancy.
 userB.Name.Surname = "Johnson";
 
+// Compare two objects for partial equivalence.
 userB.IsPartialEquivalentOf(userA)); // true
 userA.IsPartialEquivalentOf(userB)); // true
+
+// Compare two objects for equivalence.
+userB.IsEquivalentOf(userA)); // true
+userA.IsEquivalentOf(userB)); // true
 ]]>
                 </code>
               </content>
@@ -262,11 +291,11 @@ using DotNetExtras.Common.Json;
 ...
 User user = new()
 {
-    Name = new()
-    {
-        GivenName = "Alice",
-        Surname = "Johnson"
-    }
+  Name = new()
+  {
+    GivenName = "Alice",
+    Surname = "Johnson"
+  }
 };
 ...
 string json = user.ToJson();
@@ -296,16 +325,16 @@ user = json.FromJson<User>();
 using DotNetExtras.Common.Enums;
 ...
 public enum Something
-{
-    [Description("Description 1")]
-    [Abbreviation("ABBR1")]
-    [ShortName("Short1")]
-    Value1,
-
-    [Description("Description 2")]
-    [Abbreviation("ABBR2")]
-    [ShortName("Short2")]
-    Value2,
+  
+  [Description("Description 1")]
+  [Abbreviation("ABBR1")]
+  [ShortName("Short1")]
+  Value1,
+  
+  [Description("Description 2")]
+  [Abbreviation("ABBR2")]
+  [ShortName("Short2")]
+  Value2,
 }
 ...
 Something something = Something.Value1;
