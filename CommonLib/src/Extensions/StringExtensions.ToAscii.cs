@@ -74,9 +74,6 @@ public static partial class StringExtensions
     /// See: <a href="http://en.wikipedia.org/wiki/Latin_characters_in_Unicode">http://en.wikipedia.org/wiki/Latin_characters_in_Unicode</a>
     /// </para>
     /// <para>
-    /// For example, '&amp;agrave;' will be replaced by 'a'.
-    /// </para>
-    /// <para>
     /// Adapted from <see href="https://gist.github.com/andyraddatz/e6a396fb91856174d4e3f1bf2e10951c"/>.
     /// </para>
     /// </remarks>
