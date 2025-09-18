@@ -74,6 +74,10 @@ public class JsonExtensionsTests
 
         Assert.NotNull(u2);
         Assert.Equivalent(u1, u2);
+
+        object? u3 = json.FromJson(typeof(User));
+
+        Assert.IsType<User>(u3);
     }
 
     [Theory]

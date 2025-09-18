@@ -72,7 +72,7 @@ public static partial class JsonExtensions
     }
 
     /// <summary>
-    /// Converts a JSON string to an object.
+    /// Converts a JSON string to a strongly typed object.
     /// </summary>
     /// <typeparam name="T">
     /// Target data type.
@@ -118,4 +118,32 @@ public static partial class JsonExtensions
 
         return JsonSerializer.Deserialize<T>(json, options);
     }
+
+    /// <inheritdoc cref="FromJson{T}(string?)" />
+    /// <param name="type">
+    /// Data type of the deserialized object to be returned
+    /// </param>
+    /// <param name="json">
+    /// JSON string.
+    /// </param>
+    public static object? FromJson
+    (
+        this string? json,
+        Type type
+    )
+    {
+        if (string.IsNullOrEmpty(json))
+        {
+            return null;
+        }
+
+        JsonSerializerOptions options = new() 
+        {
+            PropertyNameCaseInsensitive = true,  
+            Converters = { new JsonStringEnumConverter(), new JsonObjectAsPrimitiveConverter() }
+        };
+
+        return JsonSerializer.Deserialize(json, type, options);
+    }
+
 }
