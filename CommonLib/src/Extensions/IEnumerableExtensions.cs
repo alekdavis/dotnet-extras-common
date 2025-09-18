@@ -3,10 +3,11 @@
 namespace DotNetExtras.Common.Extensions;
 
 /// <summary>
-/// Implements the most frequently used extension methods,
-/// such as getting the count of items in a collection and
+/// Implements extension methods
+/// applicable to the <see cref="IEnumerable"/> types or parameters,
+/// such as getting the count of items in a collection,
 /// converting a collection of generic elements to a comma-separated string value,
-/// for the <see cref="IEnumerable"/> types.
+/// checking if a value is in a collection.
 /// </summary>
 public static partial class IEnumerableExtensions
 {
@@ -105,5 +106,117 @@ public static partial class IEnumerableExtensions
         return values == null || !values.Any<T>() 
             ? "" 
             : string.Join(separator, values.Select(item => leftQuote + item + rightQuote));
+    }
+
+    /// <summary>
+    /// Checks if a value is in the list.
+    /// </summary>
+    /// <typeparam name="T">
+    /// Value data type.
+    /// </typeparam>
+    /// <param name="value">
+    /// Value to be checked.
+    /// </param>
+    /// <param name="values">
+    /// List of values.
+    /// </param>
+    /// <returns>
+    /// <c>true</c> if the value is found in the list; otherwise, <c>false</c>.
+    /// </returns>
+    /// <example>
+    /// <code>
+    /// <![CDATA[
+    /// // Returns true:
+    /// 5.In(1, 2, 3, 4, 5);
+    /// 
+    /// // Returns false:
+    /// 5.In(1, 2, 3, 4);
+    /// ]]>
+    /// </code>
+    /// </example>
+    public static bool In<T>
+    (
+        this T value,
+        params T[] values
+    ) 
+    {
+        return values != null && values.Contains(value);
+    }
+
+    /// <summary>
+    /// Checks if a string value is in the list.
+    /// </summary>
+    /// <param name="value">
+    /// Value to be checked.
+    /// </param>
+    /// <param name="ignoreCase">
+    /// If <c>true</c>, case sensitivity will be ignored.
+    /// </param>
+    /// <param name="values">
+    /// List of values.
+    /// </param>
+    /// <returns>
+    /// <c>true</c> if the value is found in the list; otherwise, <c>false</c>.
+    /// </returns>
+    /// <example>
+    /// <code>
+    /// <![CDATA[
+    /// // Returns true:
+    /// "one".In(false, "one, "two", "three");
+    /// 
+    /// // Returns true:
+    /// "one".In(true, "ONE, "TWO", "THREE");
+    /// 
+    /// // Returns false:
+    /// "one".In(true, "two", "three");
+    /// 
+    /// // Returns false:
+    /// "one".In(false, "two", "three");
+    /// ]]>
+    /// </code>
+    /// </example>
+    public static bool In
+    (
+        this string value,
+        bool ignoreCase,
+        params string[] values
+    ) 
+    {
+        return values != null && values.Contains(value, ignoreCase ? StringComparer.OrdinalIgnoreCase  : null);
+    }
+
+    /// <summary>
+    /// Checks if a case-sensitive string value is in the list.
+    /// </summary>
+    /// <param name="value">
+    /// Value to be checked.
+    /// </param>
+    /// <param name="values">
+    /// List of values.
+    /// </param>
+    /// <returns>
+    /// <c>true</c> if the value is found in the list; otherwise, <c>false</c>.
+    /// </returns>
+    /// <example>
+    /// <code>
+    /// <![CDATA[
+    /// // Returns true:
+    /// "one".In("one, "two", "three");
+    /// 
+    /// // Returns false:
+    /// "one".In("ONE, "TWO", "THREE");
+    /// 
+    /// // Returns false:
+    /// "one".In("two", "three");
+    /// ]]>
+    /// </code>
+    /// </example>
+    public static bool In
+    (
+        this string value,
+        params string[] values
+    ) 
+    {
+        return In(value, false, values);
     }
 }

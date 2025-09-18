@@ -2,11 +2,11 @@
 
 namespace DotNetExtras.Common.Extensions;
 /// <summary>
-/// Implements the most frequently used extension methods,
+/// Implements extension methods
+/// applicable to strings,
 /// such as escaping special characters, 
 /// converting accented characters to their ASCII equivalents, 
-/// making sure the sting ends in a punctuation character, etc.,
-/// for the <see cref="string"/> types.
+/// making sure the sting ends in a punctuation character, etc.
 /// </summary>
 public static partial class StringExtensions
 {

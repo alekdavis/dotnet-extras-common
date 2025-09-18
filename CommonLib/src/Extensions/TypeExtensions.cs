@@ -3,7 +3,9 @@
 namespace DotNetExtras.Common.Extensions;
 
 /// <summary>
-/// Implements advanced extension methods for the <see cref="System.Type"/> types.
+/// Implements extension methods 
+/// applicable to the <see cref="System.Type"/> types,
+/// such as checking if a type is simple or primitive.
 /// </summary>
 public static partial class TypeExtensions
 {

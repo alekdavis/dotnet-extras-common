@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <AssemblyName>DotNetExtras.Common</AssemblyName>
     <RootNamespace>DotNetExtras.Common</RootNamespace>
-    <Version>1.0.11</Version>
+    <Version>1.0.12</Version>
     <Title>$(AssemblyName)</Title>
     <Authors>Alek Davis</Authors>
     <Description>A .NET Core library implementing most frequently used general-purpose operations.</Description>
@@ -21,7 +21,7 @@
     <IncludeSourceRevisionInInformationalVersion>False</IncludeSourceRevisionInInformationalVersion>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <PackageReleaseNotes>Added an overloaded FromJson method.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added the In extension methods.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

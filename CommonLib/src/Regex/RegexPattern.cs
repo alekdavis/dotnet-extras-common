@@ -1,6 +1,4 @@
-﻿using static System.Net.WebRequestMethods;
-
-namespace DotNetExtras.Common.RegularExpressions;
+﻿namespace DotNetExtras.Common.RegularExpressions;
 
 /// <summary>
 /// Implements common regular expression patterns.

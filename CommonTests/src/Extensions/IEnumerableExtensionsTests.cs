@@ -48,4 +48,16 @@ public class IEnumerableExtensionsTests
         List<int> intArray = [1, 2, 3];
         Assert.Equal("[ 1 ] | [ 2 ] | [ 3 ]", intArray.ToCsv(" | ", "[ ", " ]"));
     }
+
+    [Fact]
+    public void IEnumerable_In()
+    {
+        Assert.True(1.In(1, 2, 3));
+        Assert.False(1.In(2, 3, 4));
+
+        Assert.True("one".In("one", "two", "three"));
+        Assert.False("ONE".In("one", "two", "three"));
+        Assert.True("ONE".In(true, "one", "two", "three"));
+        Assert.False("ONE".In(false, "one", "two", "three"));
+    }
 }

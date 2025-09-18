@@ -2,14 +2,13 @@
 using System.Globalization;
 using System.Reflection;
 using System.Text;
-using System.Windows.Markup;
 
 namespace DotNetExtras.Common.Extensions;
 /// <summary>
-/// Implements the most frequently used extension methods,
+/// Implements frequently used extension methods
+/// applicable to all data types,
 /// such as deep cloning, checking object equivalence, 
-/// getting and setting a nested property value by a compound name, and more,
-/// for all (any <see cref="object"/>) types.
+/// getting and setting a nested property value by a compound name, and more.
 /// </summary>
 public static partial class ObjectExtensions
 {
