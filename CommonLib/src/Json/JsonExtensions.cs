@@ -112,8 +112,16 @@ public static partial class JsonExtensions
 
         JsonSerializerOptions options = new() 
         {
-            PropertyNameCaseInsensitive = true,  
-            Converters = { new JsonStringEnumConverter(), new JsonObjectAsPrimitiveConverter() }
+            PropertyNameCaseInsensitive = true,
+            AllowTrailingCommas = true,
+            ReferenceHandler = ReferenceHandler.IgnoreCycles,
+            Converters = 
+            {   
+                new JsonStringEnumConverter(), 
+                new JsonDateTimeConverter(), 
+                new JsonDateTimeOffsetConverter(),
+                new JsonObjectAsPrimitiveConverter() 
+            }
         };
 
         return JsonSerializer.Deserialize<T>(json, options);
@@ -140,7 +148,15 @@ public static partial class JsonExtensions
         JsonSerializerOptions options = new() 
         {
             PropertyNameCaseInsensitive = true,  
-            Converters = { new JsonStringEnumConverter(), new JsonObjectAsPrimitiveConverter() }
+            AllowTrailingCommas = true,
+            ReferenceHandler = ReferenceHandler.IgnoreCycles,
+            Converters = 
+            { 
+                new JsonStringEnumConverter(), 
+                new JsonDateTimeConverter(), 
+                new JsonDateTimeOffsetConverter(),
+                new JsonObjectAsPrimitiveConverter() 
+            }
         };
 
         return JsonSerializer.Deserialize(json, type, options);
