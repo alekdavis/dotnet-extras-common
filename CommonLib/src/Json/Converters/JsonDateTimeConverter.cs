@@ -1,7 +1,10 @@
 ﻿// Ignore Spelling: Json
 
+using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using DotNetExtras.Common.Extensions;
 
 namespace DotNetExtras.Common.Json.Converters;
 /// <summary>
@@ -11,19 +14,83 @@ namespace DotNetExtras.Common.Json.Converters;
 public class JsonDateTimeConverter : JsonConverter<DateTime>
 {
     private readonly string? _format = null;
+    private readonly int _precision = 0;
+    private readonly bool _serializeAsUtc = false;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="JsonDateTimeConverter"/> class.
+    /// Initializes a new instance of the <see cref="JsonDateTimeConverter"/> class 
+    /// with the specified precision for formatting DateTime values.
+    /// </summary>
+    /// <param name="precision">
+    /// The number of fractions of a second to include when formatting DateTime values.
+    /// Must be between 0 and 7, inclusive.
+    /// </param>
+    public JsonDateTimeConverter
+    (
+        [Range(0, 7)]
+        int precision = 0
+    )
+    {
+        _precision = precision;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="JsonDateTimeConverter"/> class
+    /// with the format string.
     /// </summary>
     /// <param name="format">
     /// Date and time format string to use for serialization and deserialization.
     /// </param>
     public JsonDateTimeConverter
     (
-        string? format = null
+        string? format
     )
     {
         _format = format;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="JsonDateTimeConverter"/> class 
+    /// with the flag indicating whether to use Universal (UTC) time during serialization
+    /// and the specified precision for formatting DateTime values.
+    /// </summary>
+    /// <param name="serializeAsUtc">
+    /// Indicates whether the converter should prefer UTC when handling <see cref="DateTime"/> values. 
+    /// </param>
+    /// <param name="precision">
+    /// The number of fractions of a second to include when formatting DateTime values.
+    /// Must be between 0 and 7, inclusive.
+    /// </param>
+    public JsonDateTimeConverter
+    (
+        bool serializeAsUtc,
+        [Range(0, 7)]
+        int precision = 0
+    ) 
+    {
+        _serializeAsUtc = serializeAsUtc;
+        _precision = precision;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="JsonDateTimeConverter"/> class
+    /// with the flag indicating whether to use Universal (UTC) time during serialization
+    /// and the format string.
+    /// </summary>
+    /// <param name="serializeAsUtc">
+    /// Indicates whether the converter should prefer UTC when handling <see cref="DateTime"/> values. 
+    /// </param>
+    /// <param name="format">
+    /// Date and time format string to use for serialization and deserialization.
+    /// </param>
+    public JsonDateTimeConverter
+    (
+        bool serializeAsUtc,
+        string? format
+    ) 
+    : this(format)
+    {
+        _serializeAsUtc = serializeAsUtc;
     }
 
     /// <summary>
@@ -82,11 +149,15 @@ public class JsonDateTimeConverter : JsonConverter<DateTime>
     {
         if (string.IsNullOrEmpty(_format))
         {
-            JsonSerializer.Serialize(writer, value);
+            writer.WriteStringValue(_serializeAsUtc  
+                ? value.ToUniversalIso8601(_precision) 
+                : value.ToIso8601(_precision));
         }
         else
         {
-            writer.WriteStringValue(value.ToString(_format));
+            writer.WriteStringValue(_serializeAsUtc
+                ? value.ToUniversalTime().ToString(_format, CultureInfo.InvariantCulture)
+                : value.ToString(_format, CultureInfo.InvariantCulture));
         }
     }
 }

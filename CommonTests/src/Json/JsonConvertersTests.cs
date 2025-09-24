@@ -1,7 +1,10 @@
 ﻿// Ignore Spelling: Json
 
 using DotNetExtras.Common.Json.Converters;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace CommonLibTests.Json;
 public class TestClass
@@ -13,50 +16,160 @@ public class TestClass
 
 public class JsonConvertersTests
 {
-    [Fact]
-    public void DateTimeConverter_Serialize()
+    [Theory]
+    [InlineData(null)]
+    [InlineData("2025-10-29T10:20:30Z")]
+    [InlineData("2025-10-29T10:20:30.123Z")]
+    [InlineData("2025-10-29T10:20:30.123Z", 3)]
+    [InlineData("2025-10-29T10:20:30")]
+    [InlineData("2025-10-29T10:20:30.123", 3)]
+    [InlineData("2025-10-29T10:20:30+1:30")]
+    [InlineData("2025-10-29T10:20:30.123-1:30", 3)]
+    public void DateTimeConverter_SerializeDateTimeUtc
+    (
+        string? dateTime,
+        int precision = 0
+    )
     {
+        JsonSerializerOptions options = new()
+        {
+            WriteIndented = false,
+            Converters = { new JsonDateTimeConverter(true, precision), new JsonDateTimeOffsetConverter(true, precision) }
+        };
+
         TestClass testObject = new()
         {
-            DateTimeValue = new DateTime(2023, 10, 5, 14, 48, 30, 123, DateTimeKind.Utc),
-            DateTimeOffsetValue = new DateTimeOffset(2023, 10, 5, 14, 48, 30, 123, TimeSpan.Zero)
+            DateTimeValue = dateTime == null ? null : DateTime.Parse(dateTime)
         };
 
-        string json = JsonSerializer.Serialize(testObject, new JsonSerializerOptions
-        {
-            Converters = { new JsonDateTimeConverter(), new JsonDateTimeOffsetConverter() },
-            WriteIndented = false
-        });
+        string json = JsonSerializer.Serialize(testObject, options);
 
-        Assert.Equal("{\"DateTimeValue\":\"2023-10-05T14:48:30.123Z\",\"DateTimeOffsetValue\":\"2023-10-05T14:48:30.123+00:00\"}", json);
+        DateTime? expected = dateTime == null 
+            ? null 
+            : DateTime.Parse(dateTime);
 
-        testObject = new()
+        string expectedValue = expected == null 
+            ? "null" 
+            : "\"" + expected!.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss" + (precision > 0 ? "." + new string('f', precision) : "")) + "Z\"";
+
+        Assert.Contains($"\"DateTimeValue\":{expectedValue}", json);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("2025-10-29T10:20:30Z")]
+    [InlineData("2025-10-29T10:20:30.123Z")]
+    [InlineData("2025-10-29T10:20:30.123Z", 3)]
+    [InlineData("2025-10-29T10:20:30")]
+    [InlineData("2025-10-29T10:20:30.123", 3)]
+    [InlineData("2025-10-29T10:20:30+1:30")]
+    [InlineData("2025-10-29T10:20:30.123-1:30", 3)]
+    public void DateTimeConverter_SerializeDateTime
+    (
+        string? dateTime,
+        int precision = 0
+    )
+    {
+        JsonSerializerOptions options = new()
         {
-            DateTimeValue = null,
-            DateTimeOffsetValue = null
+            WriteIndented = false,
+            Converters = { new JsonDateTimeConverter(false, precision), new JsonDateTimeOffsetConverter(false, precision) }
         };
 
-        json = JsonSerializer.Serialize(testObject, new JsonSerializerOptions
+        TestClass testObject = new()
         {
-            Converters = { new JsonDateTimeConverter(), new JsonDateTimeOffsetConverter() },
-            WriteIndented = false
-        });
-
-        Assert.Equal("{\"DateTimeValue\":null,\"DateTimeOffsetValue\":null}", json);
-
-        testObject = new()
-        {
-            DateTimeValue = new DateTime(2023, 10, 5, 0, 0, 0, 0),
-            DateTimeOffsetValue = new DateTimeOffset(2023, 10, 5, 0, 0, 0, 0, TimeSpan.Zero)
+            DateTimeValue = dateTime == null ? null : DateTime.Parse(dateTime)
         };
 
-        json = JsonSerializer.Serialize(testObject, new JsonSerializerOptions
-        {
-            Converters = { new JsonDateTimeConverter(), new JsonDateTimeOffsetConverter() },
-            WriteIndented = false
-        });
+        string json = JsonSerializer.Serialize(testObject, options);
 
-        Assert.Equal("{\"DateTimeValue\":\"2023-10-05T00:00:00\",\"DateTimeOffsetValue\":\"2023-10-05T00:00:00+00:00\"}", json);
+        DateTime? expected = dateTime == null 
+            ? null 
+            : DateTime.Parse(dateTime);
+
+        string expectedValue = expected == null 
+            ? "null" 
+            : "\"" + expected!.Value.ToString("yyyy-MM-ddTHH:mm:ss" + (precision > 0 ? "." + new string('f', precision) : ""));
+
+        Assert.Contains($"\"DateTimeValue\":{expectedValue}", json);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("2025-10-29T10:20:30Z")]
+    [InlineData("2025-10-29T10:20:30.123Z")]
+    [InlineData("2025-10-29T10:20:30.123Z", 3)]
+    [InlineData("2025-10-29T10:20:30")]
+    [InlineData("2025-10-29T10:20:30.123", 3)]
+    [InlineData("2025-10-29T10:20:30+1:30")]
+    [InlineData("2025-10-29T10:20:30.123-1:30", 3)]
+    public void DateTimeOffsetConverter_SerializeDateTimeUtc
+    (
+        string? dateTimeOffset,
+        int precision = 0
+    )
+    {
+        JsonSerializerOptions options = new()
+        {
+            WriteIndented = false,
+            Converters = { new JsonDateTimeConverter(true, precision), new JsonDateTimeOffsetConverter(true, precision) }
+        };
+
+        TestClass testObject = new()
+        {
+            DateTimeOffsetValue = dateTimeOffset == null ? null : DateTimeOffset.Parse(dateTimeOffset)
+        };
+
+        string json = JsonSerializer.Serialize(testObject, options);
+
+        DateTimeOffset? expected = dateTimeOffset == null 
+            ? null 
+            : DateTimeOffset.Parse(dateTimeOffset);
+
+        string expectedValue = expected == null 
+            ? "null" 
+            : "\"" + expected!.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss" + (precision > 0 ? "." + new string('f', precision) : "")) + "Z\"";
+
+        Assert.Contains($"\"DateTimeOffsetValue\":{expectedValue}", json);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("2025-10-29T10:20:30Z")]
+    [InlineData("2025-10-29T10:20:30.123Z")]
+    [InlineData("2025-10-29T10:20:30.123Z", 3)]
+    [InlineData("2025-10-29T10:20:30")]
+    [InlineData("2025-10-29T10:20:30.123", 3)]
+    [InlineData("2025-10-29T10:20:30+1:30")]
+    [InlineData("2025-10-29T10:20:30.123-1:30", 3)]
+    public void DateTimeOffsetConverter_SerializeDateTime
+    (
+        string? dateTimeOffset,
+        int precision = 0
+    )
+    {
+        JsonSerializerOptions options = new()
+        {
+            WriteIndented = false,
+            Converters = { new JsonDateTimeConverter(false, precision), new JsonDateTimeOffsetConverter(false, precision) }
+        };
+
+        TestClass testObject = new()
+        {
+            DateTimeOffsetValue = dateTimeOffset == null ? null : DateTimeOffset.Parse(dateTimeOffset)
+        };
+
+        string json = JsonSerializer.Serialize(testObject, options);
+
+        DateTimeOffset? expected = dateTimeOffset == null 
+            ? null 
+            : DateTimeOffset.Parse(dateTimeOffset);
+
+        string expectedValue = expected == null 
+            ? "null" 
+            : "\"" + expected!.Value.ToString("yyyy-MM-ddTHH:mm:ss" + (precision > 0 ? "." + new string('f', precision) : ""));
+
+        Assert.Contains($"\"DateTimeOffsetValue\":{expectedValue}", json);
     }
 
     [Theory]

@@ -161,5 +161,4 @@ public static partial class JsonExtensions
 
         return JsonSerializer.Deserialize(json, type, options);
     }
-
 }
