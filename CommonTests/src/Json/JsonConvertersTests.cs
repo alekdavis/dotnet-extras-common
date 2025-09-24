@@ -29,6 +29,34 @@ public class JsonConvertersTests
         });
 
         Assert.Equal("{\"DateTimeValue\":\"2023-10-05T14:48:30.123Z\",\"DateTimeOffsetValue\":\"2023-10-05T14:48:30.123+00:00\"}", json);
+
+        testObject = new()
+        {
+            DateTimeValue = null,
+            DateTimeOffsetValue = null
+        };
+
+        json = JsonSerializer.Serialize(testObject, new JsonSerializerOptions
+        {
+            Converters = { new JsonDateTimeConverter(), new JsonDateTimeOffsetConverter() },
+            WriteIndented = false
+        });
+
+        Assert.Equal("{\"DateTimeValue\":null,\"DateTimeOffsetValue\":null}", json);
+
+        testObject = new()
+        {
+            DateTimeValue = new DateTime(2023, 10, 5, 0, 0, 0, 0),
+            DateTimeOffsetValue = new DateTimeOffset(2023, 10, 5, 0, 0, 0, 0, TimeSpan.Zero)
+        };
+
+        json = JsonSerializer.Serialize(testObject, new JsonSerializerOptions
+        {
+            Converters = { new JsonDateTimeConverter(), new JsonDateTimeOffsetConverter() },
+            WriteIndented = false
+        });
+
+        Assert.Equal("{\"DateTimeValue\":\"2023-10-05T00:00:00\",\"DateTimeOffsetValue\":\"2023-10-05T00:00:00+00:00\"}", json);
     }
 
     [Theory]
