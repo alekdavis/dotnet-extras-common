@@ -1,8 +1,10 @@
-﻿using DotNetExtras.Common.Json.Converters;
+﻿// Ignore Spelling: Json
+
+using DotNetExtras.Common.Json.Converters;
 using System.Text.Json;
 
 namespace CommonLibTests.Json;
-public class Test
+public class TestClass
 {
     public DateTime? DateTimeValue { get; set; }
 
@@ -11,6 +13,24 @@ public class Test
 
 public class JsonConvertersTests
 {
+    [Fact]
+    public void DateTimeConverter_Serialize()
+    {
+        TestClass testObject = new()
+        {
+            DateTimeValue = new DateTime(2023, 10, 5, 14, 48, 30, 123, DateTimeKind.Utc),
+            DateTimeOffsetValue = new DateTimeOffset(2023, 10, 5, 14, 48, 30, 123, TimeSpan.Zero)
+        };
+
+        string json = JsonSerializer.Serialize(testObject, new JsonSerializerOptions
+        {
+            Converters = { new JsonDateTimeConverter(), new JsonDateTimeOffsetConverter() },
+            WriteIndented = false
+        });
+
+        Assert.Equal("{\"DateTimeValue\":\"2023-10-05T14:48:30.123Z\",\"DateTimeOffsetValue\":\"2023-10-05T14:48:30.123+00:00\"}", json);
+    }
+
     [Theory]
     [InlineData(null, null)]
     [InlineData("2023-10-05",               "2023-10-05T00:00:00.0")]
@@ -36,7 +56,7 @@ public class JsonConvertersTests
             Converters = { new JsonDateTimeConverter() }
         };
 
-        Test? deserialized = JsonSerializer.Deserialize<Test>(json, options);
+        TestClass? deserialized = JsonSerializer.Deserialize<TestClass>(json, options);
 
         Assert.NotNull(deserialized);
 
@@ -77,7 +97,7 @@ public class JsonConvertersTests
             Converters = { new JsonDateTimeOffsetConverter() }
         };
 
-        Test? deserialized = JsonSerializer.Deserialize<Test>(json, options);
+        TestClass? deserialized = JsonSerializer.Deserialize<TestClass>(json, options);
 
         Assert.NotNull(deserialized);
 

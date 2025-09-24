@@ -10,6 +10,22 @@ namespace DotNetExtras.Common.Json.Converters;
 /// </summary>
 public class JsonDateTimeOffsetConverter : JsonConverter<DateTimeOffset>
 {
+    private readonly string? _format = null;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="JsonDateTimeConverter"/> class.
+    /// </summary>
+    /// <param name="format">
+    /// Date and time format string to use for serialization and deserialization.
+    /// </param>
+    public JsonDateTimeOffsetConverter
+    (
+        string? format = null
+    )
+    {
+        _format = format;
+    }
+
     /// <summary>
     /// Reads and converts a JSON string to a <see cref="DateTimeOffset"/> object.
     /// </summary>
@@ -34,9 +50,11 @@ public class JsonDateTimeOffsetConverter : JsonConverter<DateTimeOffset>
     {
         string value = reader.GetString()!;
 
-        DateTime dateTime = DateTime.Parse(value);
+        DateTimeOffset dateTimeOffset = string.IsNullOrEmpty(_format)
+            ? DateTimeOffset.Parse(value)
+            : DateTimeOffset.ParseExact(value, _format, null); 
 
-        return dateTime;
+        return dateTimeOffset;
     }
 
     /// <summary>
@@ -62,6 +80,13 @@ public class JsonDateTimeOffsetConverter : JsonConverter<DateTimeOffset>
         JsonSerializerOptions options
     )
     {
-        JsonSerializer.Serialize(writer, value, options);
+        if (string.IsNullOrEmpty(_format))
+        {
+            JsonSerializer.Serialize(writer, value);
+        }
+        else
+        {
+            writer.WriteStringValue(value.ToString(_format));
+        }
     }
 }

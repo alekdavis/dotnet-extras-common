@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <AssemblyName>DotNetExtras.Common</AssemblyName>
     <RootNamespace>DotNetExtras.Common</RootNamespace>
-    <Version>1.0.13</Version>
+    <Version>1.0.14</Version>
     <Title>$(AssemblyName)</Title>
     <Authors>Alek Davis</Authors>
     <Description>A .NET Core library implementing most frequently used general-purpose operations.</Description>
@@ -21,7 +21,7 @@
     <IncludeSourceRevisionInInformationalVersion>False</IncludeSourceRevisionInInformationalVersion>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <PackageReleaseNotes>Added JSON converters for date and time types.</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixed bugs and enhanced JSON converters for date and time types.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
