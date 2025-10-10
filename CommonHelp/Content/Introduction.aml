@@ -100,6 +100,22 @@ using DotNetExtras.Common;
 Console.WriteLine($"{PrimaryAssembly.Title} v{PrimaryAssembly.Version} {PrimaryAssembly.Copyright}");
 ]]>
                 </code>
+                
+                <code language="c#" title="CallContext examples">
+<![CDATA[
+using DotNetExtras.Common;
+...
+public class SomeClass
+{
+  public void SomeMethod()
+  {
+    // Prints: Class: SomeClass, Method: SomeMethod
+    Console.WriteLine($"Class: {CallContext.GetClassName(this)}, Method: {CallContext.GetMethodName(this)}");
+  }
+}
+```
+]]>
+                </code>
               </content>
             </section>
        

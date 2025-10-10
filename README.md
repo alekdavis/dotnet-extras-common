@@ -62,6 +62,21 @@ Print the application assembly information as `MyApp v1.0.8 (c) 2023 MyCompany`:
 Console.WriteLine($"{PrimaryAssembly.Title} v{PrimaryAssembly.Version} {PrimaryAssembly.Copyright}");
 ```
 
+### DotNetExtras.Common.CallContext class
+
+Print the current method name and its caller method name:
+
+```cs
+public class SomeClass
+{
+  public void SomeMethod()
+  {
+    // Prints: Class: SomeClass, Method: SomeMethod
+    Console.WriteLine($"Class: {CallContext.GetClassName(this)}, Method: {CallContext.GetMethodName(this)}");
+  }
+}
+```
+
 ### DotNetExtras.Common.Exceptions.ExceptionExtensions class
 
 Print exception messages from the immediate and all inner exceptions:
