@@ -25,9 +25,9 @@ namespace DotNetExtras.Common;
 ///     {
 ///         // If the Serilog template contains {MethodName} property,
 ///         // all log entries created within this scope will contain the method name.
-///         using (LogContext.PushProperty(LogProperty.MethodName, CallContext.GetClassMethodName(this)))
+///         using (LogContext.PushProperty(LogProperty.MethodName, CodeContext.GetClassMethodName(this)))
 ///         // The Operation timer will log the method duration automatically when disposed.
-///         using (Operation timer = Operation.Begin(CallContext.GetClassMethodName(this)))
+///         using (Operation timer = Operation.Begin(CodeContext.GetClassMethodName(this)))
 ///         {
 ///             // Implement logic here.
 ///             ...
@@ -38,7 +38,7 @@ namespace DotNetExtras.Common;
 /// ]]>
 /// </code>
 /// </example>
-public static class CallContext
+public static class CodeContext
 {
     /// <summary>
     /// Returns the name of the specified class.

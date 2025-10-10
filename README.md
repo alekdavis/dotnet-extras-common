@@ -62,7 +62,7 @@ Print the application assembly information as `MyApp v1.0.8 (c) 2023 MyCompany`:
 Console.WriteLine($"{PrimaryAssembly.Title} v{PrimaryAssembly.Version} {PrimaryAssembly.Copyright}");
 ```
 
-### DotNetExtras.Common.CallContext class
+### DotNetExtras.Common.CodeContext class
 
 Print the current method name and its caller method name:
 
@@ -72,7 +72,7 @@ public class SomeClass
   public void SomeMethod()
   {
     // Prints: Class: SomeClass, Method: SomeMethod
-    Console.WriteLine($"Class: {CallContext.GetClassName(this)}, Method: {CallContext.GetMethodName(this)}");
+    Console.WriteLine($"Class: {CodeContext.GetClassName(this)}, Method: {CodeContext.GetMethodName(this)}");
   }
 }
 ```

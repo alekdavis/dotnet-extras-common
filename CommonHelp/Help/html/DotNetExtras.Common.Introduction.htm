@@ -34,14 +34,14 @@ Console.WriteLine(NameOf.Short(someObject.Property.SubProperty), true));</code><
 //   &lt;Copyright&gt;© 2023 MyCompany&lt;/Copyright&gt;
 // &lt;/PropertyGroup&gt;
 // Print the version and the copyright message such as: MyApp v1.0.8 © 2023 MyCompany
-Console.WriteLine($"{PrimaryAssembly.Title} v{PrimaryAssembly.Version} {PrimaryAssembly.Copyright}");</code></pre></div></div><div class="codeSnippet"><div class="codeHeader"><span class="codeHeaderTitle">CallContext examples</span><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-c#">using DotNetExtras.Common;
+Console.WriteLine($"{PrimaryAssembly.Title} v{PrimaryAssembly.Version} {PrimaryAssembly.Copyright}");</code></pre></div></div><div class="codeSnippet"><div class="codeHeader"><span class="codeHeaderTitle">CodeContext examples</span><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-c#">using DotNetExtras.Common;
 ...
 public class SomeClass
 {
   public void SomeMethod()
   {
     // Prints: Class: SomeClass, Method: SomeMethod
-    Console.WriteLine($"Class: {CallContext.GetClassName(this)}, Method: {CallContext.GetMethodName(this)}");
+    Console.WriteLine($"Class: {CodeContext.GetClassName(this)}, Method: {CodeContext.GetMethodName(this)}");
   }
 }
 ```</code></pre></div></div><h4 id="Exceptions" class="quickLinkHeader">DotNetExtras.Common.Exceptions namespace</h4><p>
