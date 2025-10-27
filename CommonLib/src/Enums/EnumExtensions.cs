@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Data.SqlTypes;
 using System.Reflection;
 
 namespace DotNetExtras.Common.Enums;
@@ -79,6 +80,55 @@ public static partial class EnumExtensions
     }
 
     /// <summary>
+    /// Returns an enumeration field of type <typeparamref name="T"/> that matches the specified
+    /// <see cref="DescriptionAttribute"/> value.
+    /// </summary>
+    /// <remarks>
+    /// If multiple enumeration values have the same description, 
+    /// the first match is returned.
+    /// </remarks>
+    /// <typeparam name="T">
+    /// The enumeration type to search.
+    /// </typeparam>
+    /// <param name="value">
+    /// The description to match against the enumeration values.
+    /// </param>
+    /// <param name="ignoreCase">
+    /// If <see langword="true"/>, case-insensitive comparison will be used.
+    /// </param>
+    /// <returns>
+    /// The enumeration value of type <typeparamref name="T"/> that matches the specified description,  
+    /// or <see langword="null"/> if no match is found.
+    /// </returns>
+    public static T? FromDescription<T>
+    (
+        string value,
+        bool ignoreCase = false
+    )
+    where T : struct, Enum
+    {
+        if (string.IsNullOrEmpty(value))
+        {
+            return null;
+        }
+
+        foreach (T enumValue in Enum.GetValues(typeof(T)))
+        {
+            string? description = enumValue.ToDescription();
+
+            if (!string.IsNullOrEmpty(description) && 
+                description.Equals(value, ignoreCase 
+                    ? StringComparison.OrdinalIgnoreCase 
+                    : StringComparison.Ordinal))
+            {
+                return enumValue;
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
     /// Returns the value of the <see cref="AbbreviationAttribute"/> applied to an enumerated field.
     /// </summary>
     /// <param name="value">
@@ -119,6 +169,55 @@ public static partial class EnumExtensions
     }
 
     /// <summary>
+    /// Returns an enumeration field of type <typeparamref name="T"/> that matches the specified
+    /// <see cref="AbbreviationAttribute"/> value.
+    /// </summary>
+    /// <remarks>
+    /// If multiple enumeration values have the same abbreviation, 
+    /// the first match is returned.
+    /// </remarks>
+    /// <typeparam name="T">
+    /// The enumeration type to search.
+    /// </typeparam>
+    /// <param name="value">
+    /// The abbreviation to match against the enumeration values.
+    /// </param>
+    /// <param name="ignoreCase">
+    /// If <see langword="true"/>, case-insensitive comparison will be used.
+    /// </param>
+    /// <returns>
+    /// The enumeration value of type <typeparamref name="T"/> that matches the specified abbreviation,  
+    /// or <see langword="null"/> if no match is found.
+    /// </returns>
+    public static T? FromAbbreviation<T>
+    (
+        string value,
+        bool ignoreCase = false
+    )
+    where T : struct, Enum
+    {
+        if (string.IsNullOrEmpty(value))
+        {
+            return null;
+        }
+
+        foreach (T enumValue in Enum.GetValues(typeof(T)))
+        {
+            string? abbreviation = enumValue.ToAbbreviation();
+
+            if (!string.IsNullOrEmpty(abbreviation) && 
+                abbreviation.Equals(value, ignoreCase 
+                    ? StringComparison.OrdinalIgnoreCase 
+                    : StringComparison.Ordinal))
+            {
+                return enumValue;
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
     /// Returns the value of the <see cref="ShortNameAttribute"/> applied to an enumerated field.
     /// </summary>
     /// <param name="value">
@@ -156,5 +255,54 @@ public static partial class EnumExtensions
     {
         ShortNameAttribute? attribute = value.GetAttribute<ShortNameAttribute>();
         return attribute?.ShortName;
+    }
+
+    /// <summary>
+    /// Returns an enumeration field of type <typeparamref name="T"/> that matches the specified
+    /// <see cref="ShortNameAttribute"/> value.
+    /// </summary>
+    /// <remarks>
+    /// If multiple enumeration values have the same short name, 
+    /// the first match is returned.
+    /// </remarks>
+    /// <typeparam name="T">
+    /// The enumeration type to search.
+    /// </typeparam>
+    /// <param name="value">
+    /// The short name to match against the enumeration values.
+    /// </param>
+    /// <param name="ignoreCase">
+    /// If <see langword="true"/>, case-insensitive comparison will be used.
+    /// </param>
+    /// <returns>
+    /// The enumeration value of type <typeparamref name="T"/> that matches the specified short name,  
+    /// or <see langword="null"/> if no match is found.
+    /// </returns>
+    public static T? FromShortName<T>
+    (
+        string value,
+        bool ignoreCase = false
+    )
+    where T : struct, Enum
+    {
+        if (string.IsNullOrEmpty(value))
+        {
+            return null;
+        }
+
+        foreach (T enumValue in Enum.GetValues(typeof(T)))
+        {
+            string? shortName = enumValue.ToShortName();
+
+            if (!string.IsNullOrEmpty(shortName) && 
+                shortName.Equals(value, ignoreCase 
+                    ? StringComparison.OrdinalIgnoreCase 
+                    : StringComparison.Ordinal))
+            {
+                return enumValue;
+            }
+        }
+
+        return null;
     }
 }

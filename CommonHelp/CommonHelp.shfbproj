@@ -43,14 +43,14 @@
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
     <HelpTitle>DotNetExtras.Common Library Documentation</HelpTitle>
-    <HelpFileVersion>1.0.17</HelpFileVersion>
+    <HelpFileVersion>1.0.18</HelpFileVersion>
     <NamingMethod>MemberName</NamingMethod>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <RootNamespaceContainer>True</RootNamespaceContainer>
     <RootNamespaceTitle>API documentation</RootNamespaceTitle>
     <NamespaceGrouping>True</NamespaceGrouping>
     <MaximumGroupParts>3</MaximumGroupParts>
-    <Preliminary>True</Preliminary>
+    <Preliminary>False</Preliminary>
     <SdkLinkTarget>Blank</SdkLinkTarget>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="DotNetExtras.Common (Group)" isGroup="True" isDocumented="True">Defines classes and namespaces for the most common general-purpose operations.</NamespaceSummaryItem>
