@@ -8,35 +8,35 @@ public class PrimaryAssemblyTests
     public void PrimaryAssembly_Company()
     {
         string? company = PrimaryAssembly.Company;
-        Assert.Equal("Microsoft Corporation", company);
+        Assert.Equal("Alek Davis", company);
     }
 
     [Fact]
     public void PrimaryAssembly_Copyright()
     {
         string? copyright = PrimaryAssembly.Copyright;
-        Assert.Equal("© Microsoft Corporation. All rights reserved.", copyright);
+        Assert.Equal("© 2026 Alek Davis", copyright);
     }
 
     [Fact]
     public void PrimaryAssembly_Description()
     {
         string? description = PrimaryAssembly.Description;
-        Assert.Null(description);
+        Assert.Equal("Unit tests.", description);
     }
 
     [Fact]
     public void PrimaryAssembly_Product()
     {
         string? product = PrimaryAssembly.Product;
-        Assert.Equal("testhost", product);
+        Assert.Equal("CommonTests", product);
     }
 
     [Fact]
     public void PrimaryAssembly_Title()
     {
         string? title = PrimaryAssembly.Title;
-        Assert.Equal("testhost", title);
+        Assert.Equal("CommonTests", title);
     }
 
     [Fact]
