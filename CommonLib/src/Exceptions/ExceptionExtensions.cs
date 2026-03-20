@@ -68,6 +68,7 @@ public static partial class ExceptionExtensions
         }
 
         StringBuilder messages = new();
+        List<string>? seen = raw ? null : [];
 
         if (e is AggregateException ae)
         {
@@ -96,8 +97,34 @@ public static partial class ExceptionExtensions
                         ? e.Message 
                         : e.Message.ToSentence(true, true, true);
 
-                    if (raw || !messages.ToString().EndsWith(message))
+                    bool isDuplicate = false;
+
+                    if (!raw)
                     {
+                        foreach (string seenMessage in seen!)
+                        {
+                            if (seenMessage.Contains(message, StringComparison.OrdinalIgnoreCase) || 
+                                message.Contains(seenMessage, StringComparison.OrdinalIgnoreCase))
+                            {
+                                isDuplicate = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (raw || !isDuplicate)
+                    {
+                        if (!raw)
+                        {
+                            seen!.Add(message);
+
+                            // Replace newlines with spaces after duplicate check
+                            message = message
+                                .Replace("\r\n", " ")
+                                .Replace("\r", " ")
+                                .Replace("\n", " ");
+                        }
+
                         if (messages.Length > 0)
                         {
                             messages.Append(' ');

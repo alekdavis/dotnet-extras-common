@@ -1,4 +1,9 @@
 ﻿using DotNetExtras.Common.Exceptions;
+using Microsoft.Graph.Models;
+using System.Diagnostics;
+using System.Reflection.PortableExecutable;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
+using static System.Net.WebRequestMethods;
 
 namespace CommonLibTests.Exceptions;
 
@@ -41,5 +46,15 @@ public partial class ExceptionsTests
 
         Assert.Equal("Safe Outer Exception. Safe Inner Exception.", messages1);
         Assert.Equal(messages2, messages1);
+    }
+
+    [Fact]
+    public void Exception_GetMessages_NoDuplicates()
+    {
+        SafeException ex1 = new("No connection could be made because the target machine actively refused it.");
+        SafeException ex2 = new("No connection could be made because the target machine actively refused it. (localhost:7000)", ex1);
+        SafeException ex3 = new("Call failed. No connection could be made because the target machine actively refused it. (localhost:7000): POST https://localhost:7000/Endpoint?A=B", ex2);
+
+        Assert.Equal("Call failed. No connection could be made because the target machine actively refused it. (localhost:7000): POST https://localhost:7000/Endpoint?A=B.", ex3.GetMessages());
     }
 }
