@@ -103,8 +103,8 @@ public static partial class IEnumerableExtensions
             rightQuote = leftQuote;
         }
 
-        return values == null || !values.Any<T>() 
-            ? "" 
+        return values == null || !values.Any<T>()
+            ? ""
             : string.Join(separator, values.Select(item => leftQuote + item + rightQuote));
     }
 
@@ -138,7 +138,7 @@ public static partial class IEnumerableExtensions
     (
         this T value,
         params T[] values
-    ) 
+    )
     {
         return values != null && values.Contains(value);
     }
@@ -180,9 +180,9 @@ public static partial class IEnumerableExtensions
         this string value,
         bool ignoreCase,
         params string[] values
-    ) 
+    )
     {
-        return values != null && values.Contains(value, ignoreCase ? StringComparer.OrdinalIgnoreCase  : null);
+        return values != null && values.Contains(value, ignoreCase ? StringComparer.OrdinalIgnoreCase : null);
     }
 
     /// <summary>
@@ -215,7 +215,7 @@ public static partial class IEnumerableExtensions
     (
         this string value,
         params string[] values
-    ) 
+    )
     {
         return In(value, false, values);
     }

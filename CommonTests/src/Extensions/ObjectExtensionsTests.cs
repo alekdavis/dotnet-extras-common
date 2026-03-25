@@ -3,6 +3,7 @@ using DotNetExtras.Common;
 using DotNetExtras.Common.Extensions;
 
 namespace CommonLibTests.Extensions;
+
 public partial class ObjectExtensionsTests
 {
     [Fact]
@@ -70,8 +71,8 @@ public partial class ObjectExtensionsTests
         DateTime expirationDate = new(2023, 10, 1);
         DateTimeOffset expirationOffset = new(new DateTime(2023, 10, 1), TimeSpan.FromMinutes(90));
 
-        Employee employee = new() 
-        { 
+        Employee employee = new()
+        {
             Id = id,
             Name = new Name { GivenName = givenName, Surname = surname },
             ExpirationDate = expirationDate,

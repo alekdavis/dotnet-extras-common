@@ -51,7 +51,7 @@ public static partial class JsonExtensions
         bool includeNullValues = false
     )
     {
-        JsonSerializerOptions options = new() 
+        JsonSerializerOptions options = new()
         {
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
             WriteIndented = indented,
@@ -110,17 +110,17 @@ public static partial class JsonExtensions
             return null;
         }
 
-        JsonSerializerOptions options = new() 
+        JsonSerializerOptions options = new()
         {
             PropertyNameCaseInsensitive = true,
             AllowTrailingCommas = true,
             ReferenceHandler = ReferenceHandler.IgnoreCycles,
-            Converters = 
-            {   
-                new JsonStringEnumConverter(), 
-                new JsonDateTimeConverter(), 
+            Converters =
+            {
+                new JsonStringEnumConverter(),
+                new JsonDateTimeConverter(),
                 new JsonDateTimeOffsetConverter(),
-                new JsonObjectAsPrimitiveConverter() 
+                new JsonObjectAsPrimitiveConverter()
             }
         };
 
@@ -145,17 +145,17 @@ public static partial class JsonExtensions
             return null;
         }
 
-        JsonSerializerOptions options = new() 
+        JsonSerializerOptions options = new()
         {
-            PropertyNameCaseInsensitive = true,  
+            PropertyNameCaseInsensitive = true,
             AllowTrailingCommas = true,
             ReferenceHandler = ReferenceHandler.IgnoreCycles,
-            Converters = 
-            { 
-                new JsonStringEnumConverter(), 
-                new JsonDateTimeConverter(), 
+            Converters =
+            {
+                new JsonStringEnumConverter(),
+                new JsonDateTimeConverter(),
                 new JsonDateTimeOffsetConverter(),
-                new JsonObjectAsPrimitiveConverter() 
+                new JsonObjectAsPrimitiveConverter()
             }
         };
 

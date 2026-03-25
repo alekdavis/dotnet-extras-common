@@ -3,6 +3,7 @@
 using DotNetExtras.Common.Extensions;
 
 namespace CommonLibTests.Extensions;
+
 public partial class StringExtensionsTests
 {
     [Theory]
@@ -12,7 +13,7 @@ public partial class StringExtensionsTests
     [InlineData(null, null)]
     public void String_Escape
     (
-        string? source, 
+        string? source,
         string? expected
     )
     {
@@ -39,7 +40,7 @@ public partial class StringExtensionsTests
     [InlineData(null, "")]
     public void String_ToSentence
     (
-        string? source, 
+        string? source,
         string expected,
         bool trimStart = false,
         bool trimEnd = false,

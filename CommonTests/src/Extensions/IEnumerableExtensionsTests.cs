@@ -1,6 +1,7 @@
 ﻿using DotNetExtras.Common.Extensions;
 
 namespace CommonLibTests.Extensions;
+
 public class IEnumerableExtensionsTests
 {
     [Fact]
@@ -36,10 +37,10 @@ public class IEnumerableExtensionsTests
     [Fact]
     public void IEnumerable_ToCsv()
     {
-        List<string> stringList = ["a", "b", "c" ];
+        List<string> stringList = ["a", "b", "c"];
         Assert.Equal("a, b, c", stringList.ToCsv());
 
-        string[] stringArray = ["a", "b", "c" ];
+        string[] stringArray = ["a", "b", "c"];
         Assert.Equal("'a','b','c'", stringArray.ToCsv(",", "'"));
 
         List<int> intList = [1, 2, 3];

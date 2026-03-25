@@ -15,7 +15,7 @@
 public class SafeException: Exception
 {
     /// <inheritdoc cref="SafeException(string, Exception)"/>
-    public SafeException(): base() 
+    public SafeException() : base()
     {
     }
 
@@ -24,7 +24,7 @@ public class SafeException: Exception
     (
         string message
     )
-    : base(message) 
+    : base(message)
     {
     }
 
@@ -39,7 +39,7 @@ public class SafeException: Exception
     /// </param>
     public SafeException
     (
-        string message, 
+        string message,
         Exception innerException
     )
     : base(message, innerException)

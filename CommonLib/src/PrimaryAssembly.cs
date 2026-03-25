@@ -176,7 +176,7 @@ public static class PrimaryAssembly
         object[] attributes = assembly.GetCustomAttributes(typeof(T), false);
 
         return (attributes == null) || (attributes.Length == 0)
-            ? null 
+            ? null
             : (T)attributes[0];
     }
     #endregion

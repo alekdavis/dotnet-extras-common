@@ -1,17 +1,17 @@
 ﻿// Ignore Spelling: Json
 
+using DotNetExtras.Common.Extensions;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using DotNetExtras.Common.Extensions;
 
 namespace DotNetExtras.Common.Json.Converters;
 /// <summary>
 /// Provides a more capable JSON deserialization for <see cref="DateTime"/> values 
 /// than the default converter.
 /// </summary>
-public class JsonDateTimeConverter : JsonConverter<DateTime>
+public class JsonDateTimeConverter: JsonConverter<DateTime>
 {
     private readonly string? _format = null;
     private readonly int _precision = 0;
@@ -66,7 +66,7 @@ public class JsonDateTimeConverter : JsonConverter<DateTime>
         bool serializeAsUtc,
         [Range(0, 7)]
         int precision = 0
-    ) 
+    )
     {
         _serializeAsUtc = serializeAsUtc;
         _precision = precision;
@@ -87,7 +87,7 @@ public class JsonDateTimeConverter : JsonConverter<DateTime>
     (
         bool serializeAsUtc,
         string? format
-    ) 
+    )
     : this(format)
     {
         _serializeAsUtc = serializeAsUtc;
@@ -110,8 +110,8 @@ public class JsonDateTimeConverter : JsonConverter<DateTime>
     /// </returns>
     public override DateTime Read
     (
-        ref Utf8JsonReader reader, 
-        Type typeToConvert, 
+        ref Utf8JsonReader reader,
+        Type typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -119,7 +119,7 @@ public class JsonDateTimeConverter : JsonConverter<DateTime>
 
         DateTime dateTime = string.IsNullOrEmpty(_format)
             ? DateTime.Parse(value)
-            : DateTime.ParseExact(value, _format, null); 
+            : DateTime.ParseExact(value, _format, null);
 
         return dateTime;
     }
@@ -142,15 +142,15 @@ public class JsonDateTimeConverter : JsonConverter<DateTime>
     /// </remarks>
     public override void Write
     (
-        Utf8JsonWriter writer, 
-        DateTime value, 
+        Utf8JsonWriter writer,
+        DateTime value,
         JsonSerializerOptions options
     )
     {
         if (string.IsNullOrEmpty(_format))
         {
-            writer.WriteStringValue(_serializeAsUtc  
-                ? value.ToUniversalIso8601(_precision) 
+            writer.WriteStringValue(_serializeAsUtc
+                ? value.ToUniversalIso8601(_precision)
                 : value.ToIso8601(_precision));
         }
         else

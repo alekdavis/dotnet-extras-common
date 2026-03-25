@@ -1,6 +1,7 @@
 ﻿using DotNetExtras.Common.RegularExpressions;
 
 namespace CommonLibTests.RegularExpressions;
+
 public class RegexPatternTests
 {
     [Fact]

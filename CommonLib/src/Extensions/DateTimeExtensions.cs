@@ -11,8 +11,8 @@ namespace DotNetExtras.Common.Extensions;
 public static class DateTimeExtensions
 {
     private static readonly string _formatPrefix = "yyyy-MM-ddTHH:mm:ss";
-    private static readonly char   _formatPrecision = 'f';
-    private static readonly char   _formatUtc = 'Z';
+    private static readonly char _formatPrecision = 'f';
+    private static readonly char _formatUtc = 'Z';
     private static readonly string _formatOffset = "zzz";
 
     /// <summary>
@@ -40,7 +40,7 @@ public static class DateTimeExtensions
         {
             return null;
         }
-        
+
         StringBuilder format = new(_formatPrefix);
         if (precision > 0)
         {
@@ -48,10 +48,10 @@ public static class DateTimeExtensions
             format.Append(_formatPrecision, precision);
         }
 
-        if  (dateTime.Value.Kind == DateTimeKind.Utc)
+        if (dateTime.Value.Kind == DateTimeKind.Utc)
         {
             format.Append(_formatUtc);
-        } 
+        }
         else if (dateTime.Value.Kind == DateTimeKind.Local)
         {
             format.Append(dateTime.Value.ToString(_formatOffset));
@@ -80,7 +80,7 @@ public static class DateTimeExtensions
         [Range(0, 7)]
         int precision = 0
     )
-    {     
+    {
         StringBuilder format = new(_formatPrefix);
         if (precision > 0)
         {
@@ -88,10 +88,10 @@ public static class DateTimeExtensions
             format.Append(_formatPrecision, precision);
         }
 
-        if  (dateTime.Kind == DateTimeKind.Utc)
+        if (dateTime.Kind == DateTimeKind.Utc)
         {
             format.Append(_formatUtc);
-        } 
+        }
         else if (dateTime.Kind == DateTimeKind.Local)
         {
             format.Append(dateTime.ToString(_formatOffset));
@@ -125,7 +125,7 @@ public static class DateTimeExtensions
         {
             return null;
         }
-        
+
         StringBuilder format = new(_formatPrefix);
         if (precision > 0)
         {
@@ -133,10 +133,10 @@ public static class DateTimeExtensions
             format.Append(_formatPrecision, precision);
         }
 
-        if  (dateTimeOffset.Value.Offset == TimeSpan.Zero)
+        if (dateTimeOffset.Value.Offset == TimeSpan.Zero)
         {
             format.Append(_formatUtc);
-        } 
+        }
         else
         {
             format.Append(dateTimeOffset.Value.ToString(_formatOffset));
@@ -165,7 +165,7 @@ public static class DateTimeExtensions
         [Range(0, 7)]
         int precision = 0
     )
-    {     
+    {
         StringBuilder format = new(_formatPrefix);
         if (precision > 0)
         {
@@ -173,10 +173,10 @@ public static class DateTimeExtensions
             format.Append(_formatPrecision, precision);
         }
 
-        if  (dateTimeOffset.Offset == TimeSpan.Zero)
+        if (dateTimeOffset.Offset == TimeSpan.Zero)
         {
             format.Append(_formatUtc);
-        } 
+        }
         else
         {
             format.Append(dateTimeOffset.ToString(_formatOffset));
@@ -210,7 +210,7 @@ public static class DateTimeExtensions
         {
             return null;
         }
-        
+
         StringBuilder format = new(_formatPrefix);
         if (precision > 0)
         {
@@ -243,7 +243,7 @@ public static class DateTimeExtensions
         [Range(0, 7)]
         int precision = 0
     )
-    {      
+    {
         StringBuilder format = new(_formatPrefix);
         if (precision > 0)
         {
@@ -281,7 +281,7 @@ public static class DateTimeExtensions
         {
             return null;
         }
-        
+
         StringBuilder format = new(_formatPrefix);
         if (precision > 0)
         {
@@ -314,7 +314,7 @@ public static class DateTimeExtensions
         [Range(0, 7)]
         int precision = 0
     )
-    {      
+    {
         StringBuilder format = new(_formatPrefix);
         if (precision > 0)
         {

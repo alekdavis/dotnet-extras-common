@@ -37,7 +37,10 @@ public class AbbreviationAttribute: Attribute
     /// <summary>
     /// Abbreviation value.
     /// </summary>
-    public string Abbreviation { get; private set; }
+    public string Abbreviation
+    {
+        get; private set;
+    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AbbreviationAttribute"/> class.

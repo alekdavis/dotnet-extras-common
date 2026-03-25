@@ -1,6 +1,7 @@
 ﻿using DotNetExtras.Common;
 
 namespace CommonLibTests;
+
 public class CodeContextTests
 {
     [Fact]

@@ -39,8 +39,8 @@ public static partial class StringExtensions
         string replacementString = "''"
     )
     {
-        return string.IsNullOrEmpty(source) 
-            ? source 
+        return string.IsNullOrEmpty(source)
+            ? source
             : source.Replace($"{escapeChar}", $"{replacementString}");
     }
 
@@ -168,8 +168,8 @@ public static partial class StringExtensions
         }
 
         string start = keepCharsStart == 0 ? "" : input[..keepCharsStart];
-        string end   = keepCharsEnd == 0 ? "" : input[^keepCharsEnd..];
-        string middle= new(maskChar, input.Length - keepCharsStart - keepCharsEnd);
+        string end = keepCharsEnd == 0 ? "" : input[^keepCharsEnd..];
+        string middle = new(maskChar, input.Length - keepCharsStart - keepCharsEnd);
 
         return start + middle + end;
     }

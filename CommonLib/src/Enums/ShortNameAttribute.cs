@@ -32,7 +32,10 @@ public class ShortNameAttribute: Attribute
     /// <summary>
     /// Short name value.
     /// </summary>
-    public string ShortName { get; private set; }
+    public string ShortName
+    {
+        get; private set;
+    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ShortNameAttribute"/> class.

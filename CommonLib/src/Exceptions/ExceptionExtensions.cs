@@ -89,12 +89,12 @@ public static partial class ExceptionExtensions
                 e = e.InnerException;
             }
 
-            while (e != null) 
+            while (e != null)
             {
                 if (e is T)
                 {
-                    string message = raw 
-                        ? e.Message 
+                    string message = raw
+                        ? e.Message
                         : e.Message.ToSentence(true, true, true);
 
                     bool isDuplicate = false;
@@ -103,7 +103,7 @@ public static partial class ExceptionExtensions
                     {
                         foreach (string seenMessage in seen!)
                         {
-                            if (seenMessage.Contains(message, StringComparison.OrdinalIgnoreCase) || 
+                            if (seenMessage.Contains(message, StringComparison.OrdinalIgnoreCase) ||
                                 message.Contains(seenMessage, StringComparison.OrdinalIgnoreCase))
                             {
                                 isDuplicate = true;
@@ -138,7 +138,7 @@ public static partial class ExceptionExtensions
             }
         }
 
-        return raw 
+        return raw
             ? messages.ToString()
             : System.Text.RegularExpressions.Regex.Replace(messages.ToString(), @"\s+", " ").Trim();
     }

@@ -45,7 +45,7 @@ public partial class ObjectExtensionsTests
         Assert.False(b1.IsPartialEquivalentOf(false));
         Assert.True(true.IsPartialEquivalentOf(b1));
         Assert.False(false.IsPartialEquivalentOf(b1));
-        
+
         b1 = null;
         bool? b2 = null;
 
@@ -607,39 +607,39 @@ public partial class ObjectExtensionsTests
     public void Object_IsPartialEquivalentOf_HashSet()
     {
         HashSet<string>? h0 = null;
-        HashSet<string> h1 = [ "one", "two", "three" ];
-        HashSet<string> h2 = [ "one", "two", "three" ];
+        HashSet<string> h1 = ["one", "two", "three"];
+        HashSet<string> h2 = ["one", "two", "three"];
 
         Assert.True(h0.IsPartialEquivalentOf(h1));
         Assert.False(h1.IsPartialEquivalentOf(h0));
         Assert.True(h1.IsPartialEquivalentOf(h2));
         Assert.True(h2.IsPartialEquivalentOf(h1));
 
-        HashSet<string> h3 = [ "two", "three" ];
+        HashSet<string> h3 = ["two", "three"];
 
         Assert.False(h1.IsPartialEquivalentOf(h3));
         Assert.True(h3.IsPartialEquivalentOf(h1));
 
-        HashSet<string> h4 = [ "one", "three", "two" ];
+        HashSet<string> h4 = ["one", "three", "two"];
 
         Assert.True(h1.IsPartialEquivalentOf(h4));
         Assert.True(h4.IsPartialEquivalentOf(h1));
 
         HashSet<int>? i0 = null;
-        HashSet<int> i1 = [ 1, 2, 3 ];
-        HashSet<int> i2 = [ 1, 2, 3 ];
+        HashSet<int> i1 = [1, 2, 3];
+        HashSet<int> i2 = [1, 2, 3];
 
         Assert.True(i0.IsPartialEquivalentOf(i1));
         Assert.False(i1.IsPartialEquivalentOf(i0));
         Assert.True(i1.IsPartialEquivalentOf(i2));
         Assert.True(i2.IsPartialEquivalentOf(i1));
 
-        HashSet<int> i3 = [ 2, 3 ];
+        HashSet<int> i3 = [2, 3];
 
         Assert.False(i1.IsPartialEquivalentOf(i3));
         Assert.True(i3.IsPartialEquivalentOf(i1));
 
-        HashSet<int> i4 = [ 1, 3, 2 ];
+        HashSet<int> i4 = [1, 3, 2];
 
         Assert.True(i1.IsPartialEquivalentOf(i4));
         Assert.True(i4.IsPartialEquivalentOf(i1));

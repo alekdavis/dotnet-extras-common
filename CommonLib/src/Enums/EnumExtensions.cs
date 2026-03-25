@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Data.SqlTypes;
 using System.Reflection;
 
 namespace DotNetExtras.Common.Enums;
@@ -29,12 +28,12 @@ public static partial class EnumExtensions
     public static T? GetAttribute<T>
     (
         this Enum value
-    ) 
+    )
     where T : Attribute
     {
-        Type            type        = value.GetType();
-        MemberInfo[]    memberInfo  = type.GetMember(value.ToString());
-        object[]        attributes  = memberInfo[0].GetCustomAttributes(typeof(T), false);
+        Type type = value.GetType();
+        MemberInfo[] memberInfo = type.GetMember(value.ToString());
+        object[] attributes = memberInfo[0].GetCustomAttributes(typeof(T), false);
 
         return attributes == null
             ? null
@@ -116,9 +115,9 @@ public static partial class EnumExtensions
         {
             string? description = enumValue.ToDescription();
 
-            if (!string.IsNullOrEmpty(description) && 
-                description.Equals(value, ignoreCase 
-                    ? StringComparison.OrdinalIgnoreCase 
+            if (!string.IsNullOrEmpty(description) &&
+                description.Equals(value, ignoreCase
+                    ? StringComparison.OrdinalIgnoreCase
                     : StringComparison.Ordinal))
             {
                 return enumValue;
@@ -205,9 +204,9 @@ public static partial class EnumExtensions
         {
             string? abbreviation = enumValue.ToAbbreviation();
 
-            if (!string.IsNullOrEmpty(abbreviation) && 
-                abbreviation.Equals(value, ignoreCase 
-                    ? StringComparison.OrdinalIgnoreCase 
+            if (!string.IsNullOrEmpty(abbreviation) &&
+                abbreviation.Equals(value, ignoreCase
+                    ? StringComparison.OrdinalIgnoreCase
                     : StringComparison.Ordinal))
             {
                 return enumValue;
@@ -294,9 +293,9 @@ public static partial class EnumExtensions
         {
             string? shortName = enumValue.ToShortName();
 
-            if (!string.IsNullOrEmpty(shortName) && 
-                shortName.Equals(value, ignoreCase 
-                    ? StringComparison.OrdinalIgnoreCase 
+            if (!string.IsNullOrEmpty(shortName) &&
+                shortName.Equals(value, ignoreCase
+                    ? StringComparison.OrdinalIgnoreCase
                     : StringComparison.Ordinal))
             {
                 return enumValue;

@@ -1,6 +1,7 @@
 ﻿using DotNetExtras.Common.Extensions;
 
 namespace CommonLibTests.Extensions;
+
 public class TypeExtensionsTests
 {
     [Theory]
@@ -34,7 +35,7 @@ public class TypeExtensionsTests
     [InlineData(typeof(Models.Employee), false)]
     public void Type_IsPrimitive
     (
-        Type type, 
+        Type type,
         bool expected
     )
     {
@@ -72,7 +73,7 @@ public class TypeExtensionsTests
     [InlineData(typeof(Models.Employee), false)]
     public void Type_IsSimple
     (
-        Type type, 
+        Type type,
         bool expected
     )
     {

@@ -424,7 +424,7 @@ public static class NameOf
     {
         string result = name?.Replace("?", "")?.Replace("!", "")?.Replace("@", "") ?? "";
 
-        return camelCase 
+        return camelCase
             ? string.Join('.', result.Split('.').Select(JsonNamingPolicy.CamelCase.ConvertName))
             : result;
     }
@@ -456,6 +456,6 @@ public static class NameOf
         }
 
         return name;
-    } 
+    }
     #endregion
 }

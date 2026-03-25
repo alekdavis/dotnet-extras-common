@@ -4,34 +4,70 @@ namespace CommonLibTests;
 
 public class Info
 {
-    public string? X {  get; set; }
+    public string? X
+    {
+        get; set;
+    }
 
-    public int? Y { get; set; }
+    public int? Y
+    {
+        get; set;
+    }
 
-    public bool? Z { get; set; }
+    public bool? Z
+    {
+        get; set;
+    }
 
-    public string? ShortName { get; set; }
+    public string? ShortName
+    {
+        get; set;
+    }
 
-    public string? USName { get; set; }
+    public string? USName
+    {
+        get; set;
+    }
 
-    public string? USAName { get; set; }
+    public string? USAName
+    {
+        get; set;
+    }
 }
 
 public class Data
 {
-    public Info? Info { get; set; }
+    public Info? Info
+    {
+        get; set;
+    }
 
-    public string? A { get; set; }
+    public string? A
+    {
+        get; set;
+    }
 
-    public int? B { get; set; }
+    public int? B
+    {
+        get; set;
+    }
 
-    public bool? C { get; set; }
+    public bool? C
+    {
+        get; set;
+    }
 
-    public Inner? Internal { get; set; }
+    public Inner? Internal
+    {
+        get; set;
+    }
 
     public class Inner
     {
-        public Data? Data { get; set; }
+        public Data? Data
+        {
+            get; set;
+        }
     }
 }
 

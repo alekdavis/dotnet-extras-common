@@ -4,6 +4,7 @@ using CommonLibTests.Models;
 using DotNetExtras.Common.Json;
 
 namespace CommonLibTests.Json;
+
 public class JsonExtensionsTests
 {
     [Fact]
@@ -29,7 +30,10 @@ public class JsonExtensionsTests
             },
             SocialAccounts = new()
             {
-                ["Facebook"] = new() { Account = "Joe.Doe@mail.com" },
+                ["Facebook"] = new()
+                {
+                    Account = "Joe.Doe@mail.com"
+                },
             },
             Phones =
             [
@@ -37,7 +41,7 @@ public class JsonExtensionsTests
                 new() { Number = "987-654-3210", Type = PhoneType.Business },
             ],
 
-            PasswordExpirationDate = new (2031, 11, 30, 19, 15, 33),
+            PasswordExpirationDate = new(2031, 11, 30, 19, 15, 33),
             LastLoginDateOffset = new(new DateTime(2021, 10, 12, 20, 33, 41), new TimeSpan(3, 30, 0)),
 
             Password = "sensitiveValue",
@@ -92,7 +96,13 @@ public class JsonExtensionsTests
         string name
     )
     {
-        User? user = new() { Name = new() { Surname = name } };
+        User? user = new()
+        {
+            Name = new()
+            {
+                Surname = name
+            }
+        };
         string json = user.ToJson();
 
         Assert.Contains($"\"surname\":\"{name}\"", json);

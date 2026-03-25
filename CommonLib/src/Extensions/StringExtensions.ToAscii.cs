@@ -10,7 +10,7 @@ namespace DotNetExtras.Common.Extensions;
 // Lucene.Net library.  The documentation of the conversion of characters is quite impressive 
 // (thank you @NightOwl888 and @synhershko !!!):
 // https://github.com/apache/lucenenet/blob/master/src/Lucene.Net.Analysis.Common/Analysis/Miscellaneous/ASCIIFoldingFilter.cs
-    
+
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with

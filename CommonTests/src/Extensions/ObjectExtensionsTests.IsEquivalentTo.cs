@@ -45,7 +45,7 @@ public partial class ObjectExtensionsTests
         Assert.False(b1.IsEquivalentOf(false));
         Assert.True(true.IsEquivalentOf(b1));
         Assert.False(false.IsEquivalentOf(b1));
-        
+
         b1 = null;
         bool? b2 = null;
 
@@ -585,34 +585,34 @@ public partial class ObjectExtensionsTests
     [Fact]
     public void Object_IsEquivalentOf_HashSet()
     {
-        HashSet<string> h1 = [ "one", "two", "three" ];
-        HashSet<string> h2 = [ "one", "two", "three" ];
+        HashSet<string> h1 = ["one", "two", "three"];
+        HashSet<string> h2 = ["one", "two", "three"];
 
         Assert.True(h1.IsEquivalentOf(h2));
         Assert.True(h2.IsEquivalentOf(h1));
 
-        HashSet<string> h3 = [ "two", "three" ];
+        HashSet<string> h3 = ["two", "three"];
 
         Assert.False(h1.IsEquivalentOf(h3));
         Assert.False(h3.IsEquivalentOf(h1));
 
-        HashSet<string> h4 = [ "one", "three", "two" ];
+        HashSet<string> h4 = ["one", "three", "two"];
 
         Assert.True(h1.IsEquivalentOf(h4));
         Assert.True(h4.IsEquivalentOf(h1));
 
-        HashSet<int> i1 = [ 1, 2, 3 ];
-        HashSet<int> i2 = [ 1, 2, 3 ];
+        HashSet<int> i1 = [1, 2, 3];
+        HashSet<int> i2 = [1, 2, 3];
 
         Assert.True(i1.IsEquivalentOf(i2));
         Assert.True(i2.IsEquivalentOf(i1));
 
-        HashSet<int> i3 = [ 2, 3 ];
+        HashSet<int> i3 = [2, 3];
 
         Assert.False(i1.IsEquivalentOf(i3));
         Assert.False(i3.IsEquivalentOf(i1));
 
-        HashSet<int> i4 = [ 1, 3, 2 ];
+        HashSet<int> i4 = [1, 3, 2];
 
         Assert.True(i1.IsEquivalentOf(i4));
         Assert.True(i4.IsEquivalentOf(i1));

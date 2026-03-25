@@ -13,14 +13,14 @@ namespace DotNetExtras.Common.Extensions;
 public static partial class ObjectExtensions
 {
     #region Private properties
-        // When getting and setting properties,
-        // treat names as case sensitive (we need to specify all flags to make it work).
-        private static readonly BindingFlags _BINDING_FLAGS =
-            BindingFlags.IgnoreCase |
-            BindingFlags.Public |
-            BindingFlags.NonPublic |
-            BindingFlags.Static |
-            BindingFlags.Instance;
+    // When getting and setting properties,
+    // treat names as case sensitive (we need to specify all flags to make it work).
+    private static readonly BindingFlags _BINDING_FLAGS =
+        BindingFlags.IgnoreCase |
+        BindingFlags.Public |
+        BindingFlags.NonPublic |
+        BindingFlags.Static |
+        BindingFlags.Instance;
     #endregion
 
     #region Public methods
@@ -85,7 +85,7 @@ public static partial class ObjectExtensions
         // Check all public and internal fields
         foreach (FieldInfo field in type.GetFields(
             BindingFlags.Instance |
-            BindingFlags.Public  |
+            BindingFlags.Public |
             (publicOnly ? 0 : BindingFlags.Public)))
         {
             object? value = field.GetValue(source);
@@ -419,7 +419,7 @@ public static partial class ObjectExtensions
             {
                 dt = DateTime.Parse(tStringDt, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
             }
-            
+
             return source.Equals(dt);
         }
         else if (target is DateTime && source is string sStringDt)
@@ -438,7 +438,7 @@ public static partial class ObjectExtensions
             {
                 dt = DateTime.Parse(sStringDt, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
             }
-            
+
             return target.Equals(dt);
         }
         else if (source is DateTime sDt && target is DateTimeOffset tDto)
@@ -462,7 +462,7 @@ public static partial class ObjectExtensions
                 }
             }
             else
-            {          
+            {
                 if (!DateTime.TryParse(tString, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime dt))
                 {
                     return false;
@@ -470,7 +470,7 @@ public static partial class ObjectExtensions
 
                 dto = new(dt);
             }
-            
+
             return source.Equals(dto);
         }
         else if (target is DateTimeOffset && source is string sString)
@@ -484,7 +484,7 @@ public static partial class ObjectExtensions
                 }
             }
             else
-            {          
+            {
                 if (!DateTime.TryParse(sString, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime dt))
                 {
                     return false;
@@ -492,7 +492,7 @@ public static partial class ObjectExtensions
 
                 dto = new(dt);
             }
-            
+
             return target.Equals(dto);
         }
         else if (source is DateTimeOffset sDto && target is DateTime tDt)
@@ -573,8 +573,8 @@ public static partial class ObjectExtensions
             if (sourceDictionary.Count != targetDictionary.Count)
             {
                 return false;
-            }            
-            
+            }
+
             foreach (object? key in sourceDictionary.Keys)
             {
                 if (!targetDictionary.Contains(key) ||
@@ -586,7 +586,7 @@ public static partial class ObjectExtensions
 
             return true;
         }
-        else if (sourceType.IsGenericType && sourceType.GetGenericTypeDefinition() == typeof(HashSet<>) && 
+        else if (sourceType.IsGenericType && sourceType.GetGenericTypeDefinition() == typeof(HashSet<>) &&
             targetType.IsGenericType && targetType.GetGenericTypeDefinition() == typeof(HashSet<>))
         {
             IEnumerable sourceEnumerable = (IEnumerable)source;
@@ -595,8 +595,8 @@ public static partial class ObjectExtensions
             if (sourceEnumerable.Count() != targetEnumerable.Count())
             {
                 return false;
-            }            
-            
+            }
+
             foreach (object? sourceItem in sourceEnumerable.Cast<object?>())
             {
                 foreach (object? targetItem in targetEnumerable.Cast<object?>())
@@ -618,7 +618,7 @@ public static partial class ObjectExtensions
 
             foreach (PropertyInfo property in sourceType.GetProperties(
                 BindingFlags.Instance |
-                BindingFlags.Public | 
+                BindingFlags.Public |
                 (includeNonPublic ? BindingFlags.NonPublic : 0)))
             {
                 if (property.CanRead)
@@ -635,7 +635,7 @@ public static partial class ObjectExtensions
             }
 
             foreach (PropertyInfo property in targetType.GetProperties(
-                BindingFlags.Instance | 
+                BindingFlags.Instance |
                 BindingFlags.Public |
                 (includeNonPublic ? BindingFlags.NonPublic : 0)))
             {
@@ -659,7 +659,7 @@ public static partial class ObjectExtensions
 
             foreach (FieldInfo field in sourceType.GetFields(
                 BindingFlags.Instance |
-                BindingFlags.Public | 
+                BindingFlags.Public |
                 (includeNonPublic ? BindingFlags.NonPublic : 0)))
             {
                 skip.Add(field.Name);
@@ -673,7 +673,7 @@ public static partial class ObjectExtensions
                 }
             }
 
-            foreach (FieldInfo field in targetType.GetFields( 
+            foreach (FieldInfo field in targetType.GetFields(
                 BindingFlags.Instance |
                 BindingFlags.Public |
                 (includeNonPublic ? BindingFlags.NonPublic : 0)))
@@ -886,8 +886,8 @@ public static partial class ObjectExtensions
             if (sourceDictionary.Count > targetDictionary.Count)
             {
                 return false;
-            }            
-            
+            }
+
             foreach (object? key in sourceDictionary.Keys)
             {
                 if (!targetDictionary.Contains(key) || !IsPartialEquivalentOf(sourceDictionary[key], targetDictionary[key], includeNonPublic))
@@ -898,7 +898,7 @@ public static partial class ObjectExtensions
 
             return true;
         }
-        else if (sourceType.IsGenericType && sourceType.GetGenericTypeDefinition() == typeof(HashSet<>) && 
+        else if (sourceType.IsGenericType && sourceType.GetGenericTypeDefinition() == typeof(HashSet<>) &&
             targetType.IsGenericType && targetType.GetGenericTypeDefinition() == typeof(HashSet<>))
         {
             IEnumerable sourceEnumerable = (IEnumerable)source;
@@ -907,8 +907,8 @@ public static partial class ObjectExtensions
             if (sourceEnumerable.Count() > sourceEnumerable.Count())
             {
                 return false;
-            }            
-            
+            }
+
             foreach (object? sourceItem in sourceEnumerable.Cast<object?>())
             {
                 foreach (object? targetItem in targetEnumerable.Cast<object?>())
@@ -930,7 +930,7 @@ public static partial class ObjectExtensions
 
             foreach (PropertyInfo property in sourceType.GetProperties(
                 BindingFlags.Instance |
-                BindingFlags.Public | 
+                BindingFlags.Public |
                 (includeNonPublic ? BindingFlags.NonPublic : 0)))
             {
                 if (property.CanRead)
@@ -951,7 +951,7 @@ public static partial class ObjectExtensions
 
             foreach (FieldInfo field in sourceType.GetFields(
                 BindingFlags.Instance |
-                BindingFlags.Public | 
+                BindingFlags.Public |
                 (includeNonPublic ? BindingFlags.NonPublic : 0)))
             {
                 skip.Add(field.Name);

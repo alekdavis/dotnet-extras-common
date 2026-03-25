@@ -1,6 +1,7 @@
 ﻿using DotNetExtras.Common.Extensions;
 
 namespace CommonLibTests.Extensions;
+
 public class DateTimeExtensionTests
 {
     [Theory]
@@ -88,7 +89,7 @@ public class DateTimeExtensionTests
 
         result = dateTimeParsed.ToIso8601(precision);
         expected = dateTimeParsed!.Value.ToString("yyyy-MM-ddTHH:mm:ss" + (precision > 0 ? "." + new string('f', precision) : ""));
-        
+
         Assert.StartsWith(expected, result);
     }
 
@@ -125,7 +126,7 @@ public class DateTimeExtensionTests
 
         result = dateTimeOffsetParsed.ToIso8601(precision);
         expected = dateTimeOffsetParsed!.Value.ToString("yyyy-MM-ddTHH:mm:ss" + (precision > 0 ? "." + new string('f', precision) : ""));
-        
+
         Assert.StartsWith(expected, result);
     }
 }

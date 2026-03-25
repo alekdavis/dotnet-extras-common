@@ -1,17 +1,30 @@
 ﻿using System.Text.Json.Serialization;
 
 namespace CommonLibTests.Models;
+
 internal class Phone
 {
     [JsonInclude]
-    internal PhoneType? Type { get; set; }
+    internal PhoneType? Type
+    {
+        get; set;
+    }
 
     [JsonInclude]
-    internal bool? IsMobile { get; set; }
+    internal bool? IsMobile
+    {
+        get; set;
+    }
 
     [JsonInclude]
-    internal string? Number { get; set; }
+    internal string? Number
+    {
+        get; set;
+    }
 
     [JsonInclude]
-    internal bool? IsPrimary { get; set; }
+    internal bool? IsPrimary
+    {
+        get; set;
+    }
 }

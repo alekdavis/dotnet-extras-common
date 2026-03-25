@@ -1,9 +1,4 @@
 ﻿using DotNetExtras.Common.Exceptions;
-using Microsoft.Graph.Models;
-using System.Diagnostics;
-using System.Reflection.PortableExecutable;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
-using static System.Net.WebRequestMethods;
 
 namespace CommonLibTests.Exceptions;
 

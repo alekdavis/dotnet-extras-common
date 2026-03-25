@@ -38,23 +38,23 @@ public static partial class TypeExtensions
     /// </example>
 	public static bool IsSimple
     (
-		this Type type
+        this Type type
     )
-	{
-		return
+    {
+        return
             type.IsPrimitive ||
             type.IsValueType ||
-			type.IsPrimitive() ||
-			new Type[] { 
-				typeof(StringBuilder),
-				typeof(DateTime),
-				typeof(DateTimeOffset),
+            type.IsPrimitive() ||
+            new Type[] {
+                typeof(StringBuilder),
+                typeof(DateTime),
+                typeof(DateTimeOffset),
                 typeof(DateOnly),
                 typeof(TimeOnly),
-				typeof(TimeSpan),
-				typeof(Guid)
-			}.Contains(type) ||
-			Convert.GetTypeCode(type) != TypeCode.Object;
+                typeof(TimeSpan),
+                typeof(Guid)
+            }.Contains(type) ||
+            Convert.GetTypeCode(type) != TypeCode.Object;
     }
 
     /// <summary>

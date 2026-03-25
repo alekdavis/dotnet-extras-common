@@ -35,7 +35,7 @@ namespace DotNetExtras.Common.Json.Converters;
 /// </para>
 /// </remarks>
 public class JsonObjectAsPrimitiveConverter: JsonConverter<object>
-{   
+{
     /// <summary>
     /// Writes the specified object value as JSON using the provided <see cref="Utf8JsonWriter"/>.
     /// </summary>
@@ -50,8 +50,8 @@ public class JsonObjectAsPrimitiveConverter: JsonConverter<object>
     /// </param>
     public override void Write
     (
-        Utf8JsonWriter writer, 
-        object value, 
+        Utf8JsonWriter writer,
+        object value,
         JsonSerializerOptions options
     )
     {
@@ -69,7 +69,7 @@ public class JsonObjectAsPrimitiveConverter: JsonConverter<object>
             JsonSerializer.Serialize(writer, value, value.GetType(), options);
         }
     }
-    
+
     /// <summary>
     /// Reads and converts JSON element to a .NET object based on the JSON token type.
     /// </summary>
@@ -88,8 +88,8 @@ public class JsonObjectAsPrimitiveConverter: JsonConverter<object>
     /// </returns>
     public override object? Read
     (
-        ref Utf8JsonReader reader, 
-        Type typeToConvert, 
+        ref Utf8JsonReader reader,
+        Type typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -141,12 +141,12 @@ public class JsonObjectAsPrimitiveConverter: JsonConverter<object>
 
 
                 bool isDecimal = reader.TryGetDecimal(out decimal decimalValue);
-                bool isDouble  = reader.TryGetDouble(out double doubleValue);
+                bool isDouble = reader.TryGetDouble(out double doubleValue);
 
                 if (isDecimal && isDouble)
                 {
-                    return (double)decimalValue != doubleValue 
-                        ? doubleValue 
+                    return (double)decimalValue != doubleValue
+                        ? doubleValue
                         : decimalValue;
                 }
 
