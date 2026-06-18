@@ -25,6 +25,12 @@ public static partial class ExceptionExtensions
     /// otherwise, all new lines, tabs and duplicate spaces will be replaced with single spaces
     /// and consecutive duplicate messages will be omitted.
     /// </param>
+    /// <param name="safeOnly">
+    /// If <c>true</c>, messages from any <see cref="SafeException"/> (or derived) instance
+    /// whose <see cref="SafeException.IsSafe"/> property is <c>false</c> will be omitted.
+    /// The type filter specified by <typeparamref name="T"/> still applies on top of this check.
+    /// Exceptions that are not derived from <see cref="SafeException"/> are not affected by this flag.
+    /// </param>
     /// <returns>
     /// Complete error message.
     /// </returns>
@@ -40,8 +46,8 @@ public static partial class ExceptionExtensions
     /// included in the error message.
     /// </remarks>
     /// <seealso cref="SafeException"/>
-    /// <seealso cref="GetSafeMessages(Exception, bool)"/>
-    /// <seealso cref="GetMessages(Exception, bool)"/>
+    /// <seealso cref="GetSafeMessages(Exception, bool, bool)"/>
+    /// <seealso cref="GetMessages(Exception, bool, bool)"/>
     /// <example>
     /// <code>
     /// Exception ex = new SafeException("Outer exception", new SafeException("Inner exception 1"), new Exception("Inner exception 2"));
@@ -51,12 +57,17 @@ public static partial class ExceptionExtensions
     /// 
     /// // Returns: "Outer exception. Inner exception 1."
     /// messages = ex.GetMessages&lt;SafeException&gt;();
+    /// 
+    /// // Returns: "Outer exception." (inner SafeException with IsSafe=false is omitted)
+    /// ex = new SafeException("Outer exception", new SafeException("Sensitive details", isSafe: false));
+    /// messages = ex.GetMessages&lt;Exception&gt;(safeOnly: true);
     /// </code>
     /// </example>
     public static string GetMessages<T>
     (
         this Exception ex,
-        bool raw = false
+        bool raw = false,
+        bool safeOnly = false
     )
     where T : Exception
     {
@@ -79,7 +90,7 @@ public static partial class ExceptionExtensions
                     messages.Append(' ');
                 }
 
-                messages.Append(ie.GetMessages<T>(raw));
+                messages.Append(ie.GetMessages<T>(raw, safeOnly));
             }
         }
         else
@@ -91,7 +102,7 @@ public static partial class ExceptionExtensions
 
             while (e != null)
             {
-                if (e is T)
+                if (e is T && !(safeOnly && e is SafeException { IsSafe: false }))
                 {
                     string message = raw
                         ? e.Message
@@ -154,27 +165,33 @@ public static partial class ExceptionExtensions
     /// otherwise, all new lines, tabs and duplicate spaces will be replaced with single spaces
     /// and consecutive duplicate messages will be omitted.
     /// </param>
+    /// <param name="safeOnly">
+    /// If <c>true</c> (default), messages from any <see cref="SafeException"/> (or derived) instance
+    /// whose <see cref="SafeException.IsSafe"/> property is <c>false</c> will be omitted.
+    /// Set to <c>false</c> to include messages from every <see cref="SafeException"/> regardless of the flag.
+    /// </param>
     /// <returns>
     /// Complete error message.
     /// </returns>
     /// <seealso cref="SafeException"/>
-    /// <seealso cref="GetSafeMessages(Exception, bool)"/>
-    /// <seealso cref="GetMessages(Exception, bool)"/>
+    /// <seealso cref="GetMessages{T}(Exception, bool, bool)"/>
+    /// <seealso cref="GetMessages(Exception, bool, bool)"/>
     /// <example>
     /// <code>
     /// Exception ex = new SafeException("Outer exception", new SafeException("Inner exception 1"), new Exception("Inner exception 2"));
     /// 
     /// // Returns: "Outer exception. Inner exception 1."
-    /// string messages = ex.GetSafeMessages&lt;SafeException&gt;();
+    /// string messages = ex.GetSafeMessages();
     /// </code>
     /// </example>
     public static string GetSafeMessages
     (
         this Exception ex,
-        bool raw = false
+        bool raw = false,
+        bool safeOnly = true
     )
     {
-        return ex.GetMessages<SafeException>(raw);
+        return ex.GetMessages<SafeException>(raw, safeOnly);
     }
 
     /// <summary>
@@ -187,6 +204,11 @@ public static partial class ExceptionExtensions
     /// If true, original messages and formatting will be preserved; 
     /// otherwise, all new lines, tabs and duplicate spaces will be replaced with single spaces
     /// and consecutive duplicate messages will be omitted.
+    /// </param>
+    /// <param name="safeOnly">
+    /// If <c>true</c>, messages from any <see cref="SafeException"/> (or derived) instance
+    /// whose <see cref="SafeException.IsSafe"/> property is <c>false</c> will be omitted.
+    /// Exceptions that are not derived from <see cref="SafeException"/> are not affected by this flag.
     /// </param>
     /// <returns>
     /// Complete error message.
@@ -202,9 +224,10 @@ public static partial class ExceptionExtensions
     public static string GetMessages
     (
         this Exception ex,
-        bool raw = false
+        bool raw = false,
+        bool safeOnly = false
     )
     {
-        return ex.GetMessages<Exception>(raw);
+        return ex.GetMessages<Exception>(raw, safeOnly);
     }
 }
