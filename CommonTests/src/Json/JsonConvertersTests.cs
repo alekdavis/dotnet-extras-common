@@ -16,6 +16,16 @@ public class TestClass
     {
         get; set;
     }
+
+    public bool BoolValue
+    {
+        get; set;
+    }
+
+    public bool? NullableBoolValue
+    {
+        get; set;
+    }
 }
 
 public class JsonConvertersTests
@@ -256,5 +266,288 @@ public class JsonConvertersTests
 
             Assert.Equal(expected, deserialized.DateTimeOffsetValue!.Value);
         }
+    }
+
+    [Theory]
+    [InlineData(true, "true")]
+    [InlineData(false, "false")]
+    public void BoolConverter_SerializeBool
+    (
+        bool value,
+        string expected
+    )
+    {
+        JsonSerializerOptions options = new()
+        {
+            WriteIndented = false,
+            Converters = { new JsonBoolConverter() }
+        };
+
+        TestClass testObject = new()
+        {
+            BoolValue = value
+        };
+
+        string json = JsonSerializer.Serialize(testObject, options);
+
+        Assert.Contains($"\"BoolValue\":{expected}", json);
+    }
+
+    [Theory]
+    [InlineData(true, "true")]
+    [InlineData(false, "false")]
+    [InlineData(null, "null")]
+    public void BoolConverter_SerializeNullableBool
+    (
+        bool? value,
+        string expected
+    )
+    {
+        JsonSerializerOptions options = new()
+        {
+            WriteIndented = false,
+            Converters = { new JsonBoolConverter() }
+        };
+
+        TestClass testObject = new()
+        {
+            NullableBoolValue = value
+        };
+
+        string json = JsonSerializer.Serialize(testObject, options);
+
+        Assert.Contains($"\"NullableBoolValue\":{expected}", json);
+    }
+
+    [Theory]
+    [InlineData("true", true)]
+    [InlineData("false", false)]
+    public void BoolConverter_DeserializeNativeBoolean
+    (
+        string jsonValue,
+        bool expected
+    )
+    {
+        string json = $"{{\"BoolValue\":{jsonValue}}}";
+
+        JsonSerializerOptions options = new()
+        {
+            Converters = { new JsonBoolConverter() }
+        };
+
+        TestClass? deserialized = JsonSerializer.Deserialize<TestClass>(json, options);
+
+        Assert.NotNull(deserialized);
+        Assert.Equal(expected, deserialized.BoolValue);
+    }
+
+    [Theory]
+    [InlineData(1, true)]
+    [InlineData(0, false)]
+    public void BoolConverter_DeserializeNumber
+    (
+        int jsonValue,
+        bool expected
+    )
+    {
+        string json = $"{{\"BoolValue\":{jsonValue}}}";
+
+        JsonSerializerOptions options = new()
+        {
+            Converters = { new JsonBoolConverter() }
+        };
+
+        TestClass? deserialized = JsonSerializer.Deserialize<TestClass>(json, options);
+
+        Assert.NotNull(deserialized);
+        Assert.Equal(expected, deserialized.BoolValue);
+    }
+
+    [Theory]
+    [InlineData(2)]
+    [InlineData(-1)]
+    [InlineData(100)]
+    public void BoolConverter_DeserializeInvalidNumber_Throws
+    (
+        int jsonValue
+    )
+    {
+        string json = $"{{\"BoolValue\":{jsonValue}}}";
+
+        JsonSerializerOptions options = new()
+        {
+            Converters = { new JsonBoolConverter() }
+        };
+
+        Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<TestClass>(json, options));
+    }
+
+    [Fact]
+    public void BoolConverter_DeserializeNonIntegerNumber_Throws()
+    {
+        string json = "{\"BoolValue\":1.5}";
+
+        JsonSerializerOptions options = new()
+        {
+            Converters = { new JsonBoolConverter() }
+        };
+
+        Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<TestClass>(json, options));
+    }
+
+    [Theory]
+    [InlineData("true", true)]
+    [InlineData("True", true)]
+    [InlineData("TRUE", true)]
+    [InlineData("1", true)]
+    [InlineData("yes", true)]
+    [InlineData("YES", true)]
+    [InlineData("y", true)]
+    [InlineData("Y", true)]
+    [InlineData("on", true)]
+    [InlineData("ON", true)]
+    [InlineData("false", false)]
+    [InlineData("False", false)]
+    [InlineData("FALSE", false)]
+    [InlineData("0", false)]
+    [InlineData("no", false)]
+    [InlineData("NO", false)]
+    [InlineData("n", false)]
+    [InlineData("N", false)]
+    [InlineData("off", false)]
+    [InlineData("OFF", false)]
+    public void BoolConverter_DeserializeString
+    (
+        string jsonValue,
+        bool expected
+    )
+    {
+        string json = $"{{\"BoolValue\":\"{jsonValue}\"}}";
+
+        JsonSerializerOptions options = new()
+        {
+            Converters = { new JsonBoolConverter() }
+        };
+
+        TestClass? deserialized = JsonSerializer.Deserialize<TestClass>(json, options);
+
+        Assert.NotNull(deserialized);
+        Assert.Equal(expected, deserialized.BoolValue);
+    }
+
+    [Theory]
+    [InlineData("maybe")]
+    [InlineData("")]
+    [InlineData("truthy")]
+    [InlineData("falsy")]
+    [InlineData("2")]
+    public void BoolConverter_DeserializeInvalidString_Throws
+    (
+        string jsonValue
+    )
+    {
+        string json = $"{{\"BoolValue\":\"{jsonValue}\"}}";
+
+        JsonSerializerOptions options = new()
+        {
+            Converters = { new JsonBoolConverter() }
+        };
+
+        Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<TestClass>(json, options));
+    }
+
+    [Fact]
+    public void BoolConverter_DeserializeNullableBool_NullReturnsNull()
+    {
+        string json = "{\"NullableBoolValue\":null}";
+
+        JsonSerializerOptions options = new()
+        {
+            Converters = { new JsonBoolConverter() }
+        };
+
+        TestClass? deserialized = JsonSerializer.Deserialize<TestClass>(json, options);
+
+        Assert.NotNull(deserialized);
+        Assert.Null(deserialized.NullableBoolValue);
+    }
+
+    [Theory]
+    [InlineData("true", true)]
+    [InlineData("false", false)]
+    [InlineData("1", true)]
+    [InlineData("0", false)]
+    [InlineData("yes", true)]
+    [InlineData("no", false)]
+    public void BoolConverter_DeserializeNullableBool_AcceptsValueFormats
+    (
+        string jsonValue,
+        bool expected
+    )
+    {
+        string json = $"{{\"NullableBoolValue\":\"{jsonValue}\"}}";
+
+        JsonSerializerOptions options = new()
+        {
+            Converters = { new JsonBoolConverter() }
+        };
+
+        TestClass? deserialized = JsonSerializer.Deserialize<TestClass>(json, options);
+
+        Assert.NotNull(deserialized);
+        Assert.Equal(expected, deserialized.NullableBoolValue);
+    }
+
+    [Theory]
+    [InlineData(1, true)]
+    [InlineData(0, false)]
+    public void BoolConverter_DeserializeNullableBool_AcceptsNumbers
+    (
+        int jsonValue,
+        bool expected
+    )
+    {
+        string json = $"{{\"NullableBoolValue\":{jsonValue}}}";
+
+        JsonSerializerOptions options = new()
+        {
+            Converters = { new JsonBoolConverter() }
+        };
+
+        TestClass? deserialized = JsonSerializer.Deserialize<TestClass>(json, options);
+
+        Assert.NotNull(deserialized);
+        Assert.Equal(expected, deserialized.NullableBoolValue);
+    }
+
+    [Theory]
+    [InlineData(2)]
+    [InlineData(-1)]
+    public void BoolConverter_DeserializeNullableBool_InvalidNumberThrows
+    (
+        int jsonValue
+    )
+    {
+        string json = $"{{\"NullableBoolValue\":{jsonValue}}}";
+
+        JsonSerializerOptions options = new()
+        {
+            Converters = { new JsonBoolConverter() }
+        };
+
+        Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<TestClass>(json, options));
+    }
+
+    [Fact]
+    public void BoolConverter_DeserializeNullableBool_InvalidStringThrows()
+    {
+        string json = "{\"NullableBoolValue\":\"maybe\"}";
+
+        JsonSerializerOptions options = new()
+        {
+            Converters = { new JsonBoolConverter() }
+        };
+
+        Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<TestClass>(json, options));
     }
 }
