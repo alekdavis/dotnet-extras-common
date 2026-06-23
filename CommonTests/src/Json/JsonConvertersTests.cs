@@ -2,6 +2,7 @@
 
 using DotNetExtras.Common.Json.Converters;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace CommonLibTests.Json;
 
@@ -22,6 +23,21 @@ public class TestClass
         get; set;
     }
 
+    public bool? NullableBoolValue
+    {
+        get; set;
+    }
+}
+
+public class TestClassWithBoolAttribute
+{
+    [JsonConverter(typeof(JsonBoolConverter))]
+    public bool BoolValue
+    {
+        get; set;
+    }
+
+    [JsonConverter(typeof(JsonBoolConverter))]
     public bool? NullableBoolValue
     {
         get; set;
@@ -549,5 +565,92 @@ public class JsonConvertersTests
         };
 
         Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<TestClass>(json, options));
+    }
+
+    [Theory]
+    [InlineData("true", true)]
+    [InlineData("false", false)]
+    [InlineData("1", true)]
+    [InlineData("0", false)]
+    [InlineData("yes", true)]
+    [InlineData("YES", true)]
+    [InlineData("no", false)]
+    [InlineData("off", false)]
+    public void BoolConverter_WithAttribute_DeserializeString
+    (
+        string jsonValue,
+        bool expected
+    )
+    {
+        string json = $"{{\"BoolValue\":\"{jsonValue}\"}}";
+
+        // No converters registered in options — the attribute applies the converter automatically.
+        TestClassWithBoolAttribute? deserialized = JsonSerializer.Deserialize<TestClassWithBoolAttribute>(json);
+
+        Assert.NotNull(deserialized);
+        Assert.Equal(expected, deserialized.BoolValue);
+    }
+
+    [Theory]
+    [InlineData(1, true)]
+    [InlineData(0, false)]
+    public void BoolConverter_WithAttribute_DeserializeNumber
+    (
+        int jsonValue,
+        bool expected
+    )
+    {
+        string json = $"{{\"BoolValue\":{jsonValue}}}";
+
+        // No converters registered in options — the attribute applies the converter automatically.
+        TestClassWithBoolAttribute? deserialized = JsonSerializer.Deserialize<TestClassWithBoolAttribute>(json);
+
+        Assert.NotNull(deserialized);
+        Assert.Equal(expected, deserialized.BoolValue);
+    }
+
+    [Theory]
+    [InlineData(2)]
+    [InlineData(-1)]
+    public void BoolConverter_WithAttribute_DeserializeInvalidNumberThrows
+    (
+        int jsonValue
+    )
+    {
+        string json = $"{{\"BoolValue\":{jsonValue}}}";
+
+        Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<TestClassWithBoolAttribute>(json));
+    }
+
+    [Fact]
+    public void BoolConverter_WithAttribute_DeserializeNullableNull()
+    {
+        string json = "{\"NullableBoolValue\":null}";
+
+        // No converters registered in options — the attribute applies the converter automatically.
+        TestClassWithBoolAttribute? deserialized = JsonSerializer.Deserialize<TestClassWithBoolAttribute>(json);
+
+        Assert.NotNull(deserialized);
+        Assert.Null(deserialized.NullableBoolValue);
+    }
+
+    [Theory]
+    [InlineData(true, "true")]
+    [InlineData(false, "false")]
+    public void BoolConverter_WithAttribute_SerializeBool
+    (
+        bool value,
+        string expected
+    )
+    {
+        TestClassWithBoolAttribute testObject = new()
+        {
+            BoolValue = value
+        };
+
+        // No converters registered in options — the attribute applies the converter automatically.
+        string json = JsonSerializer.Serialize(testObject);
+
+        Assert.Contains($"\"BoolValue\":{expected}", json);
     }
 }
