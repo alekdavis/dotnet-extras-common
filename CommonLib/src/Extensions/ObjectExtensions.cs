@@ -599,18 +599,24 @@ public static partial class ObjectExtensions
 
             foreach (object? sourceItem in sourceEnumerable.Cast<object?>())
             {
+                bool found = false;
+
                 foreach (object? targetItem in targetEnumerable.Cast<object?>())
                 {
                     if (IsEquivalentOf(sourceItem, targetItem, includeNonPublic))
                     {
-                        return true;
+                        found = true;
+                        break;
                     }
                 }
 
-                return false;
+                if (!found)
+                {
+                    return false;
+                }
             }
 
-            return false;
+            return true;
         }
         else if (sourceType.IsClass && targetType.IsClass)
         {
@@ -904,25 +910,31 @@ public static partial class ObjectExtensions
             IEnumerable sourceEnumerable = (IEnumerable)source;
             IEnumerable targetEnumerable = (IEnumerable)target;
 
-            if (sourceEnumerable.Count() > sourceEnumerable.Count())
+            if (sourceEnumerable.Count() > targetEnumerable.Count())
             {
                 return false;
             }
 
             foreach (object? sourceItem in sourceEnumerable.Cast<object?>())
             {
+                bool found = false;
+
                 foreach (object? targetItem in targetEnumerable.Cast<object?>())
                 {
                     if (IsEquivalentOf(sourceItem, targetItem, includeNonPublic))
                     {
-                        return true;
+                        found = true;
+                        break;
                     }
                 }
 
-                return false;
+                if (!found)
+                {
+                    return false;
+                }
             }
 
-            return false;
+            return true;
         }
         else if (sourceType.IsClass && targetType.IsClass)
         {
@@ -940,7 +952,7 @@ public static partial class ObjectExtensions
                     object? sourceValue = property.GetValue(source);
                     object? targetValue = property.GetValue(target);
 
-                    if (!IsPartialEquivalentOf(sourceValue, targetValue))
+                    if (!IsPartialEquivalentOf(sourceValue, targetValue, includeNonPublic))
                     {
                         return false;
                     }

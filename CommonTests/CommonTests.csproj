@@ -23,6 +23,7 @@
   <ItemGroup>
     <Compile Include="src\.Models\Employee.cs" />
     <Compile Include="src\.Models\Name.cs" />
+    <Compile Include="src\.Models\NonPublicHolder.cs" />
     <Compile Include="src\.Models\Phone.cs" />
     <Compile Include="src\.Models\PhoneType.cs" />
     <Compile Include="src\.Models\SocialAccount.cs" />

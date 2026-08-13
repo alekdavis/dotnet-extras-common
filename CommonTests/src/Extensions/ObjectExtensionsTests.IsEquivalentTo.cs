@@ -616,6 +616,46 @@ public partial class ObjectExtensionsTests
 
         Assert.True(i1.IsEquivalentOf(i4));
         Assert.True(i4.IsEquivalentOf(i1));
+
+        HashSet<string> e1 = [];
+        HashSet<string> e2 = [];
+
+        Assert.True(e1.IsEquivalentOf(e2));
+        Assert.True(e2.IsEquivalentOf(e1));
+
+        Assert.False(e1.IsEquivalentOf(h1));
+        Assert.False(h1.IsEquivalentOf(e1));
+    }
+
+    [Fact]
+    public void Object_IsEquivalentOf_IncludeNonPublic_Nested()
+    {
+        NonPublicHolder source = new()
+        {
+            PublicValue = "same",
+            Nested = new()
+            {
+                PublicValue = "same",
+                NonPublicValue = "sourceOnly"
+            }
+        };
+
+        NonPublicHolder target = new()
+        {
+            PublicValue = "same",
+            Nested = new()
+            {
+                PublicValue = "same",
+                NonPublicValue = "targetOnly"
+            }
+        };
+
+        // Non-public members differ, but they are ignored by default.
+        Assert.True(source.IsEquivalentOf(target));
+
+        // When non-public members are included, the difference must be detected
+        // on the nested object, proving the flag is propagated recursively.
+        Assert.False(source.IsEquivalentOf(target, includeNonPublic: true));
     }
 
     [Fact]

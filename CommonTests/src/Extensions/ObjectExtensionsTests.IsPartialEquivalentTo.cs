@@ -643,6 +643,49 @@ public partial class ObjectExtensionsTests
 
         Assert.True(i1.IsPartialEquivalentOf(i4));
         Assert.True(i4.IsPartialEquivalentOf(i1));
+
+        HashSet<string> e1 = [];
+        HashSet<string> e2 = [];
+
+        Assert.True(e1.IsPartialEquivalentOf(e2));
+        Assert.True(e2.IsPartialEquivalentOf(e1));
+
+        // An empty source is a partial equivalent of a non-empty target,
+        // but a larger source cannot be a partial equivalent of a smaller target.
+        Assert.True(e1.IsPartialEquivalentOf(h1));
+        Assert.False(h1.IsPartialEquivalentOf(e1));
+    }
+
+    [Fact]
+    public void Object_IsPartialEquivalentOf_IncludeNonPublic_Nested()
+    {
+        NonPublicHolder source = new()
+        {
+            PublicValue = "same",
+            Nested = new()
+            {
+                PublicValue = "same",
+                NonPublicValue = "sourceValue"
+            }
+        };
+
+        NonPublicHolder target = new()
+        {
+            PublicValue = "same",
+            Nested = new()
+            {
+                PublicValue = "same",
+                NonPublicValue = "targetValue"
+            }
+        };
+
+        // Non-public members differ, but they are ignored by default.
+        Assert.True(source.IsPartialEquivalentOf(target));
+
+        // When non-public members are included, the differing non-public value on
+        // the nested object must be detected, proving the flag is propagated
+        // through the property-comparison path.
+        Assert.False(source.IsPartialEquivalentOf(target, includeNonPublic: true));
     }
 
     [Fact]
