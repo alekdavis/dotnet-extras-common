@@ -31,10 +31,17 @@ public static partial class ExceptionExtensions
     /// The type filter specified by <typeparamref name="T"/> still applies on top of this check.
     /// Exceptions that are not derived from <see cref="SafeException"/> are not affected by this flag.
     /// </param>
+    /// <param name="compact">
+    /// If <c>true</c> (default), runs of whitespace (new lines, tabs and duplicate spaces)
+    /// are collapsed to single spaces. If <c>false</c>, the original whitespace of each
+    /// message is preserved. Has no effect when <paramref name="raw"/> is <c>true</c>.
+    /// </param>
     /// <param name="preserveQuoted">
     /// If <c>true</c>, the content inside balanced single- or double-quoted spans
     /// is preserved verbatim (whitespace and special characters intact), while text
-    /// outside quotes is normalized as usual. Has no effect when <paramref name="raw"/> is <c>true</c>.
+    /// outside quotes is normalized as usual. Only applies when <paramref name="compact"/>
+    /// is <c>true</c>; it is ignored (treated as <c>false</c>) when <paramref name="compact"/>
+    /// is <c>false</c> and has no effect when <paramref name="raw"/> is <c>true</c>.
     /// </param>
     /// <returns>
     /// Complete error message.
@@ -51,8 +58,8 @@ public static partial class ExceptionExtensions
     /// included in the error message.
     /// </remarks>
     /// <seealso cref="SafeException"/>
-    /// <seealso cref="GetSafeMessages(Exception, bool, bool, bool)"/>
-    /// <seealso cref="GetMessages(Exception, bool, bool, bool)"/>
+    /// <seealso cref="GetSafeMessages(Exception, bool, bool, bool, bool)"/>
+    /// <seealso cref="GetMessages(Exception, bool, bool, bool, bool)"/>
     /// <example>
     /// <code>
     /// Exception ex = new SafeException("Outer exception", new SafeException("Inner exception 1"), new Exception("Inner exception 2"));
@@ -73,11 +80,19 @@ public static partial class ExceptionExtensions
         this Exception ex,
         bool raw = false,
         bool safeOnly = false,
+        bool compact = true,
         bool preserveQuoted = true
     )
     where T : Exception
     {
         Exception? e = ex;
+
+        // Quote preservation is a refinement of the compaction step,
+        // so it only makes sense when compaction is enabled.
+        if (!compact)
+        {
+            preserveQuoted = false;
+        }
 
         if (e == null)
         {
@@ -96,7 +111,7 @@ public static partial class ExceptionExtensions
                     messages.Append(' ');
                 }
 
-                messages.Append(ie.GetMessages<T>(raw, safeOnly, preserveQuoted));
+                messages.Append(ie.GetMessages<T>(raw, safeOnly, compact, preserveQuoted));
             }
         }
         else
@@ -112,7 +127,7 @@ public static partial class ExceptionExtensions
                 {
                     string message = raw
                         ? e.Message
-                        : e.Message.ToSentence(true, true, true, preserveQuoted);
+                        : e.Message.ToSentence(true, true, compact, preserveQuoted);
 
                     bool isDuplicate = false;
 
@@ -170,17 +185,24 @@ public static partial class ExceptionExtensions
     /// whose <see cref="SafeException.IsSafe"/> property is <c>false</c> will be omitted.
     /// Set to <c>false</c> to include messages from every <see cref="SafeException"/> regardless of the flag.
     /// </param>
+    /// <param name="compact">
+    /// If <c>true</c> (default), runs of whitespace (new lines, tabs and duplicate spaces)
+    /// are collapsed to single spaces. If <c>false</c>, the original whitespace of each
+    /// message is preserved. Has no effect when <paramref name="raw"/> is <c>true</c>.
+    /// </param>
     /// <param name="preserveQuoted">
     /// If <c>true</c>, the content inside balanced single- or double-quoted spans
     /// is preserved verbatim (whitespace and special characters intact), while text
-    /// outside quotes is normalized as usual. Has no effect when <paramref name="raw"/> is <c>true</c>.
+    /// outside quotes is normalized as usual. Only applies when <paramref name="compact"/>
+    /// is <c>true</c>; it is ignored (treated as <c>false</c>) when <paramref name="compact"/>
+    /// is <c>false</c> and has no effect when <paramref name="raw"/> is <c>true</c>.
     /// </param>
     /// <returns>
     /// Complete error message.
     /// </returns>
     /// <seealso cref="SafeException"/>
-    /// <seealso cref="GetMessages{T}(Exception, bool, bool, bool)"/>
-    /// <seealso cref="GetMessages(Exception, bool, bool, bool)"/>
+    /// <seealso cref="GetMessages{T}(Exception, bool, bool, bool, bool)"/>
+    /// <seealso cref="GetMessages(Exception, bool, bool, bool, bool)"/>
     /// <example>
     /// <code>
     /// Exception ex = new SafeException("Outer exception", new SafeException("Inner exception 1"), new Exception("Inner exception 2"));
@@ -194,10 +216,11 @@ public static partial class ExceptionExtensions
         this Exception ex,
         bool raw = false,
         bool safeOnly = true,
+        bool compact = true,
         bool preserveQuoted = true
     )
     {
-        return ex.GetMessages<SafeException>(raw, safeOnly, preserveQuoted);
+        return ex.GetMessages<SafeException>(raw, safeOnly, compact, preserveQuoted);
     }
 
     /// <summary>
@@ -216,10 +239,17 @@ public static partial class ExceptionExtensions
     /// whose <see cref="SafeException.IsSafe"/> property is <c>false</c> will be omitted.
     /// Exceptions that are not derived from <see cref="SafeException"/> are not affected by this flag.
     /// </param>
+    /// <param name="compact">
+    /// If <c>true</c> (default), runs of whitespace (new lines, tabs and duplicate spaces)
+    /// are collapsed to single spaces. If <c>false</c>, the original whitespace of each
+    /// message is preserved. Has no effect when <paramref name="raw"/> is <c>true</c>.
+    /// </param>
     /// <param name="preserveQuoted">
     /// If <c>true</c>, the content inside balanced single- or double-quoted spans
     /// is preserved verbatim (whitespace and special characters intact), while text
-    /// outside quotes is normalized as usual. Has no effect when <paramref name="raw"/> is <c>true</c>.
+    /// outside quotes is normalized as usual. Only applies when <paramref name="compact"/>
+    /// is <c>true</c>; it is ignored (treated as <c>false</c>) when <paramref name="compact"/>
+    /// is <c>false</c> and has no effect when <paramref name="raw"/> is <c>true</c>.
     /// </param>
     /// <returns>
     /// Complete error message.
@@ -237,9 +267,10 @@ public static partial class ExceptionExtensions
         this Exception ex,
         bool raw = false,
         bool safeOnly = false,
+        bool compact = true,
         bool preserveQuoted = true
     )
     {
-        return ex.GetMessages<Exception>(raw, safeOnly, preserveQuoted);
+        return ex.GetMessages<Exception>(raw, safeOnly, compact, preserveQuoted);
     }
 }

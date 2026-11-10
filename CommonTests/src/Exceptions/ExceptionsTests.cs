@@ -124,4 +124,49 @@ public partial class ExceptionsTests
             "Workgroup 'Approver-DevTools JIRA Hades All Roles-AWG' does not exist.",
             ex.GetMessages(preserveQuoted: false));
     }
+
+    [Fact]
+    public void Exception_GetMessages_CompactFalse_PreservesAllWhitespace()
+    {
+        Exception ex = new("Line one.\nLine   two   with  spaces.");
+
+        // compact: false preserves the original whitespace of the message,
+        // including newlines and duplicate spaces.
+        Assert.Equal(
+            "Line one.\nLine   two   with  spaces.",
+            ex.GetMessages(compact: false));
+    }
+
+    [Fact]
+    public void Exception_GetMessages_CompactTrue_IsDefault()
+    {
+        Exception ex = new("Line one.\nLine   two   with  spaces.");
+
+        // compact defaults to true, collapsing all whitespace runs.
+        Assert.Equal(
+            "Line one. Line two with spaces.",
+            ex.GetMessages());
+    }
+
+    [Fact]
+    public void Exception_GetSafeMessages_CompactFalse_PreservesAllWhitespace()
+    {
+        SafeException ex = new("Safe   message\nwith   spacing.");
+
+        Assert.Equal(
+            "Safe   message\nwith   spacing.",
+            ex.GetSafeMessages(compact: false));
+    }
+
+    [Fact]
+    public void Exception_GetMessages_CompactFalse_IgnoresPreserveQuoted()
+    {
+        Exception ex = new("Value 'keep  me' and   outside   text.");
+
+        // When compact is false, preserveQuoted is forced off, so ALL whitespace
+        // (inside and outside quotes) is preserved as-is.
+        Assert.Equal(
+            "Value 'keep  me' and   outside   text.",
+            ex.GetMessages(compact: false, preserveQuoted: true));
+    }
 }
