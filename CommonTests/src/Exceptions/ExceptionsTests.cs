@@ -52,4 +52,76 @@ public partial class ExceptionsTests
 
         Assert.Equal("Call failed. No connection could be made because the target machine actively refused it. (localhost:7000): POST https://localhost:7000/Endpoint?A=B.", ex3.GetMessages());
     }
+
+    [Fact]
+    public void Exception_GetMessages_PreserveQuoted_SingleQuotes()
+    {
+        Exception ex = new("Workgroup 'Approver-DevTools JIRA Hades  All Roles-AWG' does not exist.");
+
+        Assert.Equal(
+            "Workgroup 'Approver-DevTools JIRA Hades  All Roles-AWG' does not exist.",
+            ex.GetMessages(preserveQuoted: true));
+    }
+
+    [Fact]
+    public void Exception_GetMessages_PreserveQuoted_DoubleQuotes()
+    {
+        Exception ex = new("Workgroup \"Approver-DevTools JIRA Hades  All Roles-AWG\" does not exist.");
+
+        Assert.Equal(
+            "Workgroup \"Approver-DevTools JIRA Hades  All Roles-AWG\" does not exist.",
+            ex.GetMessages(preserveQuoted: true));
+    }
+
+    [Fact]
+    public void Exception_GetMessages_PreserveQuoted_NormalizesOutsideQuotes()
+    {
+        Exception ex = new("Workgroup   'Keep  Me'   is \t broken.");
+
+        Assert.Equal(
+            "Workgroup 'Keep  Me' is broken.",
+            ex.GetMessages(preserveQuoted: true));
+    }
+
+    [Fact]
+    public void Exception_GetMessages_PreserveQuoted_MultipleQuotedSpans()
+    {
+        Exception ex = new("Value 'first  one' differs from \"second  one\" here.");
+
+        Assert.Equal(
+            "Value 'first  one' differs from \"second  one\" here.",
+            ex.GetMessages(preserveQuoted: true));
+    }
+
+    [Fact]
+    public void Exception_GetMessages_PreserveQuoted_UnbalancedQuote()
+    {
+        Exception ex = new("Unterminated   'value  with   spaces");
+
+        string messages = ex.GetMessages(preserveQuoted: true);
+
+        Assert.Equal("Unterminated 'value with spaces.", messages);
+    }
+
+    [Fact]
+    public void Exception_GetMessages_PreserveQuoted_DefaultPreserves()
+    {
+        Exception ex = new("Workgroup 'Approver-DevTools JIRA Hades  All Roles-AWG' does not exist.");
+
+        // preserveQuoted now defaults to true, so quoted content is preserved by default.
+        Assert.Equal(
+            "Workgroup 'Approver-DevTools JIRA Hades  All Roles-AWG' does not exist.",
+            ex.GetMessages());
+    }
+
+    [Fact]
+    public void Exception_GetMessages_PreserveQuoted_FalseCollapses()
+    {
+        Exception ex = new("Workgroup 'Approver-DevTools JIRA Hades  All Roles-AWG' does not exist.");
+
+        // Opting out collapses all whitespace, including inside quotes.
+        Assert.Equal(
+            "Workgroup 'Approver-DevTools JIRA Hades All Roles-AWG' does not exist.",
+            ex.GetMessages(preserveQuoted: false));
+    }
 }

@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text;
+using System.Text.RegularExpressions;
 
 namespace DotNetExtras.Common.Extensions;
 /// <summary>
@@ -60,6 +61,11 @@ public static partial class StringExtensions
     /// <param name="compact">
     /// Indicates that the multiple space and new line characters will be converted to a single space.
     /// </param>
+    /// <param name="preserveQuoted">
+    /// When <paramref name="compact"/> is <c>true</c>, indicates that the content inside
+    /// balanced single- or double-quoted spans is preserved verbatim (whitespace and
+    /// special characters intact), while text outside quotes is compacted as usual.
+    /// </param>
     /// <returns>
     /// Input string that has a valid punctuation string at the end.
     /// </returns>
@@ -74,7 +80,8 @@ public static partial class StringExtensions
         this string source,
         bool trimStart = false,
         bool trimEnd = false,
-        bool compact = false
+        bool compact = false,
+        bool preserveQuoted = true
     )
     {
         if (string.IsNullOrEmpty(source))
@@ -84,24 +91,158 @@ public static partial class StringExtensions
 
         if (trimStart)
         {
-            source = Regex.Replace(source, "^[\\s\n\r]+", "");
+            source = LeadingWhitespaceRegex().Replace(source, "");
         }
 
         if (trimEnd)
         {
-            source = Regex.Replace(source, "[\\s\n\r]+$", "");
+            source = TrailingWhitespaceRegex().Replace(source, "");
         }
 
         if (compact)
         {
-            source = Regex.Replace(source, "[\\s\n\r]+", " ");
+            source = preserveQuoted
+                ? CompactOutsideQuotes(source)
+                : WhitespaceRegex().Replace(source, " ");
         }
 
         return string.IsNullOrEmpty(source)
             ? ""
-            : Regex.IsMatch(source, @"[\p{P}]$")
+            : EndsWithPunctuationRegex().IsMatch(source)
                 ? source
                 : source + ".";
+    }
+
+    /// <summary>
+    /// Collapses runs of whitespace to a single space in all text outside balanced
+    /// single- or double-quoted spans, while copying quoted spans (including their
+    /// whitespace and special characters) verbatim.
+    /// </summary>
+    /// <param name="input">
+    /// String to compact.
+    /// </param>
+    /// <returns>
+    /// Compacted string with quoted values preserved.
+    /// </returns>
+    /// <remarks>
+    /// A quote character is recognized as an opening delimiter only when it appears
+    /// at the start of the string or is preceded by whitespace, and as a closing
+    /// delimiter only when it appears at the end of the string or is followed by
+    /// whitespace or punctuation. This word-boundary heuristic allows embedded
+    /// apostrophes (e.g. <c>'Dick's Smith's'</c>) to be treated as literal
+    /// characters rather than as closing delimiters.
+    /// </remarks>
+    private static string CompactOutsideQuotes
+    (
+        string input
+    )
+    {
+        if (string.IsNullOrEmpty(input))
+        {
+            return input;
+        }
+
+        StringBuilder result = new();
+        StringBuilder segment = new();
+        char quoteChar = '\0';
+        bool insideQuotes = false;
+
+        void FlushCompacted()
+        {
+            result.Append(WhitespaceRegex().Replace(segment.ToString(), " "));
+            segment.Clear();
+        }
+
+        for (int i = 0; i < input.Length; i++)
+        {
+            char c = input[i];
+
+            if (insideQuotes)
+            {
+                if (c == quoteChar && IsClosingDelimiter(input, i))
+                {
+                    result.Append(quoteChar).Append(segment).Append(quoteChar);
+                    segment.Clear();
+                    insideQuotes = false;
+                }
+                else
+                {
+                    segment.Append(c);
+                }
+            }
+            else if ((c == '\'' || c == '"') && IsOpeningDelimiter(input, i))
+            {
+                FlushCompacted();
+                quoteChar = c;
+                insideQuotes = true;
+            }
+            else
+            {
+                segment.Append(c);
+            }
+        }
+
+        // An unbalanced opening quote and any text after it are normal prose.
+        if (insideQuotes)
+        {
+            result.Append(quoteChar);
+        }
+
+        FlushCompacted();
+
+        return result.ToString();
+    }
+
+    /// <summary>
+    /// Determines whether the quote character at the specified position starts a
+    /// quoted span (it is at the start of the string or preceded by whitespace).
+    /// </summary>
+    /// <param name="input">
+    /// String being scanned.
+    /// </param>
+    /// <param name="index">
+    /// Zero-based position of the quote character.
+    /// </param>
+    /// <returns>
+    /// <c>true</c> if the quote character opens a span; otherwise, <c>false</c>.
+    /// </returns>
+    private static bool IsOpeningDelimiter
+    (
+        string input,
+        int index
+    )
+    {
+        return index == 0 || char.IsWhiteSpace(input[index - 1]);
+    }
+
+    /// <summary>
+    /// Determines whether the quote character at the specified position closes a
+    /// quoted span (it is at the end of the string or followed by whitespace or
+    /// punctuation).
+    /// </summary>
+    /// <param name="input">
+    /// String being scanned.
+    /// </param>
+    /// <param name="index">
+    /// Zero-based position of the quote character.
+    /// </param>
+    /// <returns>
+    /// <c>true</c> if the quote character closes a span; otherwise, <c>false</c>.
+    /// </returns>
+    private static bool IsClosingDelimiter
+    (
+        string input,
+        int index
+    )
+    {
+        if (index == input.Length - 1)
+        {
+            return true;
+        }
+
+        char next = input[index + 1];
+
+        return char.IsWhiteSpace(next) || char.IsPunctuation(next);
     }
 
     /// <summary>
@@ -173,4 +314,16 @@ public static partial class StringExtensions
 
         return start + middle + end;
     }
+
+    [GeneratedRegex(@"\s+")]
+    private static partial Regex WhitespaceRegex();
+
+    [GeneratedRegex(@"^\s+")]
+    private static partial Regex LeadingWhitespaceRegex();
+
+    [GeneratedRegex(@"\s+$")]
+    private static partial Regex TrailingWhitespaceRegex();
+
+    [GeneratedRegex(@"[\p{P}]$")]
+    private static partial Regex EndsWithPunctuationRegex();
 }

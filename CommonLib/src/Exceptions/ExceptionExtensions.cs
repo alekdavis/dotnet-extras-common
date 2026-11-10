@@ -31,6 +31,11 @@ public static partial class ExceptionExtensions
     /// The type filter specified by <typeparamref name="T"/> still applies on top of this check.
     /// Exceptions that are not derived from <see cref="SafeException"/> are not affected by this flag.
     /// </param>
+    /// <param name="preserveQuoted">
+    /// If <c>true</c>, the content inside balanced single- or double-quoted spans
+    /// is preserved verbatim (whitespace and special characters intact), while text
+    /// outside quotes is normalized as usual. Has no effect when <paramref name="raw"/> is <c>true</c>.
+    /// </param>
     /// <returns>
     /// Complete error message.
     /// </returns>
@@ -46,8 +51,8 @@ public static partial class ExceptionExtensions
     /// included in the error message.
     /// </remarks>
     /// <seealso cref="SafeException"/>
-    /// <seealso cref="GetSafeMessages(Exception, bool, bool)"/>
-    /// <seealso cref="GetMessages(Exception, bool, bool)"/>
+    /// <seealso cref="GetSafeMessages(Exception, bool, bool, bool)"/>
+    /// <seealso cref="GetMessages(Exception, bool, bool, bool)"/>
     /// <example>
     /// <code>
     /// Exception ex = new SafeException("Outer exception", new SafeException("Inner exception 1"), new Exception("Inner exception 2"));
@@ -67,7 +72,8 @@ public static partial class ExceptionExtensions
     (
         this Exception ex,
         bool raw = false,
-        bool safeOnly = false
+        bool safeOnly = false,
+        bool preserveQuoted = true
     )
     where T : Exception
     {
@@ -90,7 +96,7 @@ public static partial class ExceptionExtensions
                     messages.Append(' ');
                 }
 
-                messages.Append(ie.GetMessages<T>(raw, safeOnly));
+                messages.Append(ie.GetMessages<T>(raw, safeOnly, preserveQuoted));
             }
         }
         else
@@ -106,7 +112,7 @@ public static partial class ExceptionExtensions
                 {
                     string message = raw
                         ? e.Message
-                        : e.Message.ToSentence(true, true, true);
+                        : e.Message.ToSentence(true, true, true, preserveQuoted);
 
                     bool isDuplicate = false;
 
@@ -128,12 +134,6 @@ public static partial class ExceptionExtensions
                         if (!raw)
                         {
                             seen!.Add(message);
-
-                            // Replace newlines with spaces after duplicate check
-                            message = message
-                                .Replace("\r\n", " ")
-                                .Replace("\r", " ")
-                                .Replace("\n", " ");
                         }
 
                         if (messages.Length > 0)
@@ -151,7 +151,7 @@ public static partial class ExceptionExtensions
 
         return raw
             ? messages.ToString()
-            : System.Text.RegularExpressions.Regex.Replace(messages.ToString(), @"\s+", " ").Trim();
+            : messages.ToString().Trim();
     }
 
     /// <summary>
@@ -170,12 +170,17 @@ public static partial class ExceptionExtensions
     /// whose <see cref="SafeException.IsSafe"/> property is <c>false</c> will be omitted.
     /// Set to <c>false</c> to include messages from every <see cref="SafeException"/> regardless of the flag.
     /// </param>
+    /// <param name="preserveQuoted">
+    /// If <c>true</c>, the content inside balanced single- or double-quoted spans
+    /// is preserved verbatim (whitespace and special characters intact), while text
+    /// outside quotes is normalized as usual. Has no effect when <paramref name="raw"/> is <c>true</c>.
+    /// </param>
     /// <returns>
     /// Complete error message.
     /// </returns>
     /// <seealso cref="SafeException"/>
-    /// <seealso cref="GetMessages{T}(Exception, bool, bool)"/>
-    /// <seealso cref="GetMessages(Exception, bool, bool)"/>
+    /// <seealso cref="GetMessages{T}(Exception, bool, bool, bool)"/>
+    /// <seealso cref="GetMessages(Exception, bool, bool, bool)"/>
     /// <example>
     /// <code>
     /// Exception ex = new SafeException("Outer exception", new SafeException("Inner exception 1"), new Exception("Inner exception 2"));
@@ -188,10 +193,11 @@ public static partial class ExceptionExtensions
     (
         this Exception ex,
         bool raw = false,
-        bool safeOnly = true
+        bool safeOnly = true,
+        bool preserveQuoted = true
     )
     {
-        return ex.GetMessages<SafeException>(raw, safeOnly);
+        return ex.GetMessages<SafeException>(raw, safeOnly, preserveQuoted);
     }
 
     /// <summary>
@@ -210,6 +216,11 @@ public static partial class ExceptionExtensions
     /// whose <see cref="SafeException.IsSafe"/> property is <c>false</c> will be omitted.
     /// Exceptions that are not derived from <see cref="SafeException"/> are not affected by this flag.
     /// </param>
+    /// <param name="preserveQuoted">
+    /// If <c>true</c>, the content inside balanced single- or double-quoted spans
+    /// is preserved verbatim (whitespace and special characters intact), while text
+    /// outside quotes is normalized as usual. Has no effect when <paramref name="raw"/> is <c>true</c>.
+    /// </param>
     /// <returns>
     /// Complete error message.
     /// </returns>
@@ -225,9 +236,10 @@ public static partial class ExceptionExtensions
     (
         this Exception ex,
         bool raw = false,
-        bool safeOnly = false
+        bool safeOnly = false,
+        bool preserveQuoted = true
     )
     {
-        return ex.GetMessages<Exception>(raw, safeOnly);
+        return ex.GetMessages<Exception>(raw, safeOnly, preserveQuoted);
     }
 }
